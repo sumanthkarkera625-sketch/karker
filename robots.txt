@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /karker_admin.html
+
+Sitemap: https://karker.in/sitemap.xml
