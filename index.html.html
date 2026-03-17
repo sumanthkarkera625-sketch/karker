@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="KARKER — India's first curated aesthetic fashion marketplace. Shop Y2K, Gothic, Minimal, Artistic wear from verified indie artists.">
+<meta property="og:title" content="KARKER — Own Your Aesthetic">
+<meta property="og:description" content="India's first curated aesthetic fashion marketplace.">
+<meta property="og:url" content="https://karkera.in">
+<title>KARKER — Own Your Aesthetic · karkera.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --w: #FFFFFF;
+  --off: #F6F5F2;
+  --off2: #EEECE8;
+  --off3: #E4E1DB;
+  --k: #0C0B09;
+  --ink: #181614;
+  --i80: rgba(12,11,9,0.80);
+  --i55: rgba(12,11,9,0.55);
+  --i32: rgba(12,11,9,0.32);
+  --i16: rgba(12,11,9,0.16);
+  --i08: rgba(12,11,9,0.08);
+  --i04: rgba(12,11,9,0.04);
+  --bdr: rgba(12,11,9,0.10);
+  --bdr2: rgba(12,11,9,0.20);
+  --bc: 'Barlow Condensed', sans-serif;
+  --b: 'Barlow', sans-serif;
+  --m: 'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--b);background:var(--w);color:var(--k);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:none;border:none;background:none}
+a{text-decoration:none;color:inherit;cursor:none}
+::selection{background:var(--k);color:var(--w)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--w)}
+::-webkit-scrollbar-thumb{background:var(--i32)}
+
+/* ── CURSOR ── */
+#cur{width:8px;height:8px;background:var(--k);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-radius .22s,background .22s;mix-blend-mode:difference}
+#cur-o{width:38px;height:38px;border:1.5px solid var(--i16);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:opacity .2s}
+body.hov #cur{width:52px;height:52px;background:var(--k);border-radius:3px;mix-blend-mode:normal;opacity:.06}
+body.hov #cur-o{opacity:0}
+body.dark-cur #cur{background:white;mix-blend-mode:normal}
+
+/* ── OVERLAYS ── */
+.overlay{position:fixed;inset:0;background:rgba(12,11,9,0.55);z-index:800;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
+.overlay.open{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:0;bottom:0;width:420px;background:var(--w);z-index:900;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);border-left:2px solid var(--k);overflow-y:auto}
+.panel.open{transform:translateX(0)}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);z-index:900;background:var(--w);width:min(840px,94vw);max-height:90vh;overflow-y:auto;border:2px solid var(--k);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+.modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%)}
+
+/* ══ ANN BAR ══ */
+.ann{background:var(--k);color:rgba(255,255,255,.6);padding:10px 40px;text-align:center;font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.1em}
+.ann b{color:rgba(255,255,255,.92);font-weight:500}
+.ann-sep{margin:0 16px;opacity:.3}
+
+/* ══ NAV ══ */
+nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z-index:400}
+.nav-wrap{max-width:1440px;margin:0 auto;padding:0 28px;height:62px;display:flex;align-items:center;gap:0}
+.nav-logo{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--k);display:flex;align-items:center;gap:8px;cursor:none;flex-shrink:0}
+.nav-mark{width:26px;height:26px;background:var(--k);display:flex;align-items:center;justify-content:center;border-radius:2px}
+.nav-mark span{font-family:var(--bc);font-size:15px;font-weight:900;color:white;line-height:1}
+.nav-c{flex:1;display:flex;align-items:center;justify-content:center;gap:0}
+.nav-lnk{padding:5px 16px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:none;transition:color .15s;border-left:1px solid var(--bdr)}
+.nav-lnk:first-child{border-left:none}
+.nav-lnk:hover{color:var(--k)}
+.nav-r{display:flex;align-items:center;gap:0;margin-left:auto}
+.n-ico{width:46px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:none;border-left:1px solid var(--bdr);transition:background .15s;position:relative;font-size:16px;color:var(--i55)}
+.n-ico:hover{background:var(--i04);color:var(--k)}
+.n-ico .nl{font-family:var(--m);font-size:8px;color:var(--i32);letter-spacing:.04em}
+.n-cnt{position:absolute;top:10px;right:7px;width:14px;height:14px;background:var(--k);color:white;font-size:7.5px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--m)}
+.nav-sell{height:34px;padding:0 20px;background:var(--k);color:white;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;margin:0 14px;transition:opacity .15s;border:none}
+.nav-sell:hover{opacity:.8}
+
+/* ══ VIBE STRIP ══ */
+.vs{background:var(--w);border-bottom:1px solid var(--bdr);overflow-x:auto;scrollbar-width:none}
+.vs::-webkit-scrollbar{display:none}
+.vs-in{max-width:1440px;margin:0 auto;padding:0 28px;display:flex;white-space:nowrap}
+.v-cs{padding:11px 18px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--i32);border-bottom:2px solid transparent;cursor:none;transition:color .15s,border-color .15s;flex-shrink:0}
+.v-cs:hover{color:var(--i55)}
+.v-cs.on{color:var(--k);border-bottom-color:var(--k);font-weight:500}
+
+/* ══ DROP BAND ══ */
+#drop-sec{background:var(--k);position:relative;overflow:hidden;max-height:120px;transition:max-height .55s cubic-bezier(.4,0,.2,1),opacity .35s}
+#drop-sec.off{max-height:0;opacity:0;pointer-events:none}
+.drop-noise{position:absolute;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;opacity:.6}
+.drop-in{max-width:1440px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;position:relative;z-index:1;flex-wrap:wrap}
+.drop-l .d-ey{font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:4px}
+.drop-l .d-tt{font-family:var(--bc);font-size:32px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:white;line-height:1}
+.cd-row{display:flex;align-items:center;gap:5px}
+.cd-u{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);padding:9px 14px;text-align:center;min-width:62px}
+.cd-n{font-family:var(--bc);font-size:30px;font-weight:900;color:white;line-height:1}
+.cd-l{font-family:var(--m);font-size:7.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:2px}
+.cd-sep{font-family:var(--bc);font-size:26px;font-weight:700;color:rgba(255,255,255,.2);line-height:1}
+.drop-r{display:flex;align-items:center;gap:14px}
+.drop-sub{font-family:var(--b);font-size:12.5px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.65;max-width:160px;text-align:right}
+.drop-sub b{color:rgba(255,255,255,.75);display:block;font-weight:600;font-size:13.5px}
+.drop-btn{height:40px;padding:0 24px;background:white;color:var(--k);font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:none;transition:background .15s,transform .15s;white-space:nowrap}
+.drop-btn:hover{background:#F0EDEA;transform:translateY(-1px)}
+
+/* ══ HERO ══ */
+.hero{background:var(--w);position:relative;overflow:hidden;min-height:calc(100vh - 62px);display:grid;grid-template-columns:1fr 1fr}
+.hero-l{padding:72px 56px 64px 28px;display:flex;flex-direction:column;justify-content:space-between;border-right:2px solid var(--k);position:relative}
+.hero-bg{position:absolute;top:50%;left:-24px;transform:translateY(-50%);font-family:var(--bc);font-size:clamp(160px,20vw,280px);font-weight:900;text-transform:uppercase;color:var(--i04);letter-spacing:-.04em;white-space:nowrap;pointer-events:none;line-height:1;user-select:none;z-index:0}
+.hero-top{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--k);padding:6px 14px;font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--k);margin-bottom:28px}
+.badge-dot{width:6px;height:6px;background:var(--k);border-radius:50%;animation:bdot 2.8s ease-in-out infinite;flex-shrink:0}
+@keyframes bdot{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-h1{font-family:var(--bc);font-size:clamp(68px,9vw,136px);font-weight:900;letter-spacing:-.01em;text-transform:uppercase;line-height:.9;color:var(--k);margin-bottom:28px}
+.h1-solid{display:block}
+.h1-ghost{display:block;-webkit-text-stroke:2px var(--k);color:transparent}
+.h1-muted{display:block;color:var(--i32)}
+.hero-body{font-family:var(--b);font-size:14.5px;font-weight:300;line-height:1.85;color:var(--i55);max-width:390px;margin-bottom:40px;position:relative;z-index:1}
+.hero-btns{display:flex;align-items:center;gap:12px;margin-bottom:60px;position:relative;z-index:1;flex-wrap:wrap}
+.btn-k{height:50px;padding:0 34px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s;display:inline-flex;align-items:center;gap:10px}
+.btn-k:hover{background:transparent;color:var(--k)}
+.btn-k-o{height:50px;padding:0 28px;background:transparent;color:var(--k);font-family:var(--m);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s}
+.btn-k-o:hover{background:var(--k);color:white}
+.hero-stats{display:flex;gap:0;border-top:2px solid var(--k);padding-top:0;position:relative;z-index:1}
+.hst{flex:1;padding:18px 0 2px}
+.hst+.hst{padding-left:22px;border-left:1px solid var(--bdr)}
+.hst-n{font-family:var(--bc);font-size:38px;font-weight:900;color:var(--k);line-height:1;letter-spacing:-.02em}
+.hst-l{font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);margin-top:1px}
+
+/* Hero right */
+.hero-r{background:var(--k);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;position:relative}
+.hero-r::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 75% 30%,rgba(255,255,255,.03) 0%,transparent 60%);pointer-events:none}
+.hr-cell{border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:20px 22px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;cursor:none;min-height:210px;transition:background .35s}
+.hr-cell:nth-child(2),.hr-cell:nth-child(4){border-right:none}
+.hr-cell:nth-child(3),.hr-cell:nth-child(4){border-bottom:none}
+.hr-cell:hover{background:rgba(255,255,255,.03)}
+.hr-ico{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);font-size:62px;filter:grayscale(1)brightness(.15);transition:filter .45s,transform .55s;pointer-events:none}
+.hr-cell:hover .hr-ico{filter:grayscale(1)brightness(.25);transform:translate(-50%,-60%)scale(1.07)}
+.hr-vibe{font-family:var(--m);font-size:8px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:4px;opacity:0;transition:opacity .22s}
+.hr-cell:hover .hr-vibe{opacity:1}
+.hr-name{font-family:var(--b);font-size:13px;font-weight:400;color:rgba(255,255,255,.60);line-height:1.35;margin-bottom:3px}
+.hr-price{font-family:var(--m);font-size:12px;font-weight:400;color:rgba(255,255,255,.30)}
+.hr-arr{position:absolute;top:15px;right:16px;font-size:17px;color:rgba(255,255,255,.18);opacity:0;transition:opacity .2s}
+.hr-cell:hover .hr-arr{opacity:1}
+
+/* ══ MARQUEE ══ */
+.marq{background:var(--k);border-top:2px solid var(--k);border-bottom:2px solid var(--k);padding:13px 0;overflow:hidden}
+.marq-t{display:flex;width:max-content;animation:mq 26s linear infinite}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mi{font-family:var(--bc);font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:white;padding:0 26px;white-space:nowrap}
+.ms{color:rgba(255,255,255,.28);font-size:10px}
+
+/* ══ PROMISE ══ */
+.promise{border-bottom:1px solid var(--bdr)}
+.promise-in{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.pi{padding:22px 28px;display:flex;align-items:center;gap:14px;border-right:1px solid var(--bdr)}
+.pi:last-child{border-right:none}
+.pi-n{font-family:var(--bc);font-size:26px;font-weight:900;color:var(--i08);flex-shrink:0;line-height:1}
+.pi-tit{font-family:var(--m);font-size:12px;font-weight:500;color:var(--k);margin-bottom:2px;letter-spacing:.02em}
+.pi-sub{font-family:var(--b);font-size:11.5px;font-weight:300;color:var(--i55);line-height:1.5}
+
+/* ══ SECTIONS ══ */
+.sec{padding:88px 28px}
+.sec-in{max-width:1440px;margin:0 auto}
+.sec-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;gap:16px;flex-wrap:wrap}
+.sec-ey{font-family:var(--m);font-size:9.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--i32);margin-bottom:9px;display:flex;align-items:center;gap:10px}
+.sec-ey::before{content:'';width:18px;height:1.5px;background:var(--i32)}
+.sec-tit{font-family:var(--bc);font-size:clamp(32px,4vw,54px);font-weight:900;text-transform:uppercase;letter-spacing:.01em;color:var(--k);line-height:.95}
+.sec-tit em{font-style:italic;color:var(--i32);font-weight:700}
+.see-all{font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);display:flex;align-items:center;gap:8px;cursor:none;transition:color .15s,gap .15s;border-bottom:1px solid var(--i16);padding-bottom:2px;white-space:nowrap}
+.see-all:hover{color:var(--k);gap:12px;border-bottom-color:var(--k)}
+
+/* ══ VIBE GRID ══ */
+.vg{display:grid;grid-template-columns:repeat(7,1fr);border:2px solid var(--k)}
+.vc{position:relative;aspect-ratio:9/16;cursor:none;overflow:hidden;border-right:1px solid rgba(255,255,255,.07);transition:z-index 0s}
+.vc:last-child{border-right:none}
+.vc:nth-child(1){background:linear-gradient(170deg,#111 0%,#1D1818 100%)}
+.vc:nth-child(2){background:linear-gradient(170deg,#0D0D0D 0%,#191414 100%)}
+.vc:nth-child(3){background:linear-gradient(170deg,#131310 0%,#1F1C17 100%)}
+.vc:nth-child(4){background:linear-gradient(170deg,#0F0D08 0%,#1C170F 100%)}
+.vc:nth-child(5){background:linear-gradient(170deg,#0D0808 0%,#190E0E 100%)}
+.vc:nth-child(6){background:linear-gradient(170deg,#080D08 0%,#101910 100%)}
+.vc:nth-child(7){background:linear-gradient(170deg,#08080D 0%,#10101B 100%)}
+.vc:hover::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.04)}
+.vc-ico{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);font-size:38px;filter:grayscale(1)brightness(.16);transition:filter .4s,transform .5s}
+.vc:hover .vc-ico{filter:grayscale(1)brightness(.28);transform:translate(-50%,-60%)scale(1.1)}
+.vc-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.90) 0%,transparent 55%)}
+.vc-info{position:absolute;bottom:0;left:0;right:0;padding:13px 11px;z-index:2;transform:translateY(3px);transition:transform .3s}
+.vc:hover .vc-info{transform:translateY(0)}
+.vc-num{font-family:var(--m);font-size:7.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:5px;opacity:0;transition:opacity .22s}
+.vc:hover .vc-num{opacity:1}
+.vc-name{font-family:var(--bc);font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.70);line-height:1.1}
+.vc-cnt{font-family:var(--m);font-size:8.5px;color:rgba(255,255,255,.22);margin-top:3px;opacity:0;transform:translateY(4px);transition:opacity .2s .04s,transform .2s .04s}
+.vc:hover .vc-cnt{opacity:1;transform:translateY(0)}
+.vc-arr{position:absolute;top:11px;right:11px;width:22px;height:22px;border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.38);opacity:0;transition:opacity .2s}
+.vc:hover .vc-arr{opacity:1}
+
+/* ══ PRODUCT GRID ══ */
+.pg{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--k);gap:0}
+.pc{background:var(--w);border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);cursor:none;overflow:hidden;position:relative;transition:background .22s}
+.pc:nth-child(4n){border-right:none}
+.pc:nth-last-child(-n+4){border-bottom:none}
+.pc:hover{background:var(--off)}
+.pc-img{aspect-ratio:3/4;background:var(--off);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pc-img-bg{position:absolute;inset:0;background:linear-gradient(145deg,var(--off) 0%,var(--off2) 100%)}
+.pc-ico{font-size:50px;position:relative;z-index:1;filter:grayscale(1)brightness(.32)contrast(.85);transition:filter .45s,transform .5s}
+.pc:hover .pc-ico{filter:grayscale(1)brightness(.45)contrast(.9);transform:scale(1.05)translateY(-4px)}
+.pc-tag{position:absolute;top:13px;left:13px;font-family:var(--m);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--k);color:white;padding:3px 8px;z-index:2}
+.pc-tag.w{background:white;color:var(--k);border:1px solid var(--k)}
+.pc-wish{position:absolute;top:11px;right:13px;font-size:17px;color:var(--i16);opacity:0;transition:opacity .2s;cursor:none;z-index:2}
+.pc:hover .pc-wish{opacity:1}
+.pc-wish.on{opacity:1;color:var(--k)}
+.pc-body{padding:15px 18px 20px}
+.pc-seller{font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.08em;color:var(--i32);margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.sv{width:11px;height:11px;background:var(--i16);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:6px;color:var(--i55);flex-shrink:0}
+.pc-name{font-family:var(--b);font-size:14px;font-weight:500;color:var(--k);line-height:1.4;margin-bottom:9px}
+.pc-pr{display:flex;align-items:baseline;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.pc-price{font-family:var(--m);font-size:15.5px;font-weight:500;color:var(--k)}
+.pc-mrp{font-family:var(--m);font-size:11.5px;font-weight:300;color:var(--i32);text-decoration:line-through}
+.pc-off{font-family:var(--m);font-size:10px;font-weight:500;color:var(--i55)}
+.pc-rat{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.03em}
+
+/* ══ EDITORIAL ══ */
+.editorial{background:var(--k);display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--k);border-bottom:2px solid var(--k);min-height:400px;position:relative;overflow:hidden}
+.ed-l{padding:64px 48px 64px 28px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.ed-ey{font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:18px}
+.ed-tit{font-family:var(--bc);font-size:clamp(40px,5vw,68px);font-weight:900;text-transform:uppercase;letter-spacing:.01em;line-height:.92;color:white;margin-bottom:18px}
+.ed-tit .ghost{-webkit-text-stroke:1.5px rgba(255,255,255,.45);color:transparent;display:block}
+.ed-body{font-family:var(--b);font-size:13.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.40);max-width:340px;margin-bottom:38px}
+.ed-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-inv{height:46px;padding:0 28px;background:white;color:var(--k);font-family:var(--m);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:none;transition:background .15s}
+.btn-inv:hover{background:#F0EDEA}
+.btn-g-inv{height:46px;padding:0 22px;border:2px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;background:none;transition:all .2s}
+.btn-g-inv:hover{border-color:rgba(255,255,255,.5);color:white}
+.ed-r{padding:56px 28px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.ed-feat{padding:19px 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;gap:16px}
+.ed-feat:last-child{border-bottom:none}
+.ef-n{font-family:var(--bc);font-size:20px;font-weight:900;color:rgba(255,255,255,.10);flex-shrink:0;line-height:1;width:26px}
+.ef-tit{font-family:var(--m);font-size:12px;font-weight:500;color:rgba(255,255,255,.65);margin-bottom:4px;letter-spacing:.02em}
+.ef-sub{font-family:var(--b);font-size:11.5px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
+
+/* ══ CATEGORIES ══ */
+.cat-g{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--k)}
+.ct{background:var(--w);border-right:1px solid var(--bdr);padding:26px 20px;cursor:none;transition:background .2s;overflow:hidden;position:relative}
+.ct:last-child{border-right:none}
+.ct:hover{background:var(--off)}
+.ct-n{font-family:var(--bc);font-size:44px;font-weight:900;color:var(--i04);line-height:1;margin-bottom:10px;transition:color .3s}
+.ct:hover .ct-n{color:var(--i08)}
+.ct-ico{font-size:22px;filter:grayscale(1)brightness(.38);margin-bottom:10px;display:block;transition:filter .3s}
+.ct:hover .ct-ico{filter:grayscale(1)brightness(.52)}
+.ct-name{font-family:var(--m);font-size:12px;font-weight:500;color:var(--k);margin-bottom:2px;letter-spacing:.02em}
+.ct-cnt{font-family:var(--m);font-size:9.5px;font-weight:400;color:var(--i32)}
+
+/* ══ SELLERS ══ */
+.sg{display:grid;grid-template-columns:repeat(7,1fr);border:2px solid var(--k)}
+.scrd{background:var(--w);border-right:1px solid var(--bdr);padding:26px 14px;cursor:none;transition:background .2s;text-align:center}
+.scrd:last-child{border-right:none}
+.scrd:hover{background:var(--off)}
+.savt{width:50px;height:50px;border:2px solid var(--k);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:19px;filter:grayscale(1)brightness(.42);transition:filter .3s;border-radius:50%}
+.scrd:hover .savt{filter:grayscale(1)brightness(.58)}
+.s-n{font-family:var(--m);font-size:11.5px;font-weight:500;color:var(--k);margin-bottom:1px}
+.s-h{font-family:var(--m);font-size:9px;color:var(--i32);margin-bottom:8px;letter-spacing:.03em}
+.s-st{font-family:var(--m);font-size:9px;color:var(--i32);letter-spacing:.02em}
+.s-pills{display:flex;gap:3px;justify-content:center;margin-top:9px;flex-wrap:wrap}
+.spill{font-family:var(--m);font-size:7.5px;padding:2px 7px;border:1px solid var(--bdr2);color:var(--i32);text-transform:uppercase;letter-spacing:.08em}
+
+/* ══ NEW ARRIVALS ══ */
+/* inherits .pg styles */
+
+/* ══ SEARCH OVERLAY ══ */
+.srch-panel{position:fixed;top:0;left:0;right:0;background:var(--w);z-index:850;border-bottom:2px solid var(--k);padding:24px 28px;transform:translateY(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.srch-panel.open{transform:translateY(0)}
+.srch-wrap{max-width:800px;margin:0 auto;position:relative}
+.srch-inp{width:100%;height:56px;border:none;border-bottom:2px solid var(--k);background:transparent;font-family:var(--bc);font-size:32px;font-weight:700;color:var(--k);letter-spacing:.02em;outline:none;padding:0 48px 0 0;text-transform:uppercase}
+.srch-inp::placeholder{color:var(--i16)}
+.srch-close{position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:22px;color:var(--i32);cursor:none;transition:color .15s}
+.srch-close:hover{color:var(--k)}
+.srch-tags{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.srch-tag{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bdr2);padding:5px 14px;color:var(--i32);cursor:none;transition:all .15s}
+.srch-tag:hover{background:var(--k);color:white;border-color:var(--k)}
+
+/* ══ CART PANEL ══ */
+.cart-head{padding:24px 24px 18px;border-bottom:2px solid var(--k);display:flex;align-items:center;justify-content:space-between}
+.cart-title{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
+.panel-close{font-size:20px;color:var(--i55);cursor:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bdr);transition:all .15s}
+.panel-close:hover{background:var(--k);color:white;border-color:var(--k)}
+.cart-items{padding:20px 24px;flex:1}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.cart-item:last-child{border-bottom:none}
+.ci-img{width:72px;height:90px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:28px;filter:grayscale(1)brightness(.35);flex-shrink:0}
+.ci-info{flex:1}
+.ci-seller{font-family:var(--m);font-size:8.5px;color:var(--i32);letter-spacing:.06em;margin-bottom:4px}
+.ci-name{font-family:var(--b);font-size:13.5px;font-weight:500;color:var(--k);margin-bottom:6px;line-height:1.35}
+.ci-meta{font-family:var(--m);font-size:9.5px;color:var(--i32);margin-bottom:8px}
+.ci-row{display:flex;align-items:center;justify-content:space-between}
+.ci-price{font-family:var(--m);font-size:14px;font-weight:500;color:var(--k)}
+.ci-qty{display:flex;align-items:center;gap:0;border:1px solid var(--bdr2)}
+.qty-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--i55);cursor:none;transition:background .15s;border:none;background:none;font-family:var(--m)}
+.qty-btn:hover{background:var(--off)}
+.qty-n{width:32px;text-align:center;font-family:var(--m);font-size:12px;font-weight:500;color:var(--k)}
+.cart-footer{padding:20px 24px;border-top:2px solid var(--k);margin-top:auto}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cart-tot-lbl{font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i55)}
+.cart-tot-val{font-family:var(--bc);font-size:28px;font-weight:900;color:var(--k);letter-spacing:-.01em}
+.cart-note{font-family:var(--b);font-size:11px;font-weight:300;color:var(--i32);margin-bottom:16px;line-height:1.5}
+.btn-full{width:100%;height:50px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s;margin-bottom:8px}
+.btn-full:hover{background:transparent;color:var(--k)}
+.btn-full-o{width:100%;height:46px;background:transparent;color:var(--i55);font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--bdr);transition:all .2s}
+.btn-full-o:hover{border-color:var(--k);color:var(--k)}
+
+/* ══ LOGIN MODAL ══ */
+.modal-inner{padding:40px;min-height:300px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+.modal-tit{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
+.modal-tabs{display:flex;border-bottom:2px solid var(--k);margin-bottom:32px}
+.m-tab{padding:10px 24px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:none;transition:color .15s;border-bottom:2px solid transparent;margin-bottom:-2px}
+.m-tab.on{color:var(--k);border-bottom-color:var(--k)}
+.m-tab:hover:not(.on){color:var(--i55)}
+.m-field{margin-bottom:18px}
+.m-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i55);margin-bottom:7px;display:block}
+.m-input{width:100%;height:46px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:14px;font-weight:400;color:var(--k);padding:0 14px;outline:none;transition:border-color .15s;font-family:var(--b)}
+.m-input:focus{border-color:var(--k)}
+.m-or{display:flex;align-items:center;gap:14px;margin:22px 0;font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32)}
+.m-or::before,.m-or::after{content:'';flex:1;height:1px;background:var(--bdr2)}
+.m-social{display:flex;gap:10px}
+.m-soc-btn{flex:1;height:44px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--i55);cursor:none;background:var(--w);transition:all .2s}
+.m-soc-btn:hover{border-color:var(--k);color:var(--k)}
+.m-footer{margin-top:12px;font-family:var(--b);font-size:11.5px;font-weight:300;color:var(--i32);line-height:1.6;text-align:center}
+.m-footer a{color:var(--k);font-weight:500;border-bottom:1px solid var(--k)}
+
+/* ══ PRODUCT MODAL ══ */
+.prod-modal-grid{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+.pm-img{background:var(--off);display:flex;align-items:center;justify-content:center;position:relative;border-right:2px solid var(--k)}
+.pm-img-ico{font-size:100px;filter:grayscale(1)brightness(.28);transition:transform .5s}
+.pm-img:hover .pm-img-ico{transform:scale(1.04)translateY(-6px)}
+.pm-tag{position:absolute;top:18px;left:18px;font-family:var(--m);font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--k);color:white;padding:4px 10px}
+.pm-info{padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
+.pm-vibe{font-family:var(--m);font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--i32);margin-bottom:8px}
+.pm-name{font-family:var(--bc);font-size:clamp(22px,3vw,34px);font-weight:900;text-transform:uppercase;letter-spacing:.01em;color:var(--k);line-height:1;margin-bottom:10px}
+.pm-seller{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.04em;margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.pm-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:22px}
+.pm-price{font-family:var(--m);font-size:26px;font-weight:500;color:var(--k)}
+.pm-mrp{font-family:var(--m);font-size:14px;font-weight:300;color:var(--i32);text-decoration:line-through}
+.pm-off{font-family:var(--m);font-size:11px;font-weight:600;color:var(--i55)}
+.pm-sec-tit{font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--i32);margin-bottom:10px}
+.pm-sizes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.pm-sz{width:40px;height:40px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:11px;font-weight:500;color:var(--i55);cursor:none;transition:all .15s}
+.pm-sz:hover,.pm-sz.on{border-color:var(--k);color:var(--k);background:var(--off)}
+.pm-sz.sold{opacity:.3;pointer-events:none;text-decoration:line-through}
+.pm-desc{font-family:var(--b);font-size:12.5px;font-weight:300;line-height:1.75;color:var(--i55);margin-bottom:24px}
+.pm-btns{display:flex;gap:10px}
+.pm-btns .btn-k{flex:2}
+.pm-btns .btn-k-o{flex:1}
+.pm-rating{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-family:var(--m);font-size:10.5px;color:var(--i32)}
+.pm-rat-score{font-weight:600;color:var(--k)}
+
+/* ══ SELLER SECTION WITHIN NAV MENU ══ */
+.mob-menu{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--w);z-index:900;transform:translateX(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1);border-right:2px solid var(--k);display:flex;flex-direction:column}
+.mob-menu.open{transform:translateX(0)}
+.mob-head{padding:20px 20px;border-bottom:2px solid var(--k);display:flex;align-items:center;justify-content:space-between}
+.mob-logo{font-family:var(--bc);font-size:20px;font-weight:900;letter-spacing:.22em;color:var(--k)}
+.mob-links{padding:24px 20px;display:flex;flex-direction:column;gap:0;flex:1}
+.mob-lnk{padding:15px 0;font-family:var(--bc);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--k);border-bottom:1px solid var(--bdr);cursor:none;transition:color .15s;display:flex;align-items:center;justify-content:space-between}
+.mob-lnk:hover{color:var(--i55)}
+.mob-lnk:last-child{border-bottom:none}
+.mob-foot{padding:20px;border-top:2px solid var(--k)}
+
+/* ══ TOGGLE BTN ══ */
+.drop-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;align-items:center;gap:8px;background:var(--k);color:white;padding:10px 16px;font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:none;border:none;transition:opacity .2s;box-shadow:0 4px 20px rgba(12,11,9,.2)}
+.drop-toggle:hover{opacity:.8}
+.t-dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex-shrink:0;transition:background .3s}
+.t-dot.off{background:rgba(255,255,255,.3)}
+
+/* ══ TOAST ══ */
+#toasts{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:9100;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+.toast{background:var(--k);color:white;padding:10px 18px;font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.08em;box-shadow:0 4px 20px rgba(12,11,9,.2);animation:tin .24s ease;white-space:nowrap}
+.toast.lt{background:var(--w);color:var(--k);border:1.5px solid var(--k)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ FOOTER ══ */
+footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
+.ft-w{max-width:1440px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:28px}
+.ft-logo{font-family:var(--bc);font-size:20px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.ft-lm{width:22px;height:22px;background:white;display:flex;align-items:center;justify-content:center}
+.ft-lm span{font-family:var(--bc);font-size:12px;font-weight:900;color:var(--k);line-height:1}
+.ft-desc{font-family:var(--b);font-size:12.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.28);max-width:280px;margin-bottom:24px}
+.ft-domain{font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.1em;color:rgba(255,255,255,.22);margin-bottom:22px}
+.ft-soc{display:flex;gap:0;border:1px solid rgba(255,255,255,.10);width:fit-content}
+.fsoc{width:34px;height:34px;border-right:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:none;filter:grayscale(1)brightness(.4);transition:filter .2s,background .2s}
+.fsoc:last-child{border-right:none}
+.fsoc:hover{filter:grayscale(1)brightness(.7);background:rgba(255,255,255,.04)}
+.ft-ch{font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.20);margin-bottom:18px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ft-links a{font-family:var(--b);font-size:12.5px;font-weight:300;color:rgba(255,255,255,.28);cursor:none;transition:color .15s}
+.ft-links a:hover{color:rgba(255,255,255,.70)}
+.ft-bot{display:flex;align-items:center;justify-content:space-between;font-family:var(--m);font-size:9.5px;font-weight:300;letter-spacing:.06em;color:rgba(255,255,255,.18);flex-wrap:wrap;gap:12px}
+.ft-bds{display:flex;gap:6px;flex-wrap:wrap}
+.fbd{border:1px solid rgba(255,255,255,.08);padding:3px 9px;font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.08em}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1200px){
+  .hero{grid-template-columns:1fr}
+  .hero-r{display:none}
+  .vg{grid-template-columns:repeat(4,1fr)}
+  .pg{grid-template-columns:repeat(3,1fr)}
+  .ft-top{grid-template-columns:1fr 1fr}
+  .cat-g{grid-template-columns:repeat(3,1fr)}
+  .sg{grid-template-columns:repeat(4,1fr)}
+  .editorial{grid-template-columns:1fr}
+  .pc:nth-child(4n){border-right:1px solid var(--bdr)}
+  .pc:nth-child(3n){border-right:none}
+  .pc:nth-last-child(-n+4){border-bottom:1px solid var(--bdr)}
+  .pc:nth-last-child(-n+3){border-bottom:none}
+}
+@media(max-width:900px){
+  .nav-c{display:none}
+  .vg{grid-template-columns:repeat(3,1fr)}
+  .pg{grid-template-columns:repeat(2,1fr)}
+  .cat-g{grid-template-columns:repeat(2,1fr)}
+  .sg{grid-template-columns:repeat(3,1fr)}
+  .promise-in{grid-template-columns:1fr 1fr}
+  .panel{width:100vw}
+  .modal{width:96vw}
+  .prod-modal-grid{grid-template-columns:1fr}
+  .pm-img{min-height:260px}
+  .sec{padding:64px 20px}
+  .pc:nth-child(3n){border-right:1px solid var(--bdr)}
+  .pc:nth-child(2n){border-right:none}
+  .pc:nth-last-child(-n+3){border-bottom:1px solid var(--bdr)}
+  .pc:nth-last-child(-n+2){border-bottom:none}
+}
+@media(max-width:600px){
+  .vg{grid-template-columns:repeat(2,1fr)}
+  .ann-sep{display:none}
+  .drop-in{flex-direction:column;align-items:flex-start;padding:20px 20px;gap:14px;min-height:auto}
+  .drop-r{flex-direction:column;align-items:flex-start;gap:10px}
+  .drop-sub{text-align:left}
+  .hero-btns{flex-direction:column;align-items:flex-start}
+  .hero-stats{flex-wrap:wrap}
+  .hst{min-width:40%}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .ft-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-o"></div>
+
+<!-- TOASTS -->
+<div id="toasts"></div>
+
+<!-- OVERLAYS -->
+<div class="overlay" id="ov" onclick="closeAll()"></div>
+
+<!-- SEARCH PANEL -->
+<div class="srch-panel" id="srchPanel">
+  <div class="srch-wrap">
+    <input class="srch-inp" id="srchInp" type="text" placeholder="SEARCH..." autocomplete="off" onkeydown="if(event.key==='Escape')closeSearch();if(event.key==='Enter')doSearch()">
+    <button class="srch-close" onclick="closeSearch()">✕</button>
+  </div>
+  <div class="srch-tags">
+    <span class="srch-tag" onclick="fillSearch('Y2K Mesh Top')">Y2K Mesh Top</span>
+    <span class="srch-tag" onclick="fillSearch('Gothic Corset')">Gothic Corset</span>
+    <span class="srch-tag" onclick="fillSearch('Linen Blazer')">Linen Blazer</span>
+    <span class="srch-tag" onclick="fillSearch('Rhinestone Set')">Rhinestone Set</span>
+    <span class="srch-tag" onclick="fillSearch('Cargo Trousers')">Cargo Trousers</span>
+    <span class="srch-tag" onclick="fillSearch('Painted Denim')">Painted Denim</span>
+    <span class="srch-tag" onclick="fillSearch('Platform Mules')">Platform Mules</span>
+  </div>
+</div>
+
+<!-- CART PANEL -->
+<div class="panel" id="cartPanel" style="display:flex;flex-direction:column">
+  <div class="cart-head">
+    <div class="cart-title">Cart <span id="cart-count" style="font-size:14px;font-weight:400;color:var(--i32);font-family:var(--m)">(2 items)</span></div>
+    <button class="panel-close" onclick="closePanel('cartPanel')">✕</button>
+  </div>
+  <div class="cart-items">
+    <div class="cart-item">
+      <div class="ci-img">👗</div>
+      <div class="ci-info">
+        <div class="ci-seller">@stardust.fits</div>
+        <div class="ci-name">Butterfly Mesh Baby Tee, Lavender</div>
+        <div class="ci-meta">Size: S &nbsp;·&nbsp; Y2K Revival</div>
+        <div class="ci-row">
+          <div class="ci-price">₹649</div>
+          <div class="ci-qty">
+            <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+            <div class="qty-n">1</div>
+            <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cart-item">
+      <div class="ci-img">💍</div>
+      <div class="ci-info">
+        <div class="ci-seller">@the.aura.co</div>
+        <div class="ci-name">Rhinestone Layered Necklace Set</div>
+        <div class="ci-meta">One size &nbsp;·&nbsp; Accessories</div>
+        <div class="ci-row">
+          <div class="ci-price">₹480</div>
+          <div class="ci-qty">
+            <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+            <div class="qty-n">1</div>
+            <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <div class="cart-tot-lbl">Subtotal</div>
+      <div class="cart-tot-val" id="cart-total">₹1,129</div>
+    </div>
+    <div class="cart-note">Free delivery on this order · Est. delivery 3–5 days</div>
+    <button class="btn-full" onclick="toast('Checkout coming soon →')">Proceed to Checkout →</button>
+    <button class="btn-full-o" onclick="closePanel('cartPanel')">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="loginOv" onclick="closeModal('loginModal')"></div>
+<div class="modal" id="loginModal" style="border-radius:0">
+  <div class="modal-inner">
+    <div class="modal-head">
+      <div class="modal-tit">Sign In</div>
+      <button class="panel-close" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <span class="m-tab on" onclick="setTab(this,'loginForm')">Login</span>
+      <span class="m-tab" onclick="setTab(this,'signupForm')">Create Account</span>
+    </div>
+    <div id="loginForm">
+      <div class="m-field">
+        <label class="m-label">Email or Phone</label>
+        <input class="m-input" type="text" placeholder="you@email.com or +91 98765 43210">
+      </div>
+      <div class="m-field">
+        <label class="m-label">Password</label>
+        <input class="m-input" type="password" placeholder="••••••••">
+      </div>
+      <button class="btn-full" style="margin-top:8px" onclick="toast('Login coming soon!')">Sign In →</button>
+      <div class="m-or">or continue with</div>
+      <div class="m-social">
+        <button class="m-soc-btn" onclick="toast('Google login coming soon!')">◯ &nbsp; Google</button>
+        <button class="m-soc-btn" onclick="toast('Phone OTP coming soon!')">📱 &nbsp; Phone OTP</button>
+      </div>
+      <div class="m-footer">Don't have an account? <a onclick="switchTab('signupForm')">Create one free</a></div>
+    </div>
+    <div id="signupForm" style="display:none">
+      <div class="m-field">
+        <label class="m-label">Full Name</label>
+        <input class="m-input" type="text" placeholder="Your name">
+      </div>
+      <div class="m-field">
+        <label class="m-label">Email</label>
+        <input class="m-input" type="email" placeholder="you@email.com">
+      </div>
+      <div class="m-field">
+        <label class="m-label">Phone</label>
+        <input class="m-input" type="tel" placeholder="+91 98765 43210">
+      </div>
+      <div class="m-field">
+        <label class="m-label">Password</label>
+        <input class="m-input" type="password" placeholder="Min. 8 characters">
+      </div>
+      <button class="btn-full" style="margin-top:8px" onclick="toast('Sign up coming in Phase 2!')">Create Account →</button>
+      <div class="m-footer" style="margin-top:10px">By signing up you agree to our <a>Terms</a> & <a>Privacy Policy</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT QUICK-VIEW MODAL -->
+<div class="overlay" id="prodOv" onclick="closeModal('prodModal')"></div>
+<div class="modal" id="prodModal">
+  <div class="prod-modal-grid">
+    <div class="pm-img">
+      <span class="pm-img-ico" id="pm-ico">👗</span>
+      <span class="pm-tag" id="pm-tag">New</span>
+    </div>
+    <div class="pm-info">
+      <div>
+        <div class="pm-vibe" id="pm-vibe">Y2K Revival</div>
+        <div class="pm-name" id="pm-name">Butterfly Mesh Baby Tee</div>
+        <div class="pm-seller" id="pm-seller">@stardust.fits <span class="sv" style="margin-left:2px">✓</span></div>
+        <div class="pm-rating"><span class="pm-rat-score">★ 4.8</span> <span>· 142 reviews</span></div>
+        <div class="pm-price-row">
+          <span class="pm-price" id="pm-price">₹649</span>
+          <span class="pm-mrp" id="pm-mrp">₹899</span>
+          <span class="pm-off" id="pm-off">− 28%</span>
+        </div>
+        <div class="pm-sec-tit">Select Size</div>
+        <div class="pm-sizes">
+          <div class="pm-sz sold" title="Sold out">XS</div>
+          <div class="pm-sz on" onclick="selSz(this)">S</div>
+          <div class="pm-sz" onclick="selSz(this)">M</div>
+          <div class="pm-sz" onclick="selSz(this)">L</div>
+          <div class="pm-sz" onclick="selSz(this)">XL</div>
+        </div>
+        <div class="pm-desc" id="pm-desc">Sheer mesh fabric with embroidered butterfly details. Cropped fit. Pairs well with high-waist bottoms. Hand wash only.</div>
+      </div>
+      <div>
+        <div class="pm-btns">
+          <button class="btn-k" onclick="addToCart();closeModal('prodModal')">Add to Cart</button>
+          <button class="btn-k-o" onclick="toast('Wishlisted ♥')">♡ Save</button>
+        </div>
+        <div style="margin-top:14px;font-family:var(--m);font-size:9px;color:var(--i32);letter-spacing:.06em">
+          ✓ Free delivery above ₹599 &nbsp;·&nbsp; ✓ 7-day returns
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="panel-close" style="position:absolute;top:14px;right:14px;background:var(--k);border-color:var(--k);color:white;z-index:10" onclick="closeModal('prodModal')">✕</button>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="overlay" id="mobOv" onclick="closePanel('mobMenu')"></div>
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-head">
+    <div class="mob-logo">KARKER</div>
+    <button class="panel-close" onclick="closePanel('mobMenu')">✕</button>
+  </div>
+  <div class="mob-links">
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">New Arrivals <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Collections <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Artists <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Editorial <span>→</span></div>
+    <div class="mob-lnk" onclick="openPanel('cartPanel')">Cart (2) <span>→</span></div>
+    <div class="mob-lnk" onclick="openModal('loginModal')">Sign In <span>→</span></div>
+  </div>
+  <div class="mob-foot">
+    <button class="btn-k" style="width:100%" onclick="toast('Seller portal →','lt')">Sell on KARKER</button>
+  </div>
+</div>
+
+<!-- ══ ANN BAR ══ -->
+<div class="ann">
+  New drops every Tuesday
+  <span class="ann-sep">—</span>
+  Free delivery above <b>₹599</b>
+  <span class="ann-sep">—</span>
+  <b>180</b> verified sellers · <b>karkera.in</b>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-wrap">
+    <button class="nav-logo" onclick="window.scrollTo(0,0)">
+      <div class="nav-mark"><span>K</span></div>
+      KARKER
+    </button>
+    <div class="nav-c">
+      <a class="nav-lnk" href="#new-arrivals">New Arrivals</a>
+      <a class="nav-lnk" href="#vibes">Collections</a>
+      <a class="nav-lnk" href="#sellers">Artists</a>
+      <a class="nav-lnk" href="#sell">For Sellers</a>
+    </div>
+    <div class="nav-r">
+      <div class="n-ico" onclick="openSearch()" title="Search">
+        <span style="font-size:18px">⌕</span>
+        <span class="nl">Search</span>
+      </div>
+      <div class="n-ico" onclick="toast('Wishlist coming in Phase 2 ♡')" title="Wishlist">
+        <span>♡</span>
+        <span class="nl">Wishlist</span>
+      </div>
+      <div class="n-ico" onclick="openPanel('cartPanel')" title="Cart">
+        <span>◻</span>
+        <span class="nl">Cart</span>
+        <span class="n-cnt" id="navCartN">2</span>
+      </div>
+      <div class="n-ico" onclick="openModal('loginModal')" title="Account">
+        <span>◯</span>
+        <span class="nl">Account</span>
+      </div>
+      <button class="nav-sell" onclick="toast('Seller portal — Phase 2 🎨','lt')">Sell</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ VIBE STRIP ══ -->
+<div class="vs">
+  <div class="vs-in">
+    <span class="v-cs on" onclick="setVibe(this)">All Vibes</span>
+    <span class="v-cs" onclick="setVibe(this)">Y2K Revival</span>
+    <span class="v-cs" onclick="setVibe(this)">Dark Gothic</span>
+    <span class="v-cs" onclick="setVibe(this)">Soft Minimal</span>
+    <span class="v-cs" onclick="setVibe(this)">Artistic Wear</span>
+    <span class="v-cs" onclick="setVibe(this)">High Fashion</span>
+    <span class="v-cs" onclick="setVibe(this)">Trending</span>
+    <span class="v-cs" onclick="setVibe(this)">Indie Core</span>
+    <span class="v-cs" onclick="setVibe(this)">Streetwear</span>
+  </div>
+</div>
+
+<!-- ══ DROP COUNTDOWN ══ -->
+<div id="drop-sec">
+  <div class="drop-noise"></div>
+  <div class="drop-in">
+    <div class="drop-l">
+      <div class="d-ey">Limited Release · Y2K Collection 001 · karkera.in</div>
+      <div class="d-tt">Tuesday Drop — Live Now</div>
+    </div>
+    <div class="cd-row">
+      <div class="cd-u"><div class="cd-n" id="cdh">18</div><div class="cd-l">Hours</div></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-u"><div class="cd-n" id="cdm">42</div><div class="cd-l">Min</div></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-u"><div class="cd-n" id="cds">09</div><div class="cd-l">Sec</div></div>
+    </div>
+    <div class="drop-r">
+      <div class="drop-sub"><b>Only 40 pieces.</b>Once it's gone, it's gone.</div>
+      <button class="drop-btn" onclick="toast('You are on the drop list ✓','lt')">Notify Me →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-l">
+    <div class="hero-bg">OWN IT</div>
+    <div class="hero-top">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        India's Aesthetic Marketplace · karkera.in
+      </div>
+      <h1 class="hero-h1">
+        <span class="h1-solid">Own</span>
+        <span class="h1-ghost">Your</span>
+        <span class="h1-muted">Aesthetic.</span>
+      </h1>
+      <p class="hero-body">Hand-picked indie clothing and accessories from India's most creative small artists. Real makers. Real pieces. Every drop limited. Zero algorithm.</p>
+      <div class="hero-btns">
+        <button class="btn-k" onclick="document.getElementById('trending').scrollIntoView({behavior:'smooth'})">
+          Shop Now &nbsp;→
+        </button>
+        <button class="btn-k-o" onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">
+          Sell on KARKER
+        </button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hst"><div class="hst-n">180</div><div class="hst-l">Verified sellers</div></div>
+      <div class="hst"><div class="hst-n">4.2K+</div><div class="hst-l">Orders delivered</div></div>
+      <div class="hst"><div class="hst-n">4.7★</div><div class="hst-l">Avg. rating</div></div>
+      <div class="hst"><div class="hst-n">8</div><div class="hst-l">Aesthetic worlds</div></div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="hr-cell" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit. Pairs well with high-waist bottoms.','New')">
+      <span class="hr-ico">👗</span><span class="hr-arr">↗</span>
+      <div class="hr-vibe">Y2K Revival</div>
+      <div class="hr-name">Butterfly Mesh Baby Tee</div>
+      <div class="hr-price">₹649</div>
+    </div>
+    <div class="hr-cell" onclick="openProduct('💍','Accessories','Rhinestone Layered Set','@the.aura.co','₹480','','','Layered rhinestone necklace set. Silver-tone plating. Includes 3 chains of varying lengths.','New')">
+      <span class="hr-ico">💍</span><span class="hr-arr">↗</span>
+      <div class="hr-vibe">Accessories</div>
+      <div class="hr-name">Rhinestone Layered Set</div>
+      <div class="hr-price">₹480</div>
+    </div>
+    <div class="hr-cell" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.','New')">
+      <span class="hr-ico">🧥</span><span class="hr-arr">↗</span>
+      <div class="hr-vibe">Soft Minimal</div>
+      <div class="hr-name">Oversized Linen Blazer</div>
+      <div class="hr-price">₹2,100</div>
+    </div>
+    <div class="hr-cell" onclick="openProduct('🎨','Artistic Wear','Hand-Painted Denim Jacket','@palette.people','₹3,200','','','Each jacket is hand-painted — no two are alike. Acrylic on premium Japanese denim. XS–XL.','Artist Pick')">
+      <span class="hr-ico">🎨</span><span class="hr-arr">↗</span>
+      <div class="hr-vibe">Artistic Wear</div>
+      <div class="hr-name">Hand-Painted Denim Jacket</div>
+      <div class="hr-price">₹3,200</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marq">
+  <div class="marq-t">
+    <span class="mi">Y2K Revival</span><span class="ms">✦</span>
+    <span class="mi">Free Delivery ₹599+</span><span class="ms">✦</span>
+    <span class="mi">180 Verified Sellers</span><span class="ms">✦</span>
+    <span class="mi">Dark Gothic</span><span class="ms">✦</span>
+    <span class="mi">New Drops Tuesday</span><span class="ms">✦</span>
+    <span class="mi">Indie Artist Picks</span><span class="ms">✦</span>
+    <span class="mi">Soft Minimal</span><span class="ms">✦</span>
+    <span class="mi">7-Day Returns</span><span class="ms">✦</span>
+    <span class="mi">Artistic Wear</span><span class="ms">✦</span>
+    <span class="mi">karkera.in</span><span class="ms">✦</span>
+    <span class="mi">Y2K Revival</span><span class="ms">✦</span>
+    <span class="mi">Free Delivery ₹599+</span><span class="ms">✦</span>
+    <span class="mi">180 Verified Sellers</span><span class="ms">✦</span>
+    <span class="mi">Dark Gothic</span><span class="ms">✦</span>
+    <span class="mi">New Drops Tuesday</span><span class="ms">✦</span>
+    <span class="mi">Indie Artist Picks</span><span class="ms">✦</span>
+    <span class="mi">Soft Minimal</span><span class="ms">✦</span>
+    <span class="mi">7-Day Returns</span><span class="ms">✦</span>
+    <span class="mi">Artistic Wear</span><span class="ms">✦</span>
+    <span class="mi">karkera.in</span><span class="ms">✦</span>
+  </div>
+</div>
+
+<!-- ══ PROMISE ══ -->
+<div class="promise">
+  <div class="promise-in">
+    <div class="pi"><span class="pi-n">01</span><div><div class="pi-tit">Free Delivery</div><div class="pi-sub">Orders above ₹599. Pan-India via Shiprocket.</div></div></div>
+    <div class="pi"><span class="pi-n">02</span><div><div class="pi-tit">7-Day Returns</div><div class="pi-sub">No questions. Full refund guaranteed.</div></div></div>
+    <div class="pi"><span class="pi-n">03</span><div><div class="pi-tit">Razorpay Secured</div><div class="pi-sub">UPI, Cards, Net Banking, EMI & COD.</div></div></div>
+    <div class="pi"><span class="pi-n">04</span><div><div class="pi-tit">KYC Verified</div><div class="pi-sub">Every seller identity & quality verified.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ SHOP BY VIBE ══ -->
+<div class="sec" id="vibes" style="padding-bottom:0">
+  <div class="sec-in">
+    <div class="sec-row" style="margin-bottom:36px">
+      <div><div class="sec-ey">Aesthetic Navigation</div><div class="sec-tit">Shop by <em>Vibe</em></div></div>
+      <span class="see-all" onclick="toast('All 8 vibes →')">View All →</span>
+    </div>
+  </div>
+</div>
+<div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
+  <div style="max-width:1440px;margin:0 auto">
+    <div class="vg">
+      <div class="vc" onclick="setVibe2('Y2K Revival')"><span class="vc-ico">✦</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">01</div><div class="vc-name">Y2K Revival</div><div class="vc-cnt">312 items</div></div></div>
+      <div class="vc" onclick="setVibe2('Dark Gothic')"><span class="vc-ico">☽</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">02</div><div class="vc-name">Dark Gothic</div><div class="vc-cnt">198 items</div></div></div>
+      <div class="vc" onclick="setVibe2('Soft Minimal')"><span class="vc-ico">—</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">03</div><div class="vc-name">Soft Minimal</div><div class="vc-cnt">224 items</div></div></div>
+      <div class="vc" onclick="setVibe2('Artistic Wear')"><span class="vc-ico">◎</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">04</div><div class="vc-name">Artistic Wear</div><div class="vc-cnt">163 items</div></div></div>
+      <div class="vc" onclick="setVibe2('High Fashion')"><span class="vc-ico">❋</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">05</div><div class="vc-name">High Fashion</div><div class="vc-cnt">287 items</div></div></div>
+      <div class="vc" onclick="setVibe2('Indie Core')"><span class="vc-ico">◈</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">06</div><div class="vc-name">Indie Core</div><div class="vc-cnt">176 items</div></div></div>
+      <div class="vc" onclick="setVibe2('Streetwear')"><span class="vc-ico">↑</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">07</div><div class="vc-name">Streetwear</div><div class="vc-cnt">141 items</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRENDING PRODUCTS ══ -->
+<div class="sec" id="trending">
+  <div class="sec-in">
+    <div class="sec-row">
+      <div><div class="sec-ey">Curated Picks</div><div class="sec-tit">Trending <em>This Week</em></div></div>
+      <span class="see-all" onclick="toast('All products →')">See All →</span>
+    </div>
+    <div class="pg" id="prod-grid">
+      <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👗</span><span class="pc-tag">New</span><span class="pc-wish on">♥</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits <span class="sv">✓</span></div><div class="pc-name">Butterfly Mesh Baby Tee, Lavender</div><div class="pc-pr"><span class="pc-price">₹649</span><span class="pc-mrp">₹899</span><span class="pc-off">−28%</span></div><div class="pc-rat">★ 4.8 · 142 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('💍','Accessories','Rhinestone Layered Necklace Set','@the.aura.co','₹480','','','Layered rhinestone necklace set. Silver-tone plating. Three chains.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">💍</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@the.aura.co <span class="sv">✓</span></div><div class="pc-name">Rhinestone Layered Necklace Set</div><div class="pc-pr"><span class="pc-price">₹480</span></div><div class="pc-rat">★ 4.9 · 89 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧣','Dark Gothic','Velvet Butterfly Scarf, Midnight','@glitch.stitch','₹390','','','Deep midnight purple velvet. Extra-wide silhouette. Can be worn as shawl or scarf.','Limited')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧣</span><span class="pc-tag">Limited</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@glitch.stitch</div><div class="pc-name">Velvet Butterfly Scarf, Midnight</div><div class="pc-pr"><span class="pc-price">₹390</span></div><div class="pc-rat">★ 4.7 · 56 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👜','Accessories','Chrome Mini Shoulder Bag','@nazar.studio','₹1,200','₹1,600','25','Polished chrome finish. Adjustable chain strap. Fits phone, cards, lipstick. Magnetic clasp.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👜</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@nazar.studio <span class="sv">✓</span></div><div class="pc-name">Chrome Mini Shoulder Bag</div><div class="pc-pr"><span class="pc-price">₹1,200</span><span class="pc-mrp">₹1,600</span><span class="pc-off">−25%</span></div><div class="pc-rat">★ 4.6 · 34 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👖','Streetwear','Low-Rise Cargo Trousers, Sand','@pixel.drip','₹1,850','₹2,200','16','Heavy cotton cargo. 6 pockets. Low-rise waistband. Wide-leg silhouette. Sand beige.','Sale')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👖</span><span class="pc-tag">Sale</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@pixel.drip</div><div class="pc-name">Low-Rise Cargo Trousers, Sand</div><div class="pc-pr"><span class="pc-price">₹1,850</span><span class="pc-mrp">₹2,200</span><span class="pc-off">−16%</span></div><div class="pc-rat">★ 4.5 · 28 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🎨','Artistic Wear','Hand-Painted Denim Jacket','@palette.people','₹3,200','','','Each jacket is hand-painted — no two are alike. Acrylic on premium Japanese denim.','Artist Pick')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🎨</span><span class="pc-tag w">Artist</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@palette.people <span class="sv">✓</span></div><div class="pc-name">Hand-Painted Denim Jacket</div><div class="pc-pr"><span class="pc-price">₹3,200</span></div><div class="pc-rat">★ 5.0 · 17 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧤','Dark Gothic','Fingerless Mesh Gloves, Black','@static.drop','₹299','','','Open-finger fishnet gloves. One size fits most. Cotton-mesh blend.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧤</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@static.drop</div><div class="pc-name">Fingerless Mesh Gloves, Black</div><div class="pc-pr"><span class="pc-price">₹299</span></div><div class="pc-rat">★ 4.3 · 44 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👟','Y2K Revival','Platform Jelly Mules, Bubblegum','@retro.roots','₹999','₹1,400','29','Clear PVC platform mule. 4cm platform. Pink bubblegum colourway. Sizes 5–9.','Sale')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👟</span><span class="pc-tag">−29%</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@retro.roots</div><div class="pc-name">Platform Jelly Mules, Bubblegum</div><div class="pc-pr"><span class="pc-price">₹999</span><span class="pc-mrp">₹1,400</span><span class="pc-off">−29%</span></div><div class="pc-rat">★ 4.6 · 78 reviews</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SELL ON KARKER ══ -->
+<div id="sell">
+<div class="editorial">
+  <div class="ed-l">
+    <div>
+      <div class="ed-ey">For Indie Sellers & Artists · karkera.in</div>
+      <div class="ed-tit">
+        <span>Your Art.</span>
+        <span class="ghost">Your Rules.</span>
+        <span>Your Earnings.</span>
+      </div>
+      <p class="ed-body">Join 180 verified indie artists already selling on KARKER. Zero listing fees, full payout transparency, and 7-day settlements straight to your bank account.</p>
+    </div>
+    <div class="ed-btns">
+      <button class="btn-inv" onclick="toast('Seller registration — Phase 2! 🎨','lt')">Start Selling Free</button>
+      <button class="btn-g-inv" onclick="toast('More info coming soon →')">How It Works →</button>
+    </div>
+  </div>
+  <div class="ed-r">
+    <div class="sec-ey" style="color:rgba(255,255,255,.22);margin-bottom:24px;--i32:rgba(255,255,255,.22)">Why sellers choose karkera.in</div>
+    <div class="ed-feat"><span class="ef-n">01</span><div><div class="ef-tit">Full earnings transparency</div><div class="ef-sub">Itemised breakdown per order — commission, gateway fee, TCS. No surprises, ever.</div></div></div>
+    <div class="ed-feat"><span class="ef-n">02</span><div><div class="ef-tit">Simple order management</div><div class="ef-sub">Accept, ship & track from one dashboard. One-click Shiprocket label generation.</div></div></div>
+    <div class="ed-feat"><span class="ef-n">03</span><div><div class="ef-tit">7-day payouts</div><div class="ef-sub">Funds released D+7 after delivery. Withdraw anytime to your bank. Min. ₹500.</div></div></div>
+    <div class="ed-feat"><span class="ef-n">04</span><div><div class="ef-tit">Your own storefront page</div><div class="ef-sub">A clean profile page — your brand, your story, your full collection in one place.</div></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ CATEGORIES ══ -->
+<div class="sec" id="categories" style="padding-bottom:0">
+  <div class="sec-in">
+    <div class="sec-row" style="margin-bottom:32px">
+      <div><div class="sec-ey">Browse</div><div class="sec-tit">Shop by <em>Category</em></div></div>
+    </div>
+  </div>
+</div>
+<div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
+  <div style="max-width:1440px;margin:0 auto">
+    <div class="cat-g">
+      <div class="ct" onclick="toast('Tops & Tees — 148 items')"><div class="ct-n">01</div><span class="ct-ico">👕</span><div class="ct-name">Tops & Tees</div><div class="ct-cnt">148 items</div></div>
+      <div class="ct" onclick="toast('Bottoms — 112 items')"><div class="ct-n">02</div><span class="ct-ico">👖</span><div class="ct-name">Bottoms</div><div class="ct-cnt">112 items</div></div>
+      <div class="ct" onclick="toast('Jewellery — 186 items')"><div class="ct-n">03</div><span class="ct-ico">💍</span><div class="ct-name">Jewellery</div><div class="ct-cnt">186 items</div></div>
+      <div class="ct" onclick="toast('Bags — 79 items')"><div class="ct-n">04</div><span class="ct-ico">👜</span><div class="ct-name">Bags</div><div class="ct-cnt">79 items</div></div>
+      <div class="ct" onclick="toast('Footwear — 64 items')"><div class="ct-n">05</div><span class="ct-ico">👟</span><div class="ct-name">Footwear</div><div class="ct-cnt">64 items</div></div>
+      <div class="ct" onclick="toast('Accessories — 112 items')"><div class="ct-n">06</div><span class="ct-ico">🧣</span><div class="ct-name">Accessories</div><div class="ct-cnt">112 items</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEATURED SELLERS ══ -->
+<div class="sec" id="sellers" style="padding-bottom:0">
+  <div class="sec-in">
+    <div class="sec-row" style="margin-bottom:32px">
+      <div><div class="sec-ey">The Makers</div><div class="sec-tit">Featured <em>Artists</em></div></div>
+      <span class="see-all" onclick="toast('All 180 sellers →')">View All →</span>
+    </div>
+  </div>
+</div>
+<div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
+  <div style="max-width:1440px;margin:0 auto">
+    <div class="sg">
+      <div class="scrd" onclick="toast('Opening @stardust.fits')"><div class="savt">✦</div><div class="s-n">Stardust Fits</div><div class="s-h">@stardust.fits</div><div class="s-st">★ 4.9 · 48 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Gothic</span></div></div>
+      <div class="scrd" onclick="toast('Opening @palette.people')"><div class="savt">🎨</div><div class="s-n">Palette People</div><div class="s-h">@palette.people</div><div class="s-st">★ 5.0 · 22 products</div><div class="s-pills"><span class="spill">Artistic</span></div></div>
+      <div class="scrd" onclick="toast('Opening @glitch.stitch')"><div class="savt">◈</div><div class="s-n">Glitch Stitch</div><div class="s-h">@glitch.stitch</div><div class="s-st">★ 4.7 · 37 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Indie</span></div></div>
+      <div class="scrd" onclick="toast('Opening @nazar.studio')"><div class="savt">❋</div><div class="s-n">Nazar Studio</div><div class="s-h">@nazar.studio</div><div class="s-st">★ 4.8 · 31 products</div><div class="s-pills"><span class="spill">Fashion</span></div></div>
+      <div class="scrd" onclick="toast('Opening @softstone.studio')"><div class="savt">◯</div><div class="s-n">Softstone Studio</div><div class="s-h">@softstone.studio</div><div class="s-st">★ 4.9 · 29 products</div><div class="s-pills"><span class="spill">Minimal</span></div></div>
+      <div class="scrd" onclick="toast('Opening @pixel.drip')"><div class="savt">⚡</div><div class="s-n">Pixel Drip</div><div class="s-h">@pixel.drip</div><div class="s-st">★ 4.6 · 54 products</div><div class="s-pills"><span class="spill">Street</span><span class="spill">Y2K</span></div></div>
+      <div class="scrd" onclick="toast('Opening @retro.roots')"><div class="savt">◌</div><div class="s-n">Retro Roots</div><div class="s-h">@retro.roots</div><div class="s-st">★ 4.5 · 18 products</div><div class="s-pills"><span class="spill">Vintage</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NEW ARRIVALS ══ -->
+<div class="sec" id="new-arrivals">
+  <div class="sec-in">
+    <div class="sec-row">
+      <div><div class="sec-ey">Just Landed · karkera.in</div><div class="sec-tit">New <em>Arrivals</em></div></div>
+      <span class="see-all" onclick="toast('All new arrivals →')">See All →</span>
+    </div>
+    <div class="pg">
+      <div class="pc" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer, Oatmeal','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧥</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@softstone.studio</div><div class="pc-name">Oversized Linen Blazer, Oatmeal</div><div class="pc-pr"><span class="pc-price">₹2,100</span><span class="pc-mrp">₹2,800</span><span class="pc-off">−25%</span></div><div class="pc-rat">★ 4.8 · 61 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧶','Indie Core','Crochet Knit Vest, Sage','@cottage.craft','₹920','','','Handmade crochet vest in sage green. Open-weave pattern. Oversized fit. One size.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧶</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@cottage.craft</div><div class="pc-name">Crochet Knit Vest, Sage</div><div class="pc-pr"><span class="pc-price">₹920</span></div><div class="pc-rat">★ 4.9 · 22 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👒','Trending','Crochet Bucket Hat, Terracotta','@lustre.lane','₹720','','','Hand-crocheted bucket hat. Unstructured brim. Terracotta rust colourway. One size.','Trending')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👒</span><span class="pc-tag">Trending</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@lustre.lane</div><div class="pc-name">Crochet Bucket Hat, Terracotta</div><div class="pc-pr"><span class="pc-price">₹720</span></div><div class="pc-rat">★ 4.7 · 38 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🌸','High Fashion','Petal Sleeve Organza Blouse','@sartorial.co','₹1,200','','','Sheer organza fabric. Petal-cut sleeves. Semi-fitted silhouette. Dry clean only.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🌸</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@sartorial.co</div><div class="pc-name">Petal Sleeve Organza Blouse</div><div class="pc-pr"><span class="pc-price">₹1,200</span></div><div class="pc-rat">★ 4.8 · 15 reviews</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="ft-w">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo">
+          <div class="ft-lm"><span>K</span></div>
+          KARKER
+        </div>
+        <div class="ft-domain">karkera.in</div>
+        <div class="ft-desc">India's first curated marketplace for indie aesthetic fashion. By artists, for the aesthetically obsessed. Bangalore, India — Est. 2025.</div>
+        <div class="ft-soc">
+          <div class="fsoc" onclick="toast('Instagram →')">📷</div>
+          <div class="fsoc" onclick="toast('Twitter →')">🐦</div>
+          <div class="fsoc" onclick="toast('Pinterest →')">📌</div>
+          <div class="fsoc" onclick="toast('YouTube →')">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="ft-ch">Shop</div>
+        <ul class="ft-links">
+          <li><a href="#vibes">Y2K Revival</a></li>
+          <li><a href="#vibes">Dark Gothic</a></li>
+          <li><a href="#vibes">Soft Minimal</a></li>
+          <li><a href="#vibes">Artistic Wear</a></li>
+          <li><a href="#new-arrivals">New Arrivals</a></li>
+          <li><a onclick="toast('Sale section →')">Sale</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Sellers</div>
+        <ul class="ft-links">
+          <li><a onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">Start Selling</a></li>
+          <li><a onclick="toast('Seller dashboard — Phase 2')">Seller Dashboard</a></li>
+          <li><a onclick="toast('Payout policy →')">Payout Policy</a></li>
+          <li><a onclick="toast('Guidelines →')">Seller Guidelines</a></li>
+          <li><a onclick="toast('Support →')">Seller Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Help</div>
+        <ul class="ft-links">
+          <li><a onclick="toast('Order tracking — Phase 2')">Track Order</a></li>
+          <li><a onclick="toast('Returns policy →')">Returns & Refunds</a></li>
+          <li><a onclick="toast('Size guide →')">Size Guide</a></li>
+          <li><a onclick="toast('Contact: hello@karkera.in')">Contact Us</a></li>
+          <li><a onclick="toast('FAQ →')">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2025 KARKER · karkera.in · All rights reserved · Bangalore, India</span>
+      <div class="ft-bds">
+        <span class="fbd">Razorpay Secured</span>
+        <span class="fbd">Shiprocket</span>
+        <span class="fbd">SSL Certified</span>
+        <span class="fbd">GST Compliant</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ DROP ADMIN TOGGLE ══ -->
+<button class="drop-toggle" id="dropToggle" onclick="toggleDrop()">
+  <span class="t-dot" id="tDot"></span>
+  <span id="tLbl">Drop Live</span>
+</button>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),curO=document.getElementById('cur-o');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animCur(){rx+=(mx-rx)*.09;ry+=(my-ry)*.09;curO.style.left=rx+'px';curO.style.top=ry+'px';requestAnimationFrame(animCur);})();
+const hovEls='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn';
+document.querySelectorAll(hovEls).forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* ── VIBE STRIP ── */
+function setVibe(el){document.querySelectorAll('.v-cs').forEach(i=>i.classList.remove('on'));el.classList.add('on');toast(el.textContent.trim()+' →');}
+function setVibe2(name){document.querySelectorAll('.v-cs').forEach(i=>{if(i.textContent.trim()===name)i.classList.add('on');else i.classList.remove('on');});toast(name+' — filtering...');document.getElementById('trending').scrollIntoView({behavior:'smooth'});}
+
+/* ── OVERLAYS / PANELS / MODALS ── */
+function openPanel(id){document.getElementById(id).classList.add('open');document.getElementById('ov').classList.add('open');}
+function closePanel(id){document.getElementById(id).classList.remove('open');document.getElementById('ov').classList.remove('open');document.getElementById('mobOv').classList.remove('open');}
+function openModal(id){
+  const ovId=id==='loginModal'?'loginOv':'prodOv';
+  document.getElementById(id).classList.add('open');
+  document.getElementById(ovId).classList.add('open');
+}
+function closeModal(id){
+  const ovId=id==='loginModal'?'loginOv':'prodOv';
+  document.getElementById(id).classList.remove('open');
+  document.getElementById(ovId).classList.remove('open');
+}
+function closeAll(){closePanel('cartPanel');closePanel('mobMenu');}
+
+/* ── SEARCH ── */
+function openSearch(){document.getElementById('srchPanel').classList.add('open');document.getElementById('ov').classList.add('open');setTimeout(()=>document.getElementById('srchInp').focus(),350);}
+function closeSearch(){document.getElementById('srchPanel').classList.remove('open');document.getElementById('ov').classList.remove('open');}
+function fillSearch(q){document.getElementById('srchInp').value=q;document.getElementById('srchInp').focus();}
+function doSearch(){const q=document.getElementById('srchInp').value;if(q.trim()){closeSearch();toast('Searching "'+q+'" →');}}
+
+/* ── LOGIN TABS ── */
+function setTab(el,formId){
+  document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('signupForm').style.display='none';
+  document.getElementById(formId).style.display='block';
+}
+function switchTab(formId){
+  document.querySelectorAll('.m-tab').forEach((t,i)=>{t.classList.remove('on');if((formId==='signupForm'&&i===1)||(formId==='loginForm'&&i===0))t.classList.add('on');});
+  document.getElementById('loginForm').style.display=formId==='loginForm'?'block':'none';
+  document.getElementById('signupForm').style.display=formId==='signupForm'?'block':'none';
+}
+
+/* ── PRODUCT MODAL ── */
+function openProduct(ico,vibe,name,seller,price,mrp,off,desc,tag){
+  document.getElementById('pm-ico').textContent=ico;
+  document.getElementById('pm-vibe').textContent=vibe;
+  document.getElementById('pm-name').textContent=name;
+  document.getElementById('pm-seller').innerHTML=seller+'<span class="sv" style="margin-left:4px">✓</span>';
+  document.getElementById('pm-price').textContent=price;
+  document.getElementById('pm-mrp').textContent=mrp?'₹'+mrp.replace('₹',''):'';
+  document.getElementById('pm-off').textContent=off?'− '+off+'%':'';
+  document.getElementById('pm-desc').textContent=desc||'';
+  document.getElementById('pm-tag').textContent=tag||'';
+  document.querySelectorAll('.pm-sz').forEach(s=>s.classList.remove('on'));
+  document.querySelector('.pm-sz:not(.sold)')?.classList.add('on');
+  openModal('prodModal');
+}
+function selSz(el){document.querySelectorAll('.pm-sz').forEach(s=>s.classList.remove('on'));el.classList.add('on');}
+
+/* ── CART ── */
+let cartCount=2;
+function addToCart(){
+  cartCount++;
+  document.getElementById('navCartN').textContent=cartCount;
+  document.getElementById('cart-count').textContent='('+cartCount+' items)';
+  toast('Added to cart ✓','lt');
+}
+function changeQty(btn,dir){
+  const row=btn.closest('.ci-row'),nEl=row.querySelector('.qty-n');
+  let n=parseInt(nEl.textContent)+dir;
+  if(n<1)n=1;
+  nEl.textContent=n;
+  updateCartTotal();
+}
+function updateCartTotal(){
+  const prices=[649,480];let total=0;
+  document.querySelectorAll('.cart-item').forEach((item,i)=>{
+    const q=parseInt(item.querySelector('.qty-n')?.textContent||1);
+    total+=(prices[i]||500)*q;
+  });
+  document.getElementById('cart-total').textContent='₹'+total.toLocaleString('en-IN');
+}
+
+/* ── DROP TOGGLE ── */
+let dropOn=true;
+function toggleDrop(){
+  dropOn=!dropOn;
+  document.getElementById('drop-sec').classList.toggle('off',!dropOn);
+  document.getElementById('tDot').classList.toggle('off',!dropOn);
+  document.getElementById('tLbl').textContent=dropOn?'Drop Live':'Drop Off';
+  toast(dropOn?'Drop countdown visible ✓':'Drop countdown hidden','lt');
+}
+
+/* ── COUNTDOWN ── */
+let dropEnd=new Date();
+dropEnd.setHours(dropEnd.getHours()+18,dropEnd.getMinutes()+42,dropEnd.getSeconds()+9);
+function tickCd(){
+  const d=dropEnd-new Date();
+  if(d<=0){['cdh','cdm','cds'].forEach(id=>document.getElementById(id).textContent='00');return;}
+  const h=Math.floor(d/3600000),m=Math.floor((d%3600000)/60000),s=Math.floor((d%60000)/1000);
+  document.getElementById('cdh').textContent=String(h).padStart(2,'0');
+  document.getElementById('cdm').textContent=String(m).padStart(2,'0');
+  document.getElementById('cds').textContent=String(s).padStart(2,'0');
+}
+setInterval(tickCd,1000);tickCd();
+
+/* ── TOAST ── */
+function toast(msg,cls=''){
+  const w=document.getElementById('toasts');
+  const el=document.createElement('div');
+  el.className='toast'+(cls?' '+cls:'');
+  el.textContent=msg;
+  w.prepend(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .28s';setTimeout(()=>el.remove(),280);},2500);
+}
+
+/* ── WISHLIST TOGGLE ── */
+document.querySelectorAll('.pc-wish').forEach(w=>{
+  w.addEventListener('click',e=>{e.stopPropagation();w.classList.toggle('on');w.textContent=w.classList.contains('on')?'♥':'♡';toast(w.classList.contains('on')?'Added to wishlist ♥':'Removed from wishlist');});
+});
+</script>
+</body>
+</html>
