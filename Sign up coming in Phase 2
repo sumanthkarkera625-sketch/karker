@@ -445,6 +445,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   .ft-top{grid-template-columns:1fr}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -547,7 +548,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <label class="m-label">Password</label>
         <input class="m-input" type="password" placeholder="••••••••">
       </div>
-      <button class="btn-full" style="margin-top:8px" onclick="toast('Login coming soon!')">Sign In →</button>
+      <button class="btn-full" style="margin-top:8px" onclick="doLogin()">Sign In →</button>
       <div class="m-or">or continue with</div>
       <div class="m-social">
         <button class="m-soc-btn" onclick="toast('Google login coming soon!')">◯ &nbsp; Google</button>
@@ -572,7 +573,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <label class="m-label">Password</label>
         <input class="m-input" type="password" placeholder="Min. 8 characters">
       </div>
-      <button class="btn-full" style="margin-top:8px" onclick="toast('Sign up coming in Phase 2!')">Create Account →</button>
+      <button class="btn-full" style="margin-top:8px" onclick="doSignup()">Create Account →</button>
       <div class="m-footer" style="margin-top:10px">By signing up you agree to our <a>Terms</a> & <a>Privacy Policy</a></div>
     </div>
   </div>
@@ -1169,7 +1170,64 @@ function tickCd(){
 setInterval(tickCd,1000);tickCd();
 
 /* ── TOAST ── */
-function toast(msg,cls=''){
+
+const SUPA_URL = 'https://ftqtmcowohtlhulkuiih.supabase.co';
+const SUPA_KEY = 'sb_publishable_qlWnDndl1kcfrlWGA_IhFA_TZvyy0ER';
+const { createClient } = supabase;
+const sb = createClient(SUPA_URL, SUPA_KEY);
+  
+
+  async function doLogin(){
+  const inputs = document.querySelectorAll('#loginForm .m-input');
+  const email = inputs[0].value.trim();
+  const pass  = inputs[1].value;
+  if(!email || !pass){ toast('Please fill in email and password'); return; }
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if(error){ toast(error.message); return; }
+  toast('Logged in! Welcome back ✓','lt');
+  closeModal('loginModal');
+  updateNavForUser();
+}
+
+async function doSignup(){
+  const inputs = document.querySelectorAll('#signupForm .m-input');
+  const name  = inputs[0].value.trim();
+  const email = inputs[1].value.trim();
+  const phone = inputs[2].value.trim();
+  const pass  = inputs[3].value;
+  if(!name||!email||!pass){ toast('Please fill all required fields'); return; }
+  const { error } = await sb.auth.signUp({
+    email, password: pass,
+    options:{ data:{ full_name: name, phone } }
+  });
+  if(error){ toast(error.message); return; }
+  toast('Account created! Check your email to verify ✓','lt');
+  closeModal('loginModal');
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  toast('Logged out');
+  updateNavForUser();
+}
+
+async function updateNavForUser(){
+  const { data:{ user } } = await sb.auth.getUser();
+  const accBtn = document.querySelector('.n-ico[title="Account"]');
+  if(!accBtn) return;
+  if(user){
+    accBtn.querySelector('span:first-child').textContent = '◉';
+    accBtn.onclick = () => { if(confirm('Log out?')) doLogout(); };
+  } else {
+    accBtn.querySelector('span:first-child').textContent = '◯';
+    accBtn.onclick = () => openModal('loginModal');
+  }
+}
+
+sb.auth.onAuthStateChange(()=>{ updateNavForUser(); });
+updateNavForUser();
+  
+  function toast(msg,cls=''){
   const w=document.getElementById('toasts');
   const el=document.createElement('div');
   el.className='toast'+(cls?' '+cls:'');
