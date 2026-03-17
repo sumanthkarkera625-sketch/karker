@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KARKER Admin — Control Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#0A0908;--s1:#111009;--s2:#181512;--s3:#201D18;--s4:#282420;
+  --w:#F4F1EB;--w70:rgba(244,241,235,.70);--w45:rgba(244,241,235,.45);
+  --w22:rgba(244,241,235,.22);--w10:rgba(244,241,235,.10);--w05:rgba(244,241,235,.05);
+  --bdr:rgba(244,241,235,.08);--bdr2:rgba(244,241,235,.16);
+  --green:#4ADE80;--red:#F87171;--amber:#FBBf24;--blue:#60A5FA;
+  --bc:'Barlow Condensed',sans-serif;--b:'Barlow',sans-serif;--m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--b);background:var(--bg);color:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--w22);border-radius:2px}
+::selection{background:var(--w22)}
+input,textarea,select{font-family:var(--b)}
+button{font-family:var(--b);cursor:pointer}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{width:380px;border:1px solid var(--bdr2);padding:40px;background:var(--s1)}
+.login-logo{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.22em;color:var(--w);margin-bottom:6px}
+.login-sub{font-family:var(--m);font-size:10px;color:var(--w45);letter-spacing:.12em;text-transform:uppercase;margin-bottom:32px}
+.login-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--w45);margin-bottom:7px;display:block}
+.login-inp{width:100%;height:44px;background:var(--s3);border:1px solid var(--bdr);color:var(--w);font-family:var(--b);font-size:14px;padding:0 14px;outline:none;margin-bottom:14px;transition:border-color .2s}
+.login-inp:focus{border-color:var(--w22)}
+.login-btn{width:100%;height:44px;background:var(--w);color:var(--bg);font-family:var(--m);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border:none;margin-top:4px;transition:opacity .2s}
+.login-btn:hover{opacity:.85}
+.login-err{font-family:var(--m);font-size:11px;color:var(--red);margin-top:10px;text-align:center;min-height:18px}
+
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-logo{padding:22px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px}
+.sb-mark{width:28px;height:28px;background:var(--w);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-mark span{font-family:var(--bc);font-size:16px;font-weight:900;color:var(--bg);line-height:1}
+.sb-name{font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.2em;color:var(--w)}
+.sb-nav{padding:14px 10px;flex:1}
+.sb-section{font-family:var(--m);font-size:8.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--w22);padding:12px 10px 6px;margin-top:6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:4px;font-size:13px;font-weight:400;color:var(--w45);transition:all .15s;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.sb-item:hover{background:var(--w05);color:var(--w70)}
+.sb-item.on{background:var(--w10);color:var(--w);font-weight:500}
+.sb-item .icon{font-size:15px;flex-shrink:0;width:20px;text-align:center}
+.sb-item .badge{margin-left:auto;font-family:var(--m);font-size:9px;background:var(--green);color:var(--bg);padding:1px 6px;border-radius:10px;font-weight:700}
+.sb-foot{padding:14px;border-top:1px solid var(--bdr)}
+.sb-user{font-family:var(--m);font-size:10px;color:var(--w22);letter-spacing:.06em;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-logout{width:100%;height:34px;background:transparent;border:1px solid var(--bdr2);color:var(--w45);font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
+.sb-logout:hover{background:var(--red);color:white;border-color:var(--red)}
+
+/* ── MAIN ── */
+.main{background:var(--bg);overflow-y:auto}
+.topbar{padding:18px 28px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);z-index:100}
+.page-title{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--w)}
+.page-sub{font-family:var(--m);font-size:10px;color:var(--w22);letter-spacing:.08em;margin-top:2px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2.5s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.live-badge{display:flex;align-items:center;gap:7px;font-family:var(--m);font-size:10px;color:var(--w45);letter-spacing:.08em}
+
+.page{display:none;padding:28px}
+.page.on{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--s1);border:1px solid var(--bdr);padding:22px;margin-bottom:16px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.card-title{font-family:var(--bc);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--w)}
+.card-sub{font-family:var(--m);font-size:10px;color:var(--w22);letter-spacing:.06em;margin-top:3px}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--s1);border:1px solid var(--bdr);padding:18px 20px}
+.stat-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--w22);margin-bottom:8px}
+.stat-val{font-family:var(--bc);font-size:36px;font-weight:900;color:var(--w);line-height:1;letter-spacing:-.01em}
+.stat-change{font-family:var(--m);font-size:10px;color:var(--green);margin-top:4px}
+
+/* ── FORM ELEMENTS ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid.cols3{grid-template-columns:1fr 1fr 1fr}
+.form-grid.cols1{grid-template-columns:1fr}
+.field{margin-bottom:0}
+.field.full{grid-column:1/-1}
+.f-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--w45);margin-bottom:7px;display:block}
+.f-inp{width:100%;height:42px;background:var(--s3);border:1px solid var(--bdr);color:var(--w);font-family:var(--b);font-size:13.5px;padding:0 12px;outline:none;transition:border-color .2s}
+.f-inp:focus{border-color:var(--w22)}
+.f-inp::placeholder{color:var(--w22)}
+.f-textarea{width:100%;min-height:90px;background:var(--s3);border:1px solid var(--bdr);color:var(--w);font-family:var(--b);font-size:13.5px;padding:10px 12px;outline:none;transition:border-color .2s;resize:vertical;line-height:1.6}
+.f-textarea:focus{border-color:var(--w22)}
+.f-select{width:100%;height:42px;background:var(--s3);border:1px solid var(--bdr);color:var(--w);font-family:var(--b);font-size:13.5px;padding:0 12px;outline:none;transition:border-color .2s;appearance:none}
+.f-select:focus{border-color:var(--w22)}
+
+/* ── TOGGLE ── */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--s2);border:1px solid var(--bdr);margin-bottom:10px}
+.toggle-info .t-title{font-family:var(--m);font-size:12px;font-weight:500;color:var(--w);letter-spacing:.04em}
+.toggle-info .t-sub{font-family:var(--b);font-size:11.5px;color:var(--w45);margin-top:2px}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--s4);border:1px solid var(--bdr2);border-radius:12px;transition:background .2s,border-color .2s;cursor:pointer}
+.toggle input:checked+.toggle-track{background:var(--green);border-color:var(--green)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;background:var(--w45);border-radius:50%;transition:transform .2s,background .2s}
+.toggle input:checked~.toggle-thumb,.toggle input:checked+.toggle-track~.toggle-thumb{transform:translateX(20px);background:var(--bg)}
+
+/* ── BUTTONS ── */
+.btn{height:38px;padding:0 20px;font-family:var(--m);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--w);color:var(--bg)}
+.btn-primary:hover{opacity:.85}
+.btn-danger{background:var(--red);color:white}
+.btn-danger:hover{opacity:.85}
+.btn-ghost{background:transparent;color:var(--w45);border:1px solid var(--bdr2)}
+.btn-ghost:hover{border-color:var(--w22);color:var(--w)}
+.btn-success{background:var(--green);color:var(--bg)}
+.btn-success:hover{opacity:.85}
+.btn-sm{height:32px;padding:0 14px;font-size:9.5px}
+.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;padding:9px 12px;background:var(--s2);border-bottom:1px solid var(--bdr);font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--w22);white-space:nowrap}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--bdr);color:var(--w70);vertical-align:middle}
+.tbl tr:hover td{background:var(--w05)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl-badge{font-family:var(--m);font-size:9px;padding:2px 8px;border-radius:10px;font-weight:600;letter-spacing:.06em}
+.b-green{background:rgba(74,222,128,.15);color:var(--green)}
+.b-red{background:rgba(248,113,113,.15);color:var(--red)}
+.b-amber{background:rgba(251,191,36,.12);color:var(--amber)}
+.b-blue{background:rgba(96,165,250,.12);color:var(--blue)}
+.tbl-actions{display:flex;gap:6px;align-items:center}
+
+/* ── TOAST ── */
+#toasts{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.toast{background:var(--s3);border:1px solid var(--bdr2);color:var(--w);padding:10px 16px;font-family:var(--m);font-size:11px;font-weight:400;letter-spacing:.06em;animation:tin .22s ease;white-space:nowrap;max-width:320px}
+.toast.ok{border-color:var(--green);color:var(--green)}
+.toast.err{border-color:var(--red);color:var(--red)}
+@keyframes tin{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── MODAL ── */
+.m-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:800;display:none;backdrop-filter:blur(3px)}
+.m-overlay.open{display:flex;align-items:center;justify-content:center}
+.m-box{background:var(--s1);border:1px solid var(--bdr2);width:min(600px,94vw);max-height:88vh;overflow-y:auto;padding:28px}
+.m-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.m-title{font-family:var(--bc);font-size:20px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--w)}
+.m-close{width:32px;height:32px;background:var(--s3);border:1px solid var(--bdr);color:var(--w45);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:none}
+.m-close:hover{background:var(--red);color:white}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--bdr);margin:20px 0}
+
+/* ── COLOR PICKER ROW ── */
+.color-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.color-chip{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .15s;flex-shrink:0}
+.color-chip.on{border-color:var(--w)}
+
+/* ── PRODUCT CARD MINI ── */
+.prod-mini{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--s2);border:1px solid var(--bdr);margin-bottom:8px;transition:border-color .15s}
+.prod-mini:hover{border-color:var(--bdr2)}
+.prod-mini-ico{width:44px;height:54px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:20px;filter:grayscale(1)brightness(.35);flex-shrink:0}
+.prod-mini-info{flex:1;min-width:0}
+.prod-mini-name{font-size:13px;font-weight:500;color:var(--w);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prod-mini-meta{font-family:var(--m);font-size:10px;color:var(--w22);letter-spacing:.04em}
+.prod-mini-price{font-family:var(--m);font-size:13px;font-weight:500;color:var(--w70);flex-shrink:0}
+
+/* ── ANNOUNCEMENT PREVIEW ── */
+.ann-preview{background:var(--bg);border:1px solid var(--bdr2);padding:10px 20px;text-align:center;font-family:var(--m);font-size:11px;letter-spacing:.1em;margin-bottom:16px;color:var(--w70)}
+
+/* ── SECTION TABS ── */
+.sec-tabs{display:flex;border-bottom:1px solid var(--bdr);margin-bottom:22px;gap:0;overflow-x:auto;scrollbar-width:none}
+.sec-tabs::-webkit-scrollbar{display:none}
+.sec-tab{padding:10px 18px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--w22);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;background:none;border-left:none;border-right:none;border-top:none}
+.sec-tab:hover{color:var(--w45)}
+.sec-tab.on{color:var(--w);border-bottom-color:var(--w)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid.cols3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="toasts"></div>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">KARKER</div>
+    <div class="login-sub">Admin Control Panel · karker.in</div>
+    <label class="login-label">Admin Email</label>
+    <input class="login-inp" id="adminEmail" type="email" placeholder="your@email.com" onkeydown="if(event.key==='Enter')adminLogin()">
+    <label class="login-label">Password</label>
+    <input class="login-inp" id="adminPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button class="login-btn" onclick="adminLogin()">Access Admin Panel →</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-logo">
+        <div class="sb-mark"><span>K</span></div>
+        <div class="sb-name">KARKER</div>
+      </div>
+      <nav class="sb-nav">
+        <div class="sb-section">Overview</div>
+        <button class="sb-item on" onclick="showPage('dashboard',this)"><span class="icon">◈</span>Dashboard</button>
+
+        <div class="sb-section">Website Content</div>
+        <button class="sb-item" onclick="showPage('announcement',this)"><span class="icon">📢</span>Announcement Bar</button>
+        <button class="sb-item" onclick="showPage('hero',this)"><span class="icon">◉</span>Hero Section</button>
+        <button class="sb-item" onclick="showPage('drop',this)"><span class="icon">⏱</span>Drop Countdown</button>
+        <button class="sb-item" onclick="showPage('vibes',this)"><span class="icon">✦</span>Vibe Categories</button>
+        <button class="sb-item" onclick="showPage('nav',this)"><span class="icon">≡</span>Navigation Links</button>
+
+        <div class="sb-section">Products & Sellers</div>
+        <button class="sb-item" onclick="showPage('products',this)"><span class="icon">👗</span>Products <span class="badge" id="prodBadge">0</span></button>
+        <button class="sb-item" onclick="showPage('sellers',this)"><span class="icon">🎨</span>Sellers</button>
+        <button class="sb-item" onclick="showPage('orders',this)"><span class="icon">📦</span>Orders</button>
+
+        <div class="sb-section">Users & Access</div>
+        <button class="sb-item" onclick="showPage('users',this)"><span class="icon">◯</span>Users</button>
+        <button class="sb-item" onclick="showPage('settings',this)"><span class="icon">⚙</span>Site Settings</button>
+      </nav>
+      <div class="sb-foot">
+        <div class="sb-user" id="adminUserLabel">Loading...</div>
+        <button class="sb-logout" onclick="adminLogout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div class="page-sub" id="pageSub">karker.in admin panel</div>
+        </div>
+        <div class="live-badge">
+          <div class="status-dot"></div>
+          karker.in is live
+        </div>
+      </div>
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="page on" id="page-dashboard">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Total Users</div>
+            <div class="stat-val" id="stat-users">—</div>
+            <div class="stat-change">Registered accounts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Products</div>
+            <div class="stat-val" id="stat-products">—</div>
+            <div class="stat-change">Active listings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Orders</div>
+            <div class="stat-val" id="stat-orders">—</div>
+            <div class="stat-change">Total orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Sellers</div>
+            <div class="stat-val" id="stat-sellers">—</div>
+            <div class="stat-change">Verified sellers</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Quick Controls</div><div class="card-sub">Toggle key features on karker.in</div></div>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><div class="t-title">Drop Countdown Banner</div><div class="t-sub">Show/hide the Tuesday drop countdown on homepage</div></div>
+            <label class="toggle"><input type="checkbox" id="dropToggle" checked onchange="saveToggle('drop',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><div class="t-title">Announcement Bar</div><div class="t-sub">Top bar message on all pages</div></div>
+            <label class="toggle"><input type="checkbox" id="annToggle" checked onchange="saveToggle('ann',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><div class="t-title">New User Signups</div><div class="t-sub">Allow new account creation on karker.in</div></div>
+            <label class="toggle"><input type="checkbox" id="signupToggle" checked onchange="saveToggle('signup',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><div class="t-title">Maintenance Mode</div><div class="t-sub">Show maintenance page to visitors</div></div>
+            <label class="toggle"><input type="checkbox" id="maintToggle" onchange="saveToggle('maintenance',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Recent Activity</div></div>
+          <div id="recentActivity">
+            <div style="font-family:var(--m);font-size:11px;color:var(--w22);text-align:center;padding:24px">Loading activity...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ ANNOUNCEMENT ══ -->
+      <div class="page" id="page-announcement">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Announcement Bar</div><div class="card-sub">The top black bar on every page</div></div></div>
+          <div class="ann-preview" id="annPreview">New drops every Tuesday — Free delivery above ₹599 — 180 verified sellers · karker.in</div>
+          <div class="form-grid cols3">
+            <div class="field">
+              <label class="f-label">Message Segment 1</label>
+              <input class="f-inp" id="ann1" value="New drops every Tuesday" oninput="updateAnnPreview()">
+            </div>
+            <div class="field">
+              <label class="f-label">Message Segment 2</label>
+              <input class="f-inp" id="ann2" value="Free delivery above ₹599" oninput="updateAnnPreview()">
+            </div>
+            <div class="field">
+              <label class="f-label">Message Segment 3</label>
+              <input class="f-inp" id="ann3" value="180 verified sellers · karker.in" oninput="updateAnnPreview()">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('announcement')">Save Announcement →</button>
+            <button class="btn btn-ghost" onclick="loadSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ HERO ══ -->
+      <div class="page" id="page-hero">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Hero Section</div><div class="card-sub">The main headline on your homepage</div></div></div>
+          <div class="form-grid">
+            <div class="field">
+              <label class="f-label">Line 1 (solid)</label>
+              <input class="f-inp" id="hero1" value="Own">
+            </div>
+            <div class="field">
+              <label class="f-label">Line 2 (outline)</label>
+              <input class="f-inp" id="hero2" value="Your">
+            </div>
+            <div class="field">
+              <label class="f-label">Line 3 (muted)</label>
+              <input class="f-inp" id="hero3" value="Aesthetic.">
+            </div>
+            <div class="field">
+              <label class="f-label">Background watermark text</label>
+              <input class="f-inp" id="heroBg" value="OWN IT">
+            </div>
+            <div class="field full">
+              <label class="f-label">Subheading paragraph</label>
+              <textarea class="f-textarea" id="heroBody">Hand-picked indie clothing and accessories from India's most creative small artists. Real makers. Real pieces. Every drop limited. Zero algorithm.</textarea>
+            </div>
+            <div class="field">
+              <label class="f-label">Primary button text</label>
+              <input class="f-inp" id="heroBtn1" value="Shop Now →">
+            </div>
+            <div class="field">
+              <label class="f-label">Secondary button text</label>
+              <input class="f-inp" id="heroBtn2" value="Sell on KARKER">
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div style="font-family:var(--m);font-size:10px;color:var(--w22);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">Stats Bar</div>
+          <div class="form-grid cols3">
+            <div class="field"><label class="f-label">Stat 1 Value</label><input class="f-inp" id="s1v" value="180"></div>
+            <div class="field"><label class="f-label">Stat 1 Label</label><input class="f-inp" id="s1l" value="Verified sellers"></div>
+            <div class="field"></div>
+            <div class="field"><label class="f-label">Stat 2 Value</label><input class="f-inp" id="s2v" value="4.2K+"></div>
+            <div class="field"><label class="f-label">Stat 2 Label</label><input class="f-inp" id="s2l" value="Orders delivered"></div>
+            <div class="field"></div>
+            <div class="field"><label class="f-label">Stat 3 Value</label><input class="f-inp" id="s3v" value="4.7★"></div>
+            <div class="field"><label class="f-label">Stat 3 Label</label><input class="f-inp" id="s3l" value="Avg. rating"></div>
+            <div class="field"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('hero')">Save Hero Section →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DROP COUNTDOWN ══ -->
+      <div class="page" id="page-drop">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Drop Countdown</div><div class="card-sub">The black countdown banner — toggle on/off anytime</div></div>
+            <label class="toggle"><input type="checkbox" id="dropPageToggle" checked onchange="saveToggle('drop',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label class="f-label">Drop Title</label>
+              <input class="f-inp" id="dropTitle" value="Tuesday Drop — Live Now">
+            </div>
+            <div class="field">
+              <label class="f-label">Eyebrow text</label>
+              <input class="f-inp" id="dropEye" value="Limited Release · Y2K Collection 001 · karker.in">
+            </div>
+            <div class="field">
+              <label class="f-label">Drop End Date & Time</label>
+              <input class="f-inp" id="dropDate" type="datetime-local">
+            </div>
+            <div class="field">
+              <label class="f-label">Sub text</label>
+              <input class="f-inp" id="dropSub" value="Only 40 pieces. Once it's gone, it's gone.">
+            </div>
+            <div class="field">
+              <label class="f-label">Button text</label>
+              <input class="f-inp" id="dropBtn" value="Notify Me →">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('drop')">Save Drop Settings →</button>
+            <button class="btn btn-success" onclick="saveToggle('drop',true);toast('Drop countdown is now LIVE ✓','ok')">Go Live Now</button>
+            <button class="btn btn-danger" onclick="saveToggle('drop',false);toast('Drop countdown hidden','err')">Hide Countdown</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VIBES ══ -->
+      <div class="page" id="page-vibes">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Vibe Categories</div><div class="card-sub">Edit the 7 aesthetic categories shown on homepage</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openAddVibe()">+ Add Vibe</button>
+          </div>
+          <div id="vibesList"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('vibes')">Save All Vibes →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ NAV ══ -->
+      <div class="page" id="page-nav">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Navigation Links</div><div class="card-sub">Edit the top navigation menu items</div></div></div>
+          <div id="navLinksList"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('nav')">Save Navigation →</button>
+            <button class="btn btn-ghost" onclick="addNavLink()">+ Add Link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PRODUCTS ══ -->
+      <div class="page" id="page-products">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Products</div><div class="card-sub">Manage all product listings</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Add Product</button>
+          </div>
+          <div class="sec-tabs">
+            <button class="sec-tab on" onclick="filterProds('all',this)">All</button>
+            <button class="sec-tab" onclick="filterProds('active',this)">Active</button>
+            <button class="sec-tab" onclick="filterProds('inactive',this)">Hidden</button>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Product</th><th>Seller</th><th>Vibe</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="prodTable"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">Loading products...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SELLERS ══ -->
+      <div class="page" id="page-sellers">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Sellers</div><div class="card-sub">Manage seller accounts and verification</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openSellerModal()">+ Add Seller</button>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Shop Name</th><th>Handle</th><th>Vibes</th><th>Products</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="sellerTable"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">Loading sellers...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ ORDERS ══ -->
+      <div class="page" id="page-orders">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Orders</div><div class="card-sub">All customer orders</div></div></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Order ID</th><th>Buyer</th><th>Product</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="orderTable"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">No orders yet — they will appear here once buyers start purchasing</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ USERS ══ -->
+      <div class="page" id="page-users">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Users</div><div class="card-sub">All registered accounts on karker.in</div></div></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+              <tbody id="userTable"><tr><td colspan="5" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">Loading users...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SETTINGS ══ -->
+      <div class="page" id="page-settings">
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Site Settings</div><div class="card-sub">Global configuration for karker.in</div></div></div>
+          <div class="form-grid">
+            <div class="field"><label class="f-label">Site Name</label><input class="f-inp" id="siteName" value="KARKER"></div>
+            <div class="field"><label class="f-label">Domain</label><input class="f-inp" id="siteDomain" value="karker.in"></div>
+            <div class="field"><label class="f-label">Contact Email</label><input class="f-inp" id="siteEmail" value="hello@karker.in"></div>
+            <div class="field"><label class="f-label">Free Delivery Above (₹)</label><input class="f-inp" id="freeDelivery" value="599" type="number"></div>
+            <div class="field"><label class="f-label">Instagram Handle</label><input class="f-inp" id="igHandle" value="@karker.in"></div>
+            <div class="field"><label class="f-label">Return Policy (days)</label><input class="f-inp" id="returnDays" value="7" type="number"></div>
+            <div class="field full"><label class="f-label">Footer Description</label><textarea class="f-textarea" id="footerDesc">India's first curated marketplace for indie aesthetic fashion. By artists, for the aesthetically obsessed. Bangalore, India — Est. 2025.</textarea></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveSection('settings')">Save Settings →</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div><div class="card-title">Database</div><div class="card-sub">Direct Supabase access</div></div></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <button class="btn btn-ghost" style="height:52px;flex-direction:column;gap:3px" onclick="window.open('https://supabase.com/dashboard','_blank')">
+              <span style="font-size:16px">🗄</span>
+              <span>Open Supabase</span>
+            </button>
+            <button class="btn btn-ghost" style="height:52px;flex-direction:column;gap:3px" onclick="window.open('https://vercel.com/dashboard','_blank')">
+              <span style="font-size:16px">▲</span>
+              <span>Open Vercel</span>
+            </button>
+            <button class="btn btn-ghost" style="height:52px;flex-direction:column;gap:3px" onclick="window.open('https://github.com','_blank')">
+              <span style="font-size:16px">◈</span>
+              <span>Open GitHub</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══ PRODUCT MODAL ══ -->
+<div class="m-overlay" id="prodModal">
+  <div class="m-box">
+    <div class="m-head">
+      <div class="m-title" id="prodModalTitle">Add Product</div>
+      <button class="m-close" onclick="closeModal('prodModal')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="field full"><label class="f-label">Product Name</label><input class="f-inp" id="pm-name" placeholder="e.g. Butterfly Mesh Baby Tee, Lavender"></div>
+      <div class="field full"><label class="f-label">Description</label><textarea class="f-textarea" id="pm-desc" placeholder="Product description..."></textarea></div>
+      <div class="field"><label class="f-label">Price (₹)</label><input class="f-inp" id="pm-price" type="number" placeholder="649"></div>
+      <div class="field"><label class="f-label">MRP / Original Price (₹)</label><input class="f-inp" id="pm-mrp" type="number" placeholder="899"></div>
+      <div class="field">
+        <label class="f-label">Vibe Category</label>
+        <select class="f-select" id="pm-vibe">
+          <option>Y2K Revival</option><option>Dark Gothic</option><option>Soft Minimal</option>
+          <option>Artistic Wear</option><option>High Fashion</option><option>Indie Core</option><option>Streetwear</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="f-label">Product Category</label>
+        <select class="f-select" id="pm-cat">
+          <option>Tops & Tees</option><option>Bottoms</option><option>Jewellery</option>
+          <option>Bags</option><option>Footwear</option><option>Accessories</option>
+        </select>
+      </div>
+      <div class="field"><label class="f-label">Seller Handle</label><input class="f-inp" id="pm-seller" placeholder="@stardust.fits"></div>
+      <div class="field"><label class="f-label">Stock Quantity</label><input class="f-inp" id="pm-stock" type="number" placeholder="10"></div>
+      <div class="field full"><label class="f-label">Sizes (comma separated)</label><input class="f-inp" id="pm-sizes" placeholder="XS, S, M, L, XL"></div>
+      <div class="field">
+        <label class="f-label">Badge Label</label>
+        <select class="f-select" id="pm-badge">
+          <option value="">None</option><option>New</option><option>Hot</option><option>Sale</option>
+          <option>Limited</option><option>Artist Pick</option><option>Trending</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="f-label">Status</label>
+        <select class="f-select" id="pm-status">
+          <option value="true">Active — visible on site</option>
+          <option value="false">Hidden — not visible</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveProduct()">Save Product →</button>
+      <button class="btn btn-ghost" onclick="closeModal('prodModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SELLER MODAL ══ -->
+<div class="m-overlay" id="sellerModal">
+  <div class="m-box">
+    <div class="m-head">
+      <div class="m-title">Add Seller</div>
+      <button class="m-close" onclick="closeModal('sellerModal')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label class="f-label">Shop Name</label><input class="f-inp" id="sm-name" placeholder="Stardust Fits"></div>
+      <div class="field"><label class="f-label">Handle</label><input class="f-inp" id="sm-handle" placeholder="stardust.fits"></div>
+      <div class="field full"><label class="f-label">Bio</label><textarea class="f-textarea" id="sm-bio" placeholder="About this seller..."></textarea></div>
+      <div class="field"><label class="f-label">Email</label><input class="f-inp" id="sm-email" placeholder="seller@email.com" type="email"></div>
+      <div class="field"><label class="f-label">Phone</label><input class="f-inp" id="sm-phone" placeholder="+91 98765 43210"></div>
+      <div class="field full"><label class="f-label">Aesthetic Vibes (comma separated)</label><input class="f-inp" id="sm-vibes" placeholder="Y2K, Gothic"></div>
+      <div class="field">
+        <label class="f-label">Verification Status</label>
+        <select class="f-select" id="sm-verified">
+          <option value="true">Verified ✓</option>
+          <option value="false">Pending</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveSeller()">Save Seller →</button>
+      <button class="btn btn-ghost" onclick="closeModal('sellerModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ CONFIG — REPLACE WITH YOUR VALUES ══ */
+const SUPA_URL = 'https://ftqtmcowohtlhulkuiih.supabase.co';
+const SUPA_KEY = 'sb_publishable_qlWnDndl1kcfrlWGA_IhFA_TZvyy0ER';
+const ADMIN_EMAIL = 'sumanthkarkera625@gmail.com';
+/* ════════════════════════════════════════ */
+
+const { createClient } = supabase;
+const sb = createClient(SUPA_URL, SUPA_KEY);
+
+let editingProductId = null;
+let editingSellerId = null;
+
+/* ── SETTINGS STATE ── */
+let siteSettings = {
+  ann1:'New drops every Tuesday', ann2:'Free delivery above ₹599', ann3:'180 verified sellers · karker.in',
+  drop:true, ann:true, signup:true, maintenance:false,
+  dropTitle:'Tuesday Drop — Live Now',
+  dropEye:'Limited Release · Y2K Collection 001 · karker.in',
+  dropSub:"Only 40 pieces. Once it's gone, it's gone.",
+  dropBtn:'Notify Me →',
+  hero1:'Own', hero2:'Your', hero3:'Aesthetic.', heroBg:'OWN IT',
+  heroBody:"Hand-picked indie clothing from India's most creative small artists. Real makers. Real pieces.",
+  heroBtn1:'Shop Now →', heroBtn2:'Sell on KARKER',
+  s1v:'180', s1l:'Verified sellers', s2v:'4.2K+', s2l:'Orders delivered', s3v:'4.7★', s3l:'Avg. rating',
+  siteName:'KARKER', siteDomain:'karker.in', siteEmail:'hello@karker.in',
+  freeDelivery:'599', igHandle:'@karker.in', returnDays:'7',
+  footerDesc:"India's first curated marketplace for indie aesthetic fashion.",
+  vibes:[
+    {num:'01',name:'Y2K Revival',cnt:'312 items',icon:'✦'},
+    {num:'02',name:'Dark Gothic',cnt:'198 items',icon:'☽'},
+    {num:'03',name:'Soft Minimal',cnt:'224 items',icon:'—'},
+    {num:'04',name:'Artistic Wear',cnt:'163 items',icon:'◎'},
+    {num:'05',name:'High Fashion',cnt:'287 items',icon:'❋'},
+    {num:'06',name:'Indie Core',cnt:'176 items',icon:'◈'},
+    {num:'07',name:'Streetwear',cnt:'141 items',icon:'↑'}
+  ],
+  navLinks:[
+    {label:'New Arrivals',href:'#new-arrivals'},
+    {label:'Collections',href:'#vibes'},
+    {label:'Artists',href:'#sellers'},
+    {label:'For Sellers',href:'#sell'}
+  ]
+};
+
+/* ── AUTH ── */
+async function adminLogin(){
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass  = document.getElementById('adminPass').value;
+  const errEl = document.getElementById('loginErr');
+  errEl.textContent = '';
+  if(!email || !pass){ errEl.textContent = 'Please enter email and password'; return; }
+  if(email !== ADMIN_EMAIL){ errEl.textContent = 'Not authorised as admin'; return; }
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if(error){ errEl.textContent = error.message; return; }
+  initApp(email);
+}
+
+function initApp(email){
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('adminUserLabel').textContent = email;
+  loadSettings();
+  loadStats();
+  loadProducts();
+  loadSellers();
+  loadUsers();
+  loadOrders();
+  renderVibes();
+  renderNavLinks();
+}
+
+async function adminLogout(){
+  await sb.auth.signOut();
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+/* Check if already logged in */
+(async()=>{
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session && session.user.email === ADMIN_EMAIL) initApp(session.user.email);
+})();
+
+/* ── NAVIGATION ── */
+const pageTitles = {
+  dashboard:{t:'Dashboard',s:'karker.in overview'},
+  announcement:{t:'Announcement Bar',s:'Top message on every page'},
+  hero:{t:'Hero Section',s:'Homepage main headline'},
+  drop:{t:'Drop Countdown',s:'Tuesday drop banner'},
+  vibes:{t:'Vibe Categories',s:'Aesthetic navigation grid'},
+  nav:{t:'Navigation Links',s:'Top menu items'},
+  products:{t:'Products',s:'All product listings'},
+  sellers:{t:'Sellers',s:'Seller accounts'},
+  orders:{t:'Orders',s:'Customer orders'},
+  users:{t:'Users',s:'Registered accounts'},
+  settings:{t:'Site Settings',s:'Global configuration'}
+};
+
+function showPage(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('on'));
+  document.getElementById('page-'+id).classList.add('on');
+  if(btn) btn.classList.add('on');
+  const meta = pageTitles[id] || {t:id,s:''};
+  document.getElementById('pageTitle').textContent = meta.t;
+  document.getElementById('pageSub').textContent = meta.s;
+}
+
+/* ── SETTINGS ── */
+async function loadSettings(){
+  const { data } = await sb.from('site_settings').select('*').eq('id',1).single();
+  if(data && data.settings) Object.assign(siteSettings, data.settings);
+  applySettingsToForm();
+}
+
+function applySettingsToForm(){
+  const s = siteSettings;
+  const set = (id,val) => { const el=document.getElementById(id); if(el){ if(el.type==='checkbox') el.checked=!!val; else el.value=val||''; }};
+  set('ann1',s.ann1); set('ann2',s.ann2); set('ann3',s.ann3);
+  set('dropToggle',s.drop); set('annToggle',s.ann); set('signupToggle',s.signup); set('maintToggle',s.maintenance);
+  set('dropTitle',s.dropTitle); set('dropEye',s.dropEye); set('dropSub',s.dropSub); set('dropBtn',s.dropBtn);
+  set('dropPageToggle',s.drop);
+  set('hero1',s.hero1); set('hero2',s.hero2); set('hero3',s.hero3); set('heroBg',s.heroBg);
+  set('heroBody',s.heroBody); set('heroBtn1',s.heroBtn1); set('heroBtn2',s.heroBtn2);
+  set('s1v',s.s1v); set('s1l',s.s1l); set('s2v',s.s2v); set('s2l',s.s2l); set('s3v',s.s3v); set('s3l',s.s3l);
+  set('siteName',s.siteName); set('siteDomain',s.siteDomain); set('siteEmail',s.siteEmail);
+  set('freeDelivery',s.freeDelivery); set('igHandle',s.igHandle); set('returnDays',s.returnDays);
+  set('footerDesc',s.footerDesc);
+  updateAnnPreview();
+}
+
+async function saveSettings(){
+  const { error } = await sb.from('site_settings').upsert({ id:1, settings:siteSettings, updated_at: new Date().toISOString() });
+  if(error){ toast(error.message,'err'); return false; }
+  return true;
+}
+
+function saveToggle(key, val){
+  siteSettings[key] = val;
+  saveSettings().then(ok => { if(ok) toast(key+' '+(val?'enabled':'disabled'),'ok'); });
+}
+
+async function saveSection(section){
+  const g = id => { const el=document.getElementById(id); return el ? (el.type==='checkbox'?el.checked:el.value) : ''; };
+  if(section==='announcement'){
+    siteSettings.ann1=g('ann1'); siteSettings.ann2=g('ann2'); siteSettings.ann3=g('ann3');
+  } else if(section==='hero'){
+    siteSettings.hero1=g('hero1'); siteSettings.hero2=g('hero2'); siteSettings.hero3=g('hero3');
+    siteSettings.heroBg=g('heroBg'); siteSettings.heroBody=g('heroBody');
+    siteSettings.heroBtn1=g('heroBtn1'); siteSettings.heroBtn2=g('heroBtn2');
+    siteSettings.s1v=g('s1v'); siteSettings.s1l=g('s1l'); siteSettings.s2v=g('s2v');
+    siteSettings.s2l=g('s2l'); siteSettings.s3v=g('s3v'); siteSettings.s3l=g('s3l');
+  } else if(section==='drop'){
+    siteSettings.dropTitle=g('dropTitle'); siteSettings.dropEye=g('dropEye');
+    siteSettings.dropSub=g('dropSub'); siteSettings.dropBtn=g('dropBtn');
+    siteSettings.dropDate=g('dropDate');
+  } else if(section==='settings'){
+    siteSettings.siteName=g('siteName'); siteSettings.siteDomain=g('siteDomain');
+    siteSettings.siteEmail=g('siteEmail'); siteSettings.freeDelivery=g('freeDelivery');
+    siteSettings.igHandle=g('igHandle'); siteSettings.returnDays=g('returnDays');
+    siteSettings.footerDesc=g('footerDesc');
+  } else if(section==='vibes'){
+    const rows = document.querySelectorAll('.vibe-edit-row');
+    siteSettings.vibes = Array.from(rows).map(r=>({
+      num:r.querySelector('.ve-num').value,
+      name:r.querySelector('.ve-name').value,
+      cnt:r.querySelector('.ve-cnt').value,
+      icon:r.querySelector('.ve-icon').value
+    }));
+  } else if(section==='nav'){
+    const rows = document.querySelectorAll('.nav-edit-row');
+    siteSettings.navLinks = Array.from(rows).map(r=>({
+      label:r.querySelector('.nl-label').value,
+      href:r.querySelector('.nl-href').value
+    }));
+  }
+  const ok = await saveSettings();
+  if(ok) toast(section+' saved successfully ✓','ok');
+}
+
+/* ── ANNOUNCEMENT PREVIEW ── */
+function updateAnnPreview(){
+  const a1 = document.getElementById('ann1')?.value||'';
+  const a2 = document.getElementById('ann2')?.value||'';
+  const a3 = document.getElementById('ann3')?.value||'';
+  const p = document.getElementById('annPreview');
+  if(p) p.textContent = [a1,a2,a3].filter(Boolean).join(' — ');
+}
+
+/* ── STATS ── */
+async function loadStats(){
+  const [users,products,orders,sellers] = await Promise.all([
+    sb.from('profiles').select('id',{count:'exact',head:true}),
+    sb.from('products').select('id',{count:'exact',head:true}),
+    sb.from('orders').select('id',{count:'exact',head:true}),
+    sb.from('seller_profiles').select('id',{count:'exact',head:true})
+  ]);
+  const set = (id,val) => { const el=document.getElementById(id); if(el) el.textContent=val??'0'; };
+  set('stat-users', users.count??0);
+  set('stat-products', products.count??0);
+  set('stat-orders', orders.count??0);
+  set('stat-sellers', sellers.count??0);
+  const pb = document.getElementById('prodBadge');
+  if(pb) pb.textContent = products.count??0;
+
+  const ra = document.getElementById('recentActivity');
+  if(ra){
+    const { data:recentUsers } = await sb.from('profiles').select('full_name,created_at').order('created_at',{ascending:false}).limit(5);
+    if(recentUsers && recentUsers.length){
+      ra.innerHTML = recentUsers.map(u=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bdr);font-size:12px">
+          <span style="color:var(--w70)">${u.full_name||'Anonymous'} signed up</span>
+          <span style="font-family:var(--m);font-size:10px;color:var(--w22)">${new Date(u.created_at).toLocaleDateString('en-IN')}</span>
+        </div>`).join('');
+    } else {
+      ra.innerHTML = '<div style="font-family:var(--m);font-size:11px;color:var(--w22);text-align:center;padding:20px">No recent activity</div>';
+    }
+  }
+}
+
+/* ── PRODUCTS ── */
+async function loadProducts(){
+  const { data } = await sb.from('products').select('*').order('created_at',{ascending:false});
+  const tbody = document.getElementById('prodTable');
+  if(!data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">No products yet — click Add Product to create one</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(p=>`
+    <tr>
+      <td><div style="font-weight:500;color:var(--w)">${p.title||'—'}</div><div style="font-family:var(--m);font-size:9px;color:var(--w22);margin-top:2px">${p.category||''}</div></td>
+      <td style="font-family:var(--m);font-size:11px;color:var(--w45)">${p.seller_handle||'—'}</td>
+      <td><span class="tbl-badge b-blue">${p.vibe||'—'}</span></td>
+      <td style="font-family:var(--m)">₹${p.price||0}${p.mrp?` <span style="color:var(--w22);text-decoration:line-through;font-size:10px">₹${p.mrp}</span>`:''}</td>
+      <td><span class="tbl-badge ${p.is_active?'b-green':'b-red'}">${p.is_active?'Active':'Hidden'}</span></td>
+      <td><div class="tbl-actions">
+        <button class="btn btn-ghost btn-sm" onclick="editProduct('${p.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Delete</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function filterProds(status, tab){
+  document.querySelectorAll('.sec-tab').forEach(t=>t.classList.remove('on'));
+  tab.classList.add('on');
+  toast('Filtering: '+status);
+}
+
+function openProductModal(id){
+  editingProductId = id||null;
+  document.getElementById('prodModalTitle').textContent = id?'Edit Product':'Add Product';
+  if(!id){
+    ['pm-name','pm-desc','pm-price','pm-mrp','pm-seller','pm-stock','pm-sizes'].forEach(i=>{
+      const el=document.getElementById(i); if(el) el.value='';
+    });
+  }
+  document.getElementById('prodModal').classList.add('open');
+}
+
+async function editProduct(id){
+  const { data } = await sb.from('products').select('*').eq('id',id).single();
+  if(!data) return;
+  editingProductId = id;
+  document.getElementById('prodModalTitle').textContent = 'Edit Product';
+  const set = (elId,val) => { const el=document.getElementById(elId); if(el) el.value=val||''; };
+  set('pm-name',data.title); set('pm-desc',data.description);
+  set('pm-price',data.price); set('pm-mrp',data.mrp);
+  set('pm-seller',data.seller_handle); set('pm-stock',data.stock);
+  set('pm-sizes',(data.sizes||[]).join(', '));
+  set('pm-badge',data.badge||'');
+  document.getElementById('pm-vibe').value = data.vibe||'Y2K Revival';
+  document.getElementById('pm-cat').value = data.category||'Tops & Tees';
+  document.getElementById('pm-status').value = String(data.is_active);
+  document.getElementById('prodModal').classList.add('open');
+}
+
+async function saveProduct(){
+  const g = id => document.getElementById(id)?.value||'';
+  const payload = {
+    title:g('pm-name'), description:g('pm-desc'),
+    price:parseInt(g('pm-price'))||0, mrp:parseInt(g('pm-mrp'))||null,
+    vibe:g('pm-vibe'), category:g('pm-cat'),
+    seller_handle:g('pm-seller'),
+    stock:parseInt(g('pm-stock'))||0,
+    sizes:g('pm-sizes').split(',').map(s=>s.trim()).filter(Boolean),
+    badge:g('pm-badge'),
+    is_active: document.getElementById('pm-status').value === 'true'
+  };
+  if(!payload.title){ toast('Product name is required','err'); return; }
+  let error;
+  if(editingProductId){
+    ({ error } = await sb.from('products').update(payload).eq('id',editingProductId));
+  } else {
+    ({ error } = await sb.from('products').insert(payload));
+  }
+  if(error){ toast(error.message,'err'); return; }
+  toast(editingProductId?'Product updated ✓':'Product added ✓','ok');
+  closeModal('prodModal');
+  loadProducts();
+  loadStats();
+}
+
+async function deleteProduct(id){
+  if(!confirm('Delete this product? This cannot be undone.')) return;
+  const { error } = await sb.from('products').delete().eq('id',id);
+  if(error){ toast(error.message,'err'); return; }
+  toast('Product deleted','ok');
+  loadProducts();
+  loadStats();
+}
+
+/* ── SELLERS ── */
+async function loadSellers(){
+  const { data } = await sb.from('seller_profiles').select('*').order('created_at',{ascending:false});
+  const tbody = document.getElementById('sellerTable');
+  if(!data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">No sellers yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(s=>`
+    <tr>
+      <td style="font-weight:500;color:var(--w)">${s.shop_name||'—'}</td>
+      <td style="font-family:var(--m);font-size:11px;color:var(--w45)">@${s.handle||'—'}</td>
+      <td>${(s.aesthetic_vibes||[]).map(v=>`<span class="tbl-badge b-blue" style="margin-right:3px">${v}</span>`).join('')||'—'}</td>
+      <td style="font-family:var(--m)">—</td>
+      <td><span class="tbl-badge ${s.is_verified?'b-green':'b-amber'}">${s.is_verified?'Verified':'Pending'}</span></td>
+      <td><div class="tbl-actions">
+        <button class="btn btn-success btn-sm" onclick="verifySeller('${s.id}',${!s.is_verified})">${s.is_verified?'Unverify':'Verify'}</button>
+        <button class="btn btn-ghost btn-sm" onclick="toast('Edit seller →')">Edit</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+async function verifySeller(id, val){
+  const { error } = await sb.from('seller_profiles').update({is_verified:val}).eq('id',id);
+  if(error){ toast(error.message,'err'); return; }
+  toast(val?'Seller verified ✓':'Seller unverified','ok');
+  loadSellers();
+}
+
+function openSellerModal(){
+  document.getElementById('sellerModal').classList.add('open');
+}
+
+async function saveSeller(){
+  const g = id => document.getElementById(id)?.value||'';
+  const payload = {
+    shop_name:g('sm-name'), handle:g('sm-handle').replace('@',''),
+    bio:g('sm-bio'),
+    aesthetic_vibes:g('sm-vibes').split(',').map(v=>v.trim()).filter(Boolean),
+    is_verified: document.getElementById('sm-verified').value === 'true'
+  };
+  if(!payload.shop_name){ toast('Shop name is required','err'); return; }
+  const { error } = await sb.from('seller_profiles').insert(payload);
+  if(error){ toast(error.message,'err'); return; }
+  toast('Seller added ✓','ok');
+  closeModal('sellerModal');
+  loadSellers();
+}
+
+/* ── USERS ── */
+async function loadUsers(){
+  const { data } = await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  const tbody = document.getElementById('userTable');
+  if(!data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--w22);font-family:var(--m);font-size:11px">No users yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(u=>`
+    <tr>
+      <td style="font-weight:500;color:var(--w)">${u.full_name||'—'}</td>
+      <td style="font-family:var(--m);font-size:11px;color:var(--w45)">${u.id?.slice(0,12)||'—'}...</td>
+      <td><span class="tbl-badge ${u.role==='seller'?'b-amber':u.role==='admin'?'b-red':'b-blue'}">${u.role||'buyer'}</span></td>
+      <td style="font-family:var(--m);font-size:11px;color:var(--w45)">${u.created_at?new Date(u.created_at).toLocaleDateString('en-IN'):'—'}</td>
+      <td><div class="tbl-actions">
+        <button class="btn btn-ghost btn-sm" onclick="toast('User management coming soon')">Manage</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+/* ── ORDERS ── */
+async function loadOrders(){
+  const { data } = await sb.from('orders').select('*').order('created_at',{ascending:false});
+  const tbody = document.getElementById('orderTable');
+  if(!data || !data.length) return;
+  tbody.innerHTML = data.map(o=>`
+    <tr>
+      <td style="font-family:var(--m);font-size:10px;color:var(--w45)">${o.id?.slice(0,8)||'—'}...</td>
+      <td>${o.buyer_id?.slice(0,8)||'—'}...</td>
+      <td>${o.product_id?.slice(0,8)||'—'}...</td>
+      <td style="font-family:var(--m)">₹${o.amount||0}</td>
+      <td><span class="tbl-badge ${
+        o.status==='delivered'?'b-green':
+        o.status==='shipped'?'b-blue':
+        o.status==='confirmed'?'b-amber':'b-red'
+      }">${o.status||'pending'}</span></td>
+      <td style="font-family:var(--m);font-size:11px;color:var(--w45)">${o.created_at?new Date(o.created_at).toLocaleDateString('en-IN'):'—'}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="updateOrderStatus('${o.id}')">Update</button></td>
+    </tr>`).join('');
+}
+
+async function updateOrderStatus(id){
+  const status = prompt('Enter new status: pending / confirmed / shipped / delivered / returned');
+  if(!status) return;
+  const { error } = await sb.from('orders').update({status}).eq('id',id);
+  if(error){ toast(error.message,'err'); return; }
+  toast('Order status updated ✓','ok');
+  loadOrders();
+}
+
+/* ── VIBES EDITOR ── */
+function renderVibes(){
+  const list = document.getElementById('vibesList');
+  if(!list) return;
+  list.innerHTML = siteSettings.vibes.map((v,i)=>`
+    <div class="vibe-edit-row" style="display:grid;grid-template-columns:50px 40px 1fr 120px auto;gap:8px;align-items:center;margin-bottom:8px">
+      <input class="f-inp ve-num" value="${v.num}" style="text-align:center">
+      <input class="f-inp ve-icon" value="${v.icon}" style="text-align:center;font-size:16px">
+      <input class="f-inp ve-name" value="${v.name}">
+      <input class="f-inp ve-cnt" value="${v.cnt}">
+      <button class="btn btn-danger btn-sm" onclick="removeVibe(${i})">✕</button>
+    </div>`).join('');
+}
+
+function removeVibe(i){
+  siteSettings.vibes.splice(i,1);
+  renderVibes();
+}
+
+function openAddVibe(){
+  siteSettings.vibes.push({num:`0${siteSettings.vibes.length+1}`,name:'New Vibe',cnt:'0 items',icon:'◎'});
+  renderVibes();
+  toast('New vibe row added — fill in details and save','ok');
+}
+
+/* ── NAV LINKS EDITOR ── */
+function renderNavLinks(){
+  const list = document.getElementById('navLinksList');
+  if(!list) return;
+  list.innerHTML = siteSettings.navLinks.map((n,i)=>`
+    <div class="nav-edit-row" style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px">
+      <input class="f-inp nl-label" value="${n.label}" placeholder="Label">
+      <input class="f-inp nl-href" value="${n.href}" placeholder="#section-id or /page">
+      <button class="btn btn-danger btn-sm" onclick="removeNavLink(${i})">✕</button>
+    </div>`).join('');
+}
+
+function removeNavLink(i){ siteSettings.navLinks.splice(i,1); renderNavLinks(); }
+function addNavLink(){ siteSettings.navLinks.push({label:'New Link',href:'#'}); renderNavLinks(); }
+
+/* ── MODALS ── */
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+/* ── TOAST ── */
+function toast(msg, cls=''){
+  const w=document.getElementById('toasts');
+  const el=document.createElement('div');
+  el.className='toast'+(cls?' '+cls:'');
+  el.textContent=msg;
+  w.prepend(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},2800);
+}
+</script>
+</body>
+</html>
