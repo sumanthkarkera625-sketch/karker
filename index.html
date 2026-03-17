@@ -42,11 +42,11 @@ a{text-decoration:none;color:inherit;cursor:none}
 ::-webkit-scrollbar-thumb{background:var(--i32)}
 
 /* ── CURSOR ── */
-#cur{width:10px;height:10px;background:var(--k);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1),opacity .35s;}
-#cur-o{width:40px;height:40px;border:1.5px solid var(--i32);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .45s cubic-bezier(.4,0,.2,1),height .45s cubic-bezier(.4,0,.2,1),opacity .3s,border-color .3s;}
-body.hov #cur{width:8px;height:8px;opacity:.4;}
-body.hov #cur-o{width:48px;height:48px;border-color:var(--i55);}
-body.dark-cur #cur{background:var(--k);}
+#cur{width:20px;height:20px;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(0,0);transition:transform .1s;background:none;}
+#cur-o{display:none;}
+body.hov #cur{transform:scale(1.15);}
+body.hov #cur-o{display:none;}
+body.dark-cur #cur{background:none;}
 
 /* ── OVERLAYS ── */
 .overlay{position:fixed;inset:0;background:rgba(12,11,9,0.55);z-index:800;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
@@ -450,7 +450,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <body>
 
 <!-- CURSOR -->
-<div id="cur"></div>
+<div id="cur"><svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 1L4 18.5L7.5 15L10.5 22L12.5 21L9.5 14H14.5L4 1Z" fill="white" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
 <div id="cur-o"></div>
 
 <!-- TOASTS -->
@@ -1058,8 +1058,8 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 /* ── CURSOR ── */
 const cur=document.getElementById('cur'),curO=document.getElementById('cur-o');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function animCur(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curO.style.left=rx+'px';curO.style.top=ry+'px';requestAnimationFrame(animCur);})();
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';cur.style.transform='translate(0,0)';});
+(function animCur(){rx+=(mx-rx)*0.85;ry+=(my-ry)*0.85;requestAnimationFrame(animCur);})();
 const hovEls='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn';
 document.querySelectorAll(hovEls).forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
