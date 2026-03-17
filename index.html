@@ -42,11 +42,11 @@ a{text-decoration:none;color:inherit;cursor:none}
 ::-webkit-scrollbar-thumb{background:var(--i32)}
 
 /* ── CURSOR ── */
-#cur{width:8px;height:8px;background:var(--k);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-radius .22s,background .22s;mix-blend-mode:difference}
-#cur-o{width:38px;height:38px;border:1.5px solid var(--i16);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:opacity .2s}
-body.hov #cur{width:52px;height:52px;background:var(--k);border-radius:3px;mix-blend-mode:normal;opacity:.06}
-body.hov #cur-o{opacity:0}
-body.dark-cur #cur{background:white;mix-blend-mode:normal}
+#cur{width:10px;height:10px;background:var(--k);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1),opacity .35s;}
+#cur-o{width:40px;height:40px;border:1.5px solid var(--i32);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .45s cubic-bezier(.4,0,.2,1),height .45s cubic-bezier(.4,0,.2,1),opacity .3s,border-color .3s;}
+body.hov #cur{width:8px;height:8px;opacity:.4;}
+body.hov #cur-o{width:48px;height:48px;border-color:var(--i55);}
+body.dark-cur #cur{background:var(--k);}
 
 /* ── OVERLAYS ── */
 .overlay{position:fixed;inset:0;background:rgba(12,11,9,0.55);z-index:800;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
@@ -1059,7 +1059,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 const cur=document.getElementById('cur'),curO=document.getElementById('cur-o');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function animCur(){rx+=(mx-rx)*.09;ry+=(my-ry)*.09;curO.style.left=rx+'px';curO.style.top=ry+'px';requestAnimationFrame(animCur);})();
+(function animCur(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curO.style.left=rx+'px';curO.style.top=ry+'px';requestAnimationFrame(animCur);})();
 const hovEls='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn';
 document.querySelectorAll(hovEls).forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
