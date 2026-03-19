@@ -56,10 +56,9 @@ a{text-decoration:none;color:inherit;cursor:none}
 ::-webkit-scrollbar-thumb{background:var(--i32)}
 
 /* ── CURSOR ── */
-#cur{width:20px;height:20px;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(0,0);transition:transform .1s;background:none;}
+#cur{width:20px;height:24px;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:scale(1);transition:transform .12s ease;background:none;will-change:left,top;}
 #cur-o{display:none;}
-body.hov #cur{transform:scale(1.15);}
-body.hov #cur-o{display:none;}
+body.hov #cur{transform:scale(1.25);}
 body.dark-cur #cur{background:none;}
 
 /* ── OVERLAYS ── */
@@ -300,7 +299,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .cart-title{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
 .panel-close{font-size:20px;color:var(--i55);cursor:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bdr);transition:all .15s}
 .panel-close:hover{background:var(--k);color:white;border-color:var(--k)}
-.cart-items{padding:20px 24px;flex:1}
+.cart-items{padding:20px 24px;flex:1;overflow-y:auto}
 .cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bdr)}
 .cart-item:last-child{border-bottom:none}
 .ci-img{width:72px;height:90px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:28px;filter:grayscale(1)brightness(.35);flex-shrink:0}
@@ -334,7 +333,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .m-tab:hover:not(.on){color:var(--i55)}
 .m-field{margin-bottom:18px}
 .m-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i55);margin-bottom:7px;display:block}
-.m-input{width:100%;height:46px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:14px;font-weight:400;color:var(--k);padding:0 14px;outline:none;transition:border-color .15s;font-family:var(--b)}
+.m-input{width:100%;height:46px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:14px;font-weight:400;color:var(--k);padding:0 14px;outline:none;transition:border-color .15s}
 .m-input:focus{border-color:var(--k)}
 .m-or{display:flex;align-items:center;gap:14px;margin:22px 0;font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32)}
 .m-or::before,.m-or::after{content:'';flex:1;height:1px;background:var(--bdr2)}
@@ -433,6 +432,35 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 #btt:hover{transform:translateY(-2px)}
 .skip-link{position:absolute;top:-40px;left:0;background:var(--k);color:white;padding:8px 16px;font-family:var(--m);font-size:11px;letter-spacing:.08em;z-index:9999;transition:top .2s}
 .skip-link:focus{top:0}
+
+/* ══ IST CLOCK ══ */
+#ist-clock{font-family:var(--m);font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.06em}
+
+/* ══ MOBILE HAMBURGER ══ */
+.mob-ham{display:none;width:44px;height:44px;align-items:center;justify-content:center;font-size:20px;color:var(--k);cursor:none;border:1px solid var(--bdr);background:none;line-height:1;flex-shrink:0}
+.mob-ham:hover{background:var(--i04)}
+
+/* ══ PAGE OVERLAYS (Collection / Category / Seller) ══ */
+.pg-overlay{position:fixed;inset:0;background:var(--w);z-index:750;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden}
+.pg-overlay.open{transform:translateX(0)}
+.pg-ov-head{position:sticky;top:0;background:var(--w);border-bottom:2px solid var(--k);padding:0 28px;height:62px;display:flex;align-items:center;gap:20px;z-index:10}
+.pg-back{font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--i55);cursor:none;background:none;border:none;display:flex;align-items:center;gap:6px;padding:8px 0;transition:color .15s;flex-shrink:0}
+.pg-back:hover{color:var(--k)}
+.pg-ov-sub{font-family:var(--m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--i32);margin-bottom:2px}
+.pg-ov-title{font-family:var(--bc);font-size:17px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--k);line-height:1}
+.pg-ov-count{font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;margin-left:auto;white-space:nowrap}
+.pg-ov-hero{background:var(--k);padding:36px 28px;display:flex;align-items:center;gap:24px}
+.pg-ov-emoji{font-size:46px;filter:grayscale(1)brightness(.38)}
+.pg-ov-desc{font-family:var(--b);font-size:14px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:500px}
+.pg-ov-body{padding:40px 28px;max-width:1440px;margin:0 auto}
+/* Seller profile */
+.sp-hero{background:var(--off);padding:32px 28px;display:flex;align-items:flex-start;gap:24px;border-bottom:1px solid var(--bdr)}
+.sp-avt{width:72px;height:72px;border:2px solid var(--k);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;filter:grayscale(1)brightness(.42);flex-shrink:0}
+.sp-meta{flex:1}
+.sp-name-lg{font-family:var(--bc);font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--k);margin-bottom:4px}
+.sp-rating-lg{font-family:var(--m);font-size:11px;color:var(--i55);letter-spacing:.04em}
+.sp-bio{font-family:var(--b);font-size:13px;font-weight:300;color:var(--i55);line-height:1.7;margin-top:10px;max-width:500px}
+
 /* ══ RESPONSIVE ══ */
 @media(max-width:1200px){
   .hero{grid-template-columns:1fr}
@@ -450,6 +478,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 }
 @media(max-width:900px){
   .nav-c{display:none}
+  .mob-ham{display:flex}
   .vg{grid-template-columns:repeat(3,1fr)}
   .pg{grid-template-columns:repeat(2,1fr)}
   .cat-g{grid-template-columns:repeat(2,1fr)}
@@ -520,7 +549,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <a href="#home" class="skip-link">Skip to main content</a>
 
 <!-- CURSOR -->
-<div id="cur" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 1L4 18.5L7.5 15L10.5 22L12.5 21L9.5 14H14.5L4 1Z" fill="white" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+<div id="cur" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 1L4 18.5L7.5 15L10.5 22L12.5 21L9.5 14H14.5L4 1Z" fill="#0C0B09" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
 <div id="cur-o" aria-hidden="true"></div>
 
 <!-- BACK TO TOP -->
@@ -748,12 +777,15 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   Free delivery above <b>₹599</b>
   <span class="ann-sep">—</span>
   <b>180</b> verified sellers · <b>karker.in</b>
+  <span class="ann-sep">—</span>
+  <span id="ist-clock">--:--:-- IST</span>
 </div>
 
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-wrap">
-    <button class="nav-logo" onclick="window.scrollTo(0,0)">
+    <button class="mob-ham" id="mobHam" onclick="openPanel('mobMenu')" aria-label="Open menu">☰</button>
+    <button class="nav-logo" onclick="window.scrollTo(0,0)"  style="margin-left:10px">
       <div class="nav-mark"><span>K</span></div>
       KARKER
     </button>
@@ -923,20 +955,20 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row" style="margin-bottom:36px">
       <div><div class="sec-ey">Aesthetic Navigation</div><div class="sec-tit">Shop by <em>Vibe</em></div></div>
-      <span class="see-all" onclick="toast('All 8 vibes →')">View All →</span>
+      <span class="see-all" onclick="openCollectionPage('All Vibes')">View All →</span>
     </div>
   </div>
 </div>
 <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
   <div style="max-width:1440px;margin:0 auto">
     <div class="vg">
-      <div class="vc" onclick="setVibe2('Y2K Revival')"><span class="vc-ico">✦</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">01</div><div class="vc-name">Y2K Revival</div><div class="vc-cnt">312 items</div></div></div>
-      <div class="vc" onclick="setVibe2('Dark Gothic')"><span class="vc-ico">☽</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">02</div><div class="vc-name">Dark Gothic</div><div class="vc-cnt">198 items</div></div></div>
-      <div class="vc" onclick="setVibe2('Soft Minimal')"><span class="vc-ico">—</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">03</div><div class="vc-name">Soft Minimal</div><div class="vc-cnt">224 items</div></div></div>
-      <div class="vc" onclick="setVibe2('Artistic Wear')"><span class="vc-ico">◎</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">04</div><div class="vc-name">Artistic Wear</div><div class="vc-cnt">163 items</div></div></div>
-      <div class="vc" onclick="setVibe2('High Fashion')"><span class="vc-ico">❋</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">05</div><div class="vc-name">High Fashion</div><div class="vc-cnt">287 items</div></div></div>
-      <div class="vc" onclick="setVibe2('Indie Core')"><span class="vc-ico">◈</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">06</div><div class="vc-name">Indie Core</div><div class="vc-cnt">176 items</div></div></div>
-      <div class="vc" onclick="setVibe2('Streetwear')"><span class="vc-ico">↑</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">07</div><div class="vc-name">Streetwear</div><div class="vc-cnt">141 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Y2K Revival')"><span class="vc-ico">✦</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">01</div><div class="vc-name">Y2K Revival</div><div class="vc-cnt">312 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Dark Gothic')"><span class="vc-ico">☽</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">02</div><div class="vc-name">Dark Gothic</div><div class="vc-cnt">198 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Soft Minimal')"><span class="vc-ico">—</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">03</div><div class="vc-name">Soft Minimal</div><div class="vc-cnt">224 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Artistic Wear')"><span class="vc-ico">◎</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">04</div><div class="vc-name">Artistic Wear</div><div class="vc-cnt">163 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('High Fashion')"><span class="vc-ico">❋</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">05</div><div class="vc-name">High Fashion</div><div class="vc-cnt">287 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Indie Core')"><span class="vc-ico">◈</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">06</div><div class="vc-name">Indie Core</div><div class="vc-cnt">176 items</div></div></div>
+      <div class="vc" onclick="openCollectionPage('Streetwear')"><span class="vc-ico">↑</span><div class="vc-grad"></div><div class="vc-arr">↗</div><div class="vc-info"><div class="vc-num">07</div><div class="vc-name">Streetwear</div><div class="vc-cnt">141 items</div></div></div>
     </div>
   </div>
 </div>
@@ -946,7 +978,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row">
       <div><div class="sec-ey">Curated Picks</div><div class="sec-tit">Trending <em>This Week</em></div></div>
-      <span class="see-all" onclick="toast('All products →')">See All →</span>
+      <span class="see-all" onclick="openCollectionPage('Trending')">See All →</span>
     </div>
     <div class="pg" id="prod-grid">
       <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
@@ -1024,12 +1056,12 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
   <div style="max-width:1440px;margin:0 auto">
     <div class="cat-g">
-      <div class="ct" onclick="toast('Tops & Tees — 148 items')"><div class="ct-n">01</div><span class="ct-ico">👕</span><div class="ct-name">Tops & Tees</div><div class="ct-cnt">148 items</div></div>
-      <div class="ct" onclick="toast('Bottoms — 112 items')"><div class="ct-n">02</div><span class="ct-ico">👖</span><div class="ct-name">Bottoms</div><div class="ct-cnt">112 items</div></div>
-      <div class="ct" onclick="toast('Jewellery — 186 items')"><div class="ct-n">03</div><span class="ct-ico">💍</span><div class="ct-name">Jewellery</div><div class="ct-cnt">186 items</div></div>
-      <div class="ct" onclick="toast('Bags — 79 items')"><div class="ct-n">04</div><span class="ct-ico">👜</span><div class="ct-name">Bags</div><div class="ct-cnt">79 items</div></div>
-      <div class="ct" onclick="toast('Footwear — 64 items')"><div class="ct-n">05</div><span class="ct-ico">👟</span><div class="ct-name">Footwear</div><div class="ct-cnt">64 items</div></div>
-      <div class="ct" onclick="toast('Accessories — 112 items')"><div class="ct-n">06</div><span class="ct-ico">🧣</span><div class="ct-name">Accessories</div><div class="ct-cnt">112 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Tops &amp; Tees')"><div class="ct-n">01</div><span class="ct-ico">👕</span><div class="ct-name">Tops &amp; Tees</div><div class="ct-cnt">148 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Bottoms')"><div class="ct-n">02</div><span class="ct-ico">👖</span><div class="ct-name">Bottoms</div><div class="ct-cnt">112 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Jewellery')"><div class="ct-n">03</div><span class="ct-ico">💍</span><div class="ct-name">Jewellery</div><div class="ct-cnt">186 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Bags')"><div class="ct-n">04</div><span class="ct-ico">👜</span><div class="ct-name">Bags</div><div class="ct-cnt">79 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Footwear')"><div class="ct-n">05</div><span class="ct-ico">👟</span><div class="ct-name">Footwear</div><div class="ct-cnt">64 items</div></div>
+      <div class="ct" onclick="openCategoryPage('Accessories')"><div class="ct-n">06</div><span class="ct-ico">🧣</span><div class="ct-name">Accessories</div><div class="ct-cnt">112 items</div></div>
     </div>
   </div>
 </div>
@@ -1039,20 +1071,20 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row" style="margin-bottom:32px">
       <div><div class="sec-ey">The Makers</div><div class="sec-tit">Featured <em>Artists</em></div></div>
-      <span class="see-all" onclick="toast('All 180 sellers →')">View All →</span>
+      <span class="see-all" onclick="openCollectionPage('All Artists')">View All →</span>
     </div>
   </div>
 </div>
 <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
   <div style="max-width:1440px;margin:0 auto">
     <div class="sg">
-      <div class="scrd" onclick="toast('Opening @stardust.fits')"><div class="savt">✦</div><div class="s-n">Stardust Fits</div><div class="s-h">@stardust.fits</div><div class="s-st">★ 4.9 · 48 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Gothic</span></div></div>
-      <div class="scrd" onclick="toast('Opening @palette.people')"><div class="savt">🎨</div><div class="s-n">Palette People</div><div class="s-h">@palette.people</div><div class="s-st">★ 5.0 · 22 products</div><div class="s-pills"><span class="spill">Artistic</span></div></div>
-      <div class="scrd" onclick="toast('Opening @glitch.stitch')"><div class="savt">◈</div><div class="s-n">Glitch Stitch</div><div class="s-h">@glitch.stitch</div><div class="s-st">★ 4.7 · 37 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Indie</span></div></div>
-      <div class="scrd" onclick="toast('Opening @nazar.studio')"><div class="savt">❋</div><div class="s-n">Nazar Studio</div><div class="s-h">@nazar.studio</div><div class="s-st">★ 4.8 · 31 products</div><div class="s-pills"><span class="spill">Fashion</span></div></div>
-      <div class="scrd" onclick="toast('Opening @softstone.studio')"><div class="savt">◯</div><div class="s-n">Softstone Studio</div><div class="s-h">@softstone.studio</div><div class="s-st">★ 4.9 · 29 products</div><div class="s-pills"><span class="spill">Minimal</span></div></div>
-      <div class="scrd" onclick="toast('Opening @pixel.drip')"><div class="savt">⚡</div><div class="s-n">Pixel Drip</div><div class="s-h">@pixel.drip</div><div class="s-st">★ 4.6 · 54 products</div><div class="s-pills"><span class="spill">Street</span><span class="spill">Y2K</span></div></div>
-      <div class="scrd" onclick="toast('Opening @retro.roots')"><div class="savt">◌</div><div class="s-n">Retro Roots</div><div class="s-h">@retro.roots</div><div class="s-st">★ 4.5 · 18 products</div><div class="s-pills"><span class="spill">Vintage</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Stardust Fits')"><div class="savt">✦</div><div class="s-n">Stardust Fits</div><div class="s-h">@stardust.fits</div><div class="s-st">★ 4.9 · 48 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Gothic</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Palette People')"><div class="savt">🎨</div><div class="s-n">Palette People</div><div class="s-h">@palette.people</div><div class="s-st">★ 5.0 · 22 products</div><div class="s-pills"><span class="spill">Artistic</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Glitch Stitch')"><div class="savt">◈</div><div class="s-n">Glitch Stitch</div><div class="s-h">@glitch.stitch</div><div class="s-st">★ 4.7 · 37 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Indie</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Nazar Studio')"><div class="savt">❋</div><div class="s-n">Nazar Studio</div><div class="s-h">@nazar.studio</div><div class="s-st">★ 4.8 · 31 products</div><div class="s-pills"><span class="spill">Fashion</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Softstone Studio')"><div class="savt">◯</div><div class="s-n">Softstone Studio</div><div class="s-h">@softstone.studio</div><div class="s-st">★ 4.9 · 29 products</div><div class="s-pills"><span class="spill">Minimal</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Pixel Drip')"><div class="savt">⚡</div><div class="s-n">Pixel Drip</div><div class="s-h">@pixel.drip</div><div class="s-st">★ 4.6 · 54 products</div><div class="s-pills"><span class="spill">Street</span><span class="spill">Y2K</span></div></div>
+      <div class="scrd" onclick="openSellerPage('Retro Roots')"><div class="savt">◌</div><div class="s-n">Retro Roots</div><div class="s-h">@retro.roots</div><div class="s-st">★ 4.5 · 18 products</div><div class="s-pills"><span class="spill">Vintage</span></div></div>
     </div>
   </div>
 </div>
@@ -1062,7 +1094,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row">
       <div><div class="sec-ey">Just Landed · karker.in</div><div class="sec-tit">New <em>Arrivals</em></div></div>
-      <span class="see-all" onclick="toast('All new arrivals →')">See All →</span>
+      <span class="see-all" onclick="openCollectionPage('New Arrivals')">See All →</span>
     </div>
     <div class="pg">
       <div class="pc" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer, Oatmeal','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.','New')">
@@ -1147,6 +1179,133 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   </div>
 </footer>
 
+<!-- ══ COLLECTION PAGE ══ -->
+<div class="pg-overlay" id="collectionPage" role="dialog" aria-modal="true" aria-label="Collection page">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('collectionPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Collections</div>
+      <div class="pg-ov-title" id="colPageTitle">Y2K Revival</div>
+    </div>
+    <div class="pg-ov-count" id="colPageCount">312 items</div>
+  </div>
+  <div class="pg-ov-hero">
+    <div class="pg-ov-emoji" id="colPageEmoji">✦</div>
+    <div class="pg-ov-desc" id="colPageDesc">Curated indie picks in this aesthetic.</div>
+  </div>
+  <div class="pg-ov-body">
+    <div class="sec-row" style="margin-bottom:32px"><div><div class="sec-ey">Curated Picks</div><div class="sec-tit">Products in <em id="colPageTitle2">this</em> Collection</div></div></div>
+    <div class="pg">
+      <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👗</span><span class="pc-tag">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits <span class="sv">✓</span></div><div class="pc-name">Butterfly Mesh Baby Tee, Lavender</div><div class="pc-pr"><span class="pc-price">₹649</span><span class="pc-mrp">₹899</span><span class="pc-off">−28%</span></div><div class="pc-rat">★ 4.8 · 142 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👟','Y2K Revival','Platform Jelly Mules, Bubblegum','@retro.roots','₹999','₹1,400','29','Clear PVC platform mule. 4cm platform. Pink bubblegum colourway.','Sale')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👟</span><span class="pc-tag">−29%</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@retro.roots</div><div class="pc-name">Platform Jelly Mules, Bubblegum</div><div class="pc-pr"><span class="pc-price">₹999</span><span class="pc-mrp">₹1,400</span><span class="pc-off">−29%</span></div><div class="pc-rat">★ 4.6 · 78 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('💍','Accessories','Rhinestone Layered Necklace Set','@the.aura.co','₹480','','','Layered rhinestone necklace set. Silver-tone plating.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">💍</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@the.aura.co <span class="sv">✓</span></div><div class="pc-name">Rhinestone Layered Necklace Set</div><div class="pc-pr"><span class="pc-price">₹480</span></div><div class="pc-rat">★ 4.9 · 89 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧤','Dark Gothic','Fingerless Mesh Gloves, Black','@static.drop','₹299','','','Open-finger fishnet gloves. One size fits most.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧤</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@static.drop</div><div class="pc-name">Fingerless Mesh Gloves, Black</div><div class="pc-pr"><span class="pc-price">₹299</span></div><div class="pc-rat">★ 4.3 · 44 reviews</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:40px 0;border-top:1px solid var(--bdr);margin-top:32px">
+      <div style="font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.1em;margin-bottom:16px">SHOWING 4 OF <span id="colPageCountInline">312</span> ITEMS</div>
+      <button class="btn-k" onclick="toast('Full catalogue launching soon →')">Load More Items →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CATEGORY PAGE ══ -->
+<div class="pg-overlay" id="categoryPage" role="dialog" aria-modal="true" aria-label="Category page">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('categoryPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Categories</div>
+      <div class="pg-ov-title" id="catPageTitle">Tops &amp; Tees</div>
+    </div>
+    <div class="pg-ov-count" id="catPageCount">148 items</div>
+  </div>
+  <div class="pg-ov-hero">
+    <div class="pg-ov-emoji" id="catPageEmoji">👕</div>
+    <div class="pg-ov-desc" id="catPageDesc">Indie tops and tees from verified artists.</div>
+  </div>
+  <div class="pg-ov-body">
+    <div class="sec-row" style="margin-bottom:32px"><div><div class="sec-ey">Browse</div><div class="sec-tit">All <em id="catPageTitle2">Items</em></div></div></div>
+    <div class="pg">
+      <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👗</span><span class="pc-tag">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits <span class="sv">✓</span></div><div class="pc-name">Butterfly Mesh Baby Tee, Lavender</div><div class="pc-pr"><span class="pc-price">₹649</span><span class="pc-mrp">₹899</span><span class="pc-off">−28%</span></div><div class="pc-rat">★ 4.8 · 142 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🌸','High Fashion','Petal Sleeve Organza Blouse','@sartorial.co','₹1,200','','','Sheer organza fabric. Petal-cut sleeves. Dry clean only.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🌸</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@sartorial.co</div><div class="pc-name">Petal Sleeve Organza Blouse</div><div class="pc-pr"><span class="pc-price">₹1,200</span></div><div class="pc-rat">★ 4.8 · 15 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧶','Indie Core','Crochet Knit Vest, Sage','@cottage.craft','₹920','','','Handmade crochet vest in sage green. Open-weave pattern.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧶</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@cottage.craft</div><div class="pc-name">Crochet Knit Vest, Sage</div><div class="pc-pr"><span class="pc-price">₹920</span></div><div class="pc-rat">★ 4.9 · 22 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer, Oatmeal','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧥</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@softstone.studio</div><div class="pc-name">Oversized Linen Blazer, Oatmeal</div><div class="pc-pr"><span class="pc-price">₹2,100</span><span class="pc-mrp">₹2,800</span><span class="pc-off">−25%</span></div><div class="pc-rat">★ 4.8 · 61 reviews</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:40px 0;border-top:1px solid var(--bdr);margin-top:32px">
+      <div style="font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.1em;margin-bottom:16px">SHOWING 4 OF <span id="catPageCountInline">148</span> ITEMS</div>
+      <button class="btn-k" onclick="toast('Full catalogue launching soon →')">Load More Items →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SELLER PROFILE PAGE ══ -->
+<div class="pg-overlay" id="sellerPage" role="dialog" aria-modal="true" aria-label="Seller profile page">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('sellerPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Artist Profile</div>
+      <div class="pg-ov-title" id="sellerPageName">Stardust Fits</div>
+    </div>
+    <div class="pg-ov-count" id="sellerPageHandle">@stardust.fits</div>
+  </div>
+  <div class="sp-hero">
+    <div class="sp-avt" id="sellerPageAvt">✦</div>
+    <div class="sp-meta">
+      <div class="sp-name-lg" id="sellerPageNameLg">Stardust Fits</div>
+      <div class="sp-rating-lg" id="sellerPageRating">★ 4.9 · 48 products</div>
+      <div class="s-pills" id="sellerPagePills" style="justify-content:flex-start;margin-top:10px"></div>
+      <div class="sp-bio" id="sellerPageBio">Independent artist on KARKER.</div>
+    </div>
+  </div>
+  <div class="pg-ov-body">
+    <div class="sec-row" style="margin-bottom:32px"><div><div class="sec-ey">The Collection</div><div class="sec-tit">Products by <em id="sellerPageNameEm">this Artist</em></div></div></div>
+    <div class="pg">
+      <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👗</span><span class="pc-tag">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits <span class="sv">✓</span></div><div class="pc-name">Butterfly Mesh Baby Tee, Lavender</div><div class="pc-pr"><span class="pc-price">₹649</span><span class="pc-mrp">₹899</span><span class="pc-off">−28%</span></div><div class="pc-rat">★ 4.8 · 142 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧣','Dark Gothic','Velvet Butterfly Scarf, Midnight','@stardust.fits','₹390','','','Deep midnight purple velvet. Extra-wide. Wear as shawl or scarf.','Limited')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧣</span><span class="pc-tag">Limited</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits</div><div class="pc-name">Velvet Butterfly Scarf, Midnight</div><div class="pc-pr"><span class="pc-price">₹390</span></div><div class="pc-rat">★ 4.7 · 56 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('🧤','Y2K Revival','Fingerless Lace Gloves, White','@stardust.fits','₹349','','','Delicate lace gloves. Fingerless. One size.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧤</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits</div><div class="pc-name">Fingerless Lace Gloves, White</div><div class="pc-pr"><span class="pc-price">₹349</span></div><div class="pc-rat">★ 4.5 · 29 reviews</div></div>
+      </div>
+      <div class="pc" onclick="openProduct('👒','Y2K Revival','Coquette Satin Bow Clip','@stardust.fits','₹199','','','Oversized satin bow hair clip. Available in black & pink.','New')">
+        <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👒</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
+        <div class="pc-body"><div class="pc-seller">@stardust.fits</div><div class="pc-name">Coquette Satin Bow Clip</div><div class="pc-pr"><span class="pc-price">₹199</span></div><div class="pc-rat">★ 4.9 · 112 reviews</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:40px 0;border-top:1px solid var(--bdr);margin-top:32px">
+      <button class="btn-k" onclick="toast('Full artist catalogue coming soon →')">View Full Catalogue →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ DROP ADMIN TOGGLE ══ -->
 <button class="drop-toggle" id="dropToggle" onclick="toggleDrop()">
   <span class="t-dot" id="tDot"></span>
@@ -1155,11 +1314,12 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 
 <script>
 /* ── SANITISE (XSS prevention) ── */
-function sanitise(s){if(typeof s!=='string')return '';return s.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#x27;'}[c])).trim();}
+function sanitise(s){if(typeof s!=='string')return '';return s.replace(/[<>&"'`]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#x27;','`':'&#x60;'}[c])).trim();}
 
-/* ── TOAST — defined first so all functions can call it ── */
+/* ── TOAST ── */
 function toast(msg,cls=''){
   const w=document.getElementById('toasts');
+  if(!w)return;
   const el=document.createElement('div');
   el.className='toast'+(cls?' '+cls:'');
   el.textContent=sanitise(String(msg));
@@ -1167,19 +1327,30 @@ function toast(msg,cls=''){
   setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .28s';setTimeout(()=>el.remove(),280);},2600);
 }
 
-/* ── CURSOR ── */
+/* ── CURSOR — rAF-based, correct hotspot at SVG tip (4,1) ── */
 const cur=document.getElementById('cur');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
-const hovSel='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn,#btt';
-document.querySelectorAll(hovSel).forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-});
+let _mx=-100,_my=-100,_rafPending=false;
+document.addEventListener('mousemove',e=>{
+  _mx=e.clientX;_my=e.clientY;
+  if(!_rafPending){_rafPending=true;requestAnimationFrame(()=>{cur.style.left=(_mx-4)+'px';cur.style.top=(_my-1)+'px';_rafPending=false;});}
+},{passive:true});
+
+/* Hover scale — event delegation so it works on dynamically added elements */
+const _hovMatch='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.pg-back,.mob-ham,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn,#btt';
+document.addEventListener('mouseover',e=>{if(e.target.closest(_hovMatch))document.body.classList.add('hov');});
+document.addEventListener('mouseout',e=>{if(!e.relatedTarget?.closest(_hovMatch))document.body.classList.remove('hov');});
+
+/* ── IST REAL-TIME CLOCK ── */
+function _updateISTClock(){
+  const el=document.getElementById('ist-clock');if(!el)return;
+  const ist=new Date(Date.now()+5.5*3600000);
+  el.textContent=String(ist.getUTCHours()).padStart(2,'0')+':'+String(ist.getUTCMinutes()).padStart(2,'0')+':'+String(ist.getUTCSeconds()).padStart(2,'0')+' IST';
+}
+_updateISTClock();setInterval(_updateISTClock,1000);
 
 /* ── KEYBOARD — ESC closes everything ── */
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');}
+  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');closePage('collectionPage');closePage('categoryPage');closePage('sellerPage');}
 });
 
 /* ── VALIDATION ── */
@@ -1189,14 +1360,13 @@ function validPhone(p){if(!p||!p.trim())return true;return /^(\+91[\s-]?)?[6-9]\
 /* ── FIELD ERROR HELPERS ── */
 function showFieldErr(errId,msg){
   const el=document.getElementById(errId);
-  if(el){el.style.display='block';el.textContent=msg;}
-  const inpId=errId.replace('Err','');
-  const inp=document.getElementById(inpId);
+  if(el){el.style.display='block';el.textContent=sanitise(msg);}
+  const inp=document.getElementById(errId.replace('Err',''));
   if(inp){inp.classList.add('inp-err');inp.classList.remove('inp-ok');}
 }
 function clearFieldErrs(){
   document.querySelectorAll('.m-err').forEach(e=>e.style.display='none');
-  document.querySelectorAll('.m-input').forEach(i=>{i.classList.remove('inp-err');i.classList.remove('inp-ok');});
+  document.querySelectorAll('.m-input').forEach(i=>i.classList.remove('inp-err','inp-ok'));
 }
 
 /* ── HUMANISE SUPABASE ERRORS ── */
@@ -1264,11 +1434,79 @@ function checkPwStrength(pw){
 }
 
 /* ── VIBE STRIP ── */
-function setVibe(el){document.querySelectorAll('.v-cs').forEach(i=>i.classList.remove('on'));el.classList.add('on');toast(el.textContent.trim());}
-function setVibe2(name){
-  document.querySelectorAll('.v-cs').forEach(i=>{i.classList.toggle('on',i.textContent.trim()===name);});
-  toast(name+' — filtering...');
-  document.getElementById('trending')?.scrollIntoView({behavior:'smooth'});
+function setVibe(el){
+  document.querySelectorAll('.v-cs').forEach(i=>i.classList.remove('on'));
+  el.classList.add('on');
+  const name=el.textContent.trim();
+  if(name==='All Vibes'){toast('Showing all vibes');}
+  else{openCollectionPage(name);}
+}
+
+/* ── PAGE OVERLAYS ── */
+function openPage(id){document.getElementById(id)?.classList.add('open');}
+function closePage(id){document.getElementById(id)?.classList.remove('open');}
+
+/* ── COLLECTION PAGE ── */
+const VIBE_DATA={
+  'Y2K Revival':{count:'312',emoji:'✦',desc:'Nostalgic 2000s revival aesthetics — mesh, chrome, butterfly prints, bubblegum colours.'},
+  'Dark Gothic':{count:'198',emoji:'☽',desc:'Dark romanticism — velvet, lace, onyx tones and dramatic silhouettes.'},
+  'Soft Minimal':{count:'224',emoji:'—',desc:'Clean, quiet luxury — linen, muted palettes and understated elegance.'},
+  'Artistic Wear':{count:'163',emoji:'◎',desc:'Wearable art — hand-painted, handmade, one-of-a-kind pieces by indie artists.'},
+  'High Fashion':{count:'287',emoji:'❋',desc:'Elevated indie design — editorial cuts, premium fabrics, directional style.'},
+  'Indie Core':{count:'176',emoji:'◈',desc:'The heart of indie — vintage, eclectic, thrift-inspired and authentically you.'},
+  'Streetwear':{count:'141',emoji:'↑',desc:'Urban edge — cargos, hoodies, sneakers and graphic tees from Indian street culture.'},
+  'Trending':{count:'250',emoji:'⚡',desc:'What the KARKER community is loving right now.'},
+  'New Arrivals':{count:'89',emoji:'✦',desc:'Just landed — freshest drops from our verified indie artists.'},
+  'All Vibes':{count:'1501',emoji:'◎',desc:'All aesthetics, all vibes — the complete KARKER collection.'},
+  'All Artists':{count:'180',emoji:'✦',desc:'Meet all 180 verified indie artists selling on KARKER.'},
+};
+function openCollectionPage(vibe){
+  const d=VIBE_DATA[vibe]||{count:'',emoji:'✦',desc:'Curated indie picks.'};
+  const safe=sanitise(vibe);
+  const _s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  _s('colPageTitle',vibe);_s('colPageTitle2',safe);
+  _s('colPageCount',d.count+' items');_s('colPageCountInline',d.count);
+  _s('colPageEmoji',d.emoji);_s('colPageDesc',d.desc);
+  openPage('collectionPage');
+}
+
+/* ── CATEGORY PAGE ── */
+const CAT_DATA={
+  'Tops & Tees':{count:'148',emoji:'👕',desc:'Crop tops, baby tees, oversized shirts and blouses from indie designers.'},
+  'Bottoms':{count:'112',emoji:'👖',desc:'Cargos, wide-legs, skirts and shorts — bottoms that make the look.'},
+  'Jewellery':{count:'186',emoji:'💍',desc:'Handcrafted rings, earrings, necklaces and body jewellery from indie artists.'},
+  'Bags':{count:'79',emoji:'👜',desc:'Mini bags, totes and sling bags — made by independent Indian makers.'},
+  'Footwear':{count:'64',emoji:'👟',desc:'Platforms, mules, boots and sneakers with indie spirit.'},
+  'Accessories':{count:'112',emoji:'🧣',desc:'Scarves, gloves, belts and hair accessories.'},
+};
+function openCategoryPage(cat){
+  const d=CAT_DATA[cat]||{count:'',emoji:'🛍',desc:'Indie picks.'};
+  const _s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  _s('catPageTitle',cat);_s('catPageTitle2',sanitise(cat));
+  _s('catPageCount',d.count+' items');_s('catPageCountInline',d.count);
+  _s('catPageEmoji',d.emoji);_s('catPageDesc',d.desc);
+  openPage('categoryPage');
+}
+
+/* ── SELLER PAGE ── */
+const SELLER_DATA={
+  'Stardust Fits':{handle:'@stardust.fits',rating:'★ 4.9',products:'48 products',avt:'✦',pills:['Y2K','Gothic'],bio:'Mumbai-based indie label specialising in Y2K and dark aesthetic fashion. All pieces are limited edition.'},
+  'Palette People':{handle:'@palette.people',rating:'★ 5.0',products:'22 products',avt:'🎨',pills:['Artistic'],bio:'Hand-painted wearable art from Bengaluru. Every piece is unique — no repeats ever.'},
+  'Glitch Stitch':{handle:'@glitch.stitch',rating:'★ 4.7',products:'37 products',avt:'◈',pills:['Y2K','Indie'],bio:'Delhi-based label creating nostalgic Y2K and indie core fashion with an Indian twist.'},
+  'Nazar Studio':{handle:'@nazar.studio',rating:'★ 4.8',products:'31 products',avt:'❋',pills:['Fashion'],bio:'High-fashion accessories studio from Jaipur. Specialises in statement bags and jewellery.'},
+  'Softstone Studio':{handle:'@softstone.studio',rating:'★ 4.9',products:'29 products',avt:'◯',pills:['Minimal'],bio:'Pune-based minimal fashion studio. Premium linen, cotton and natural fabrics only.'},
+  'Pixel Drip':{handle:'@pixel.drip',rating:'★ 4.6',products:'54 products',avt:'⚡',pills:['Street','Y2K'],bio:'Hyderabad streetwear label. Cargos, graphic tees and urban essentials.'},
+  'Retro Roots':{handle:'@retro.roots',rating:'★ 4.5',products:'18 products',avt:'◌',pills:['Vintage'],bio:'Chennai vintage revival label. Reworked vintage pieces and retro-inspired originals.'},
+};
+function openSellerPage(name){
+  const d=SELLER_DATA[name]||{handle:'',rating:'★',products:'',avt:'◯',pills:[],bio:'Independent artist on KARKER.'};
+  const _s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  _s('sellerPageName',name);_s('sellerPageNameLg',name);_s('sellerPageNameEm',name);
+  _s('sellerPageHandle',d.handle);_s('sellerPageRating',d.rating+' · '+d.products);
+  _s('sellerPageAvt',d.avt);_s('sellerPageBio',d.bio);
+  const pillsEl=document.getElementById('sellerPagePills');
+  if(pillsEl)pillsEl.innerHTML=d.pills.map(p=>`<span class="spill">${sanitise(p)}</span>`).join('');
+  openPage('sellerPage');
 }
 
 /* ── PANELS / MODALS ── */
@@ -1284,7 +1522,8 @@ function closeModal(id){
   document.getElementById(id)?.classList.remove('open');
   document.getElementById(ovId)?.classList.remove('open');
 }
-function closeAll(){closePanel('cartPanel');closePanel('mobMenu');}
+/* closeAll — includes search fix */
+function closeAll(){closePanel('cartPanel');closePanel('mobMenu');closeSearch();}
 
 /* ── SEARCH ── */
 function openSearch(){
@@ -1308,16 +1547,13 @@ function _showForm(id){
 }
 function setTab(el,formId){
   document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  clearFieldErrs();
-  _showForm(formId);
+  el.classList.add('on');clearFieldErrs();_showForm(formId);
 }
 function switchTab(formId){
   document.querySelectorAll('.m-tab').forEach((t,i)=>{
     t.classList.toggle('on',(formId==='signupForm'&&i===1)||(formId==='loginForm'&&i===0));
   });
-  clearFieldErrs();
-  _showForm(formId);
+  clearFieldErrs();_showForm(formId);
 }
 function showReset(){clearFieldErrs();document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('on'));_showForm('resetForm');}
 function showLogin(){clearFieldErrs();document.querySelector('.m-tab')?.classList.add('on');_showForm('loginForm');}
@@ -1422,29 +1658,43 @@ updateNavForUser();
 
 /* ── PRODUCT MODAL ── */
 function openProduct(ico,vibe,name,seller,price,mrp,off,desc,tag){
-  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v||'';};
-  set('pm-ico',ico);set('pm-vibe',vibe);set('pm-name',name);
-  set('pm-price',price);
-  set('pm-mrp',mrp?'₹'+mrp.replace('₹',''):'');
-  set('pm-off',off?'− '+off+'%':'');
-  set('pm-desc',desc||'');set('pm-tag',tag||'');
+  const _s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v||'';};
+  _s('pm-ico',ico);_s('pm-vibe',vibe);_s('pm-name',name);
+  _s('pm-price',price);
+  _s('pm-mrp',mrp?'₹'+String(mrp).replace(/₹/g,''):'');
+  _s('pm-off',off?'− '+off+'%':'');
+  _s('pm-desc',desc||'');_s('pm-tag',tag||'');
   const sellerEl=document.getElementById('pm-seller');
-  if(sellerEl)sellerEl.textContent=seller;
+  if(sellerEl)sellerEl.innerHTML=sanitise(seller)+'<span class="sv" style="margin-left:2px">✓</span>';
   document.querySelectorAll('.pm-sz').forEach(s=>s.classList.remove('on'));
   document.querySelector('.pm-sz:not(.sold)')?.classList.add('on');
   openModal('prodModal');
 }
 function selSz(el){document.querySelectorAll('.pm-sz').forEach(s=>s.classList.remove('on'));el.classList.add('on');}
 
-/* ── CART ── */
-let cartCount=2;
-const cartPrices=[649,480];
-function addToCart(){
-  cartCount++;
+/* ── CART — persisted via localStorage ── */
+(function initCart(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('karker_cart')||'null');
+    window._cartPrices=saved?.prices??[649,480];
+    window._cartCount=saved?.count??2;
+  }catch(e){window._cartPrices=[649,480];window._cartCount=2;}
+})();
+function _saveCart(){
+  try{localStorage.setItem('karker_cart',JSON.stringify({count:window._cartCount,prices:window._cartPrices}));}catch(e){}
+}
+function _syncCartUI(){
+  const c=window._cartCount;
   const n=document.getElementById('navCartN');
-  const c=document.getElementById('cart-count');
-  if(n)n.textContent=cartCount;
-  if(c)c.textContent='('+cartCount+' items)';
+  const cc=document.getElementById('cart-count');
+  if(n)n.textContent=c;
+  if(cc)cc.textContent='('+c+' item'+(c!==1?'s':'')+')';
+  updateCartTotal();
+}
+function addToCart(){
+  window._cartCount++;
+  window._cartPrices.push(699);
+  _saveCart();_syncCartUI();
   toast('Added to cart ✓','lt');
 }
 function changeQty(btn,dir){
@@ -1459,12 +1709,13 @@ function changeQty(btn,dir){
 function updateCartTotal(){
   let total=0;
   document.querySelectorAll('.cart-item').forEach((item,i)=>{
-    const q=parseInt(item.querySelector('.qty-n')?.textContent||1);
-    total+=(cartPrices[i]||500)*q;
+    const q=parseInt(item.querySelector('.qty-n')?.textContent||'1');
+    total+=(window._cartPrices[i]||500)*q;
   });
   const el=document.getElementById('cart-total');
   if(el)el.textContent='₹'+total.toLocaleString('en-IN');
 }
+_syncCartUI();
 
 /* ── DROP TOGGLE ── */
 let dropOn=true;
@@ -1477,16 +1728,35 @@ function toggleDrop(){
   toast(dropOn?'Drop countdown visible ✓':'Drop countdown hidden','lt');
 }
 
-/* ── COUNTDOWN ── */
-let dropEnd=new Date();
-dropEnd.setHours(dropEnd.getHours()+18,dropEnd.getMinutes()+42,dropEnd.getSeconds()+9);
+/* ── COUNTDOWN — persisted via localStorage so reload doesn't reset ── */
+const _DROP_KEY='karker_drop_end_v1';
+let dropEnd;
+(function initDrop(){
+  try{
+    const stored=localStorage.getItem(_DROP_KEY);
+    if(stored){const t=parseInt(stored);if(t>Date.now()){dropEnd=new Date(t);return;}}
+  }catch(e){}
+  /* Set to next Tuesday 11:59 PM IST (18:29:59 UTC) */
+  const now=new Date();
+  const istDay=new Date(now.getTime()+5.5*3600000).getUTCDay();
+  const daysToTue=((2-istDay)+7)%7||7;
+  dropEnd=new Date(now);
+  dropEnd.setDate(dropEnd.getDate()+daysToTue);
+  dropEnd.setUTCHours(18,29,59,0);
+  try{localStorage.setItem(_DROP_KEY,String(dropEnd.getTime()));}catch(e){}
+})();
 function tickCd(){
-  const d=dropEnd-new Date();
-  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0');};
-  if(d<=0){set('cdh',0);set('cdm',0);set('cds',0);return;}
-  set('cdh',Math.floor(d/3600000));
-  set('cdm',Math.floor((d%3600000)/60000));
-  set('cds',Math.floor((d%60000)/1000));
+  const d=dropEnd-Date.now();
+  const _s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=String(Math.max(0,v)).padStart(2,'0');};
+  if(d<=0){
+    _s('cdh',0);_s('cdm',0);_s('cds',0);
+    try{localStorage.removeItem(_DROP_KEY);}catch(e){}
+    return;
+  }
+  const sec=Math.floor(d/1000);
+  _s('cdh',Math.floor(sec/3600));
+  _s('cdm',Math.floor((sec%3600)/60));
+  _s('cds',sec%60);
 }
 setInterval(tickCd,1000);tickCd();
 
@@ -1495,13 +1765,21 @@ window.addEventListener('scroll',()=>{
   document.getElementById('btt')?.classList.toggle('show',window.scrollY>400);
 },{passive:true});
 
-/* ── WISHLIST ── */
-document.querySelectorAll('.pc-wish').forEach(w=>{
+/* ── WISHLIST — persisted via localStorage ── */
+let _wl;
+try{_wl=new Set(JSON.parse(localStorage.getItem('karker_wl')||'[]'));}catch(e){_wl=new Set();}
+function _saveWL(){try{localStorage.setItem('karker_wl',JSON.stringify([..._wl]));}catch(e){}}
+document.querySelectorAll('.pc-wish').forEach((w,i)=>{
+  const key='p'+i;
+  if(_wl.has(key)){w.classList.add('on');w.textContent='♥';}
   w.addEventListener('click',e=>{
     e.stopPropagation();
     w.classList.toggle('on');
-    w.textContent=w.classList.contains('on')?'♥':'♡';
-    toast(w.classList.contains('on')?'Saved to wishlist ♥':'Removed from wishlist');
+    const saved=w.classList.contains('on');
+    w.textContent=saved?'♥':'♡';
+    saved?_wl.add(key):_wl.delete(key);
+    _saveWL();
+    toast(saved?'Saved to wishlist ♥':'Removed from wishlist');
   });
 });
 
@@ -1509,7 +1787,7 @@ document.querySelectorAll('.pc-wish').forEach(w=>{
 if('IntersectionObserver' in window){
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.src){e.target.src=e.target.dataset.src;io.unobserve(e.target);}});
-  });
+  },{rootMargin:'200px'});
   document.querySelectorAll('img[data-src]').forEach(img=>io.observe(img));
 }
 </script>
