@@ -46,24 +46,21 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
-body{font-family:var(--b);background:var(--w);color:var(--k);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--b);background:var(--w);color:var(--k);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
-button{font-family:inherit;border:none;background:none}
-a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:none;border:none;background:none}
+a{text-decoration:none;color:inherit;cursor:none}
 ::selection{background:var(--k);color:var(--w)}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--w)}
 ::-webkit-scrollbar-thumb{background:var(--i32)}
 
-/* ── CURSOR (desktop/mouse only) ── */
-#cur{width:20px;height:24px;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;display:none;will-change:transform}
-body.has-mouse #cur{display:block}
-body.has-mouse{cursor:none}
-body.has-mouse button,body.has-mouse a,body.has-mouse [onclick],body.has-mouse select,body.has-mouse input,body.has-mouse textarea{cursor:none}
-body.has-mouse.hov #cur{transform:scale(1.15)}
-/* body.has-mouse overrides all cursor:pointer back to none */
-body.has-mouse *{cursor:none !important}
-body.has-mouse input,body.has-mouse textarea,body.has-mouse select{cursor:none !important}
+/* ── CURSOR ── */
+#cur{width:20px;height:20px;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(0,0);transition:transform .1s;background:none;}
+#cur-o{display:none;}
+body.hov #cur{transform:scale(1.15);}
+body.hov #cur-o{display:none;}
+body.dark-cur #cur{background:none;}
 
 /* ── OVERLAYS ── */
 .overlay{position:fixed;inset:0;background:rgba(12,11,9,0.55);z-index:800;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
@@ -74,33 +71,33 @@ body.has-mouse input,body.has-mouse textarea,body.has-mouse select{cursor:none !
 .modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%)}
 
 /* ══ ANN BAR ══ */
-.ann{background:var(--k);color:rgba(255,255,255,.6);padding:9px 40px;text-align:center;font-family:var(--m);font-size:11.5px;font-weight:400;letter-spacing:.1em}
+.ann{background:var(--k);color:rgba(255,255,255,.6);padding:10px 40px;text-align:center;font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.1em}
 .ann b{color:rgba(255,255,255,.92);font-weight:500}
 .ann-sep{margin:0 16px;opacity:.3}
 
 /* ══ NAV ══ */
 nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z-index:400}
 .nav-wrap{max-width:1440px;margin:0 auto;padding:0 28px;height:62px;display:flex;align-items:center;gap:0}
-.nav-logo{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--k);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-logo{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--k);display:flex;align-items:center;gap:8px;cursor:none;flex-shrink:0}
 .nav-mark{width:26px;height:26px;background:var(--k);display:flex;align-items:center;justify-content:center;border-radius:2px}
 .nav-mark span{font-family:var(--bc);font-size:15px;font-weight:900;color:white;line-height:1}
 .nav-c{flex:1;display:flex;align-items:center;justify-content:center;gap:0}
-.nav-lnk{padding:5px 16px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:pointer;transition:color .15s;border-left:1px solid var(--bdr)}
+.nav-lnk{padding:5px 16px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:none;transition:color .15s;border-left:1px solid var(--bdr)}
 .nav-lnk:first-child{border-left:none}
 .nav-lnk:hover{color:var(--k)}
 .nav-r{display:flex;align-items:center;gap:0;margin-left:auto}
-.n-ico{width:46px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border-left:1px solid var(--bdr);transition:background .15s;position:relative;font-size:16px;color:var(--i55)}
+.n-ico{width:46px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:none;border-left:1px solid var(--bdr);transition:background .15s;position:relative;font-size:16px;color:var(--i55)}
 .n-ico:hover{background:var(--i04);color:var(--k)}
 .n-ico .nl{font-family:var(--m);font-size:8px;color:var(--i32);letter-spacing:.04em}
 .n-cnt{position:absolute;top:10px;right:7px;width:14px;height:14px;background:var(--k);color:white;font-size:7.5px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--m)}
-.nav-sell{height:34px;padding:0 20px;background:var(--k);color:white;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;margin:0 14px;transition:opacity .15s;border:none}
+.nav-sell{height:34px;padding:0 20px;background:var(--k);color:white;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;margin:0 14px;transition:opacity .15s;border:none}
 .nav-sell:hover{opacity:.8}
 
 /* ══ VIBE STRIP ══ */
 .vs{background:var(--w);border-bottom:1px solid var(--bdr);overflow-x:auto;scrollbar-width:none}
 .vs::-webkit-scrollbar{display:none}
 .vs-in{max-width:1440px;margin:0 auto;padding:0 28px;display:flex;white-space:nowrap}
-.v-cs{padding:11px 18px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--i32);border-bottom:2px solid transparent;cursor:pointer;transition:color .15s,border-color .15s;flex-shrink:0}
+.v-cs{padding:11px 18px;font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--i32);border-bottom:2px solid transparent;cursor:none;transition:color .15s,border-color .15s;flex-shrink:0}
 .v-cs:hover{color:var(--i55)}
 .v-cs.on{color:var(--k);border-bottom-color:var(--k);font-weight:500}
 
@@ -119,7 +116,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .drop-r{display:flex;align-items:center;gap:14px}
 .drop-sub{font-family:var(--b);font-size:12.5px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.65;max-width:160px;text-align:right}
 .drop-sub b{color:rgba(255,255,255,.75);display:block;font-weight:600;font-size:13.5px}
-.drop-btn{height:40px;padding:0 24px;background:white;color:var(--k);font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:none;transition:background .15s,transform .15s;white-space:nowrap}
+.drop-btn{height:40px;padding:0 24px;background:white;color:var(--k);font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:none;transition:background .15s,transform .15s;white-space:nowrap}
 .drop-btn:hover{background:#F0EDEA;transform:translateY(-1px)}
 
 /* ══ HERO ══ */
@@ -136,9 +133,9 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .h1-muted{display:block;color:var(--i32)}
 .hero-body{font-family:var(--b);font-size:14.5px;font-weight:300;line-height:1.85;color:var(--i55);max-width:390px;margin-bottom:40px;position:relative;z-index:1}
 .hero-btns{display:flex;align-items:center;gap:12px;margin-bottom:60px;position:relative;z-index:1;flex-wrap:wrap}
-.btn-k{height:50px;padding:0 34px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:2px solid var(--k);transition:all .2s;display:inline-flex;align-items:center;gap:10px}
+.btn-k{height:50px;padding:0 34px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s;display:inline-flex;align-items:center;gap:10px}
 .btn-k:hover{background:transparent;color:var(--k)}
-.btn-k-o{height:50px;padding:0 28px;background:transparent;color:var(--k);font-family:var(--m);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:2px solid var(--k);transition:all .2s}
+.btn-k-o{height:50px;padding:0 28px;background:transparent;color:var(--k);font-family:var(--m);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s}
 .btn-k-o:hover{background:var(--k);color:white}
 .hero-stats{display:flex;gap:0;border-top:2px solid var(--k);padding-top:0;position:relative;z-index:1}
 .hst{flex:1;padding:18px 0 2px}
@@ -149,7 +146,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 /* Hero right */
 .hero-r{background:var(--k);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;position:relative}
 .hero-r::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 75% 30%,rgba(255,255,255,.03) 0%,transparent 60%);pointer-events:none}
-.hr-cell{border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:20px 22px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;cursor:pointer;min-height:210px;transition:background .35s}
+.hr-cell{border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:20px 22px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;cursor:none;min-height:210px;transition:background .35s}
 .hr-cell:nth-child(2),.hr-cell:nth-child(4){border-right:none}
 .hr-cell:nth-child(3),.hr-cell:nth-child(4){border-bottom:none}
 .hr-cell:hover{background:rgba(255,255,255,.03)}
@@ -186,12 +183,12 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .sec-ey::before{content:'';width:18px;height:1.5px;background:var(--i32)}
 .sec-tit{font-family:var(--bc);font-size:clamp(32px,4vw,54px);font-weight:900;text-transform:uppercase;letter-spacing:.01em;color:var(--k);line-height:.95}
 .sec-tit em{font-style:italic;color:var(--i32);font-weight:700}
-.see-all{font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);display:flex;align-items:center;gap:8px;cursor:pointer;transition:color .15s,gap .15s;border-bottom:1px solid var(--i16);padding-bottom:2px;white-space:nowrap}
+.see-all{font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);display:flex;align-items:center;gap:8px;cursor:none;transition:color .15s,gap .15s;border-bottom:1px solid var(--i16);padding-bottom:2px;white-space:nowrap}
 .see-all:hover{color:var(--k);gap:12px;border-bottom-color:var(--k)}
 
 /* ══ VIBE GRID ══ */
 .vg{display:grid;grid-template-columns:repeat(7,1fr);border:2px solid var(--k)}
-.vc{position:relative;aspect-ratio:9/16;cursor:pointer;overflow:hidden;border-right:1px solid rgba(255,255,255,.07);transition:z-index 0s}
+.vc{position:relative;aspect-ratio:9/16;cursor:none;overflow:hidden;border-right:1px solid rgba(255,255,255,.07);transition:z-index 0s}
 .vc:last-child{border-right:none}
 .vc:nth-child(1){background:linear-gradient(170deg,#111 0%,#1D1818 100%)}
 .vc:nth-child(2){background:linear-gradient(170deg,#0D0D0D 0%,#191414 100%)}
@@ -216,7 +213,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 
 /* ══ PRODUCT GRID ══ */
 .pg{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--k);gap:0}
-.pc{background:var(--w);border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);cursor:pointer;overflow:hidden;position:relative;transition:background .22s}
+.pc{background:var(--w);border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);cursor:none;overflow:hidden;position:relative;transition:background .22s}
 .pc:nth-child(4n){border-right:none}
 .pc:nth-last-child(-n+4){border-bottom:none}
 .pc:hover{background:var(--off)}
@@ -226,7 +223,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .pc:hover .pc-ico{filter:grayscale(1)brightness(.45)contrast(.9);transform:scale(1.05)translateY(-4px)}
 .pc-tag{position:absolute;top:13px;left:13px;font-family:var(--m);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--k);color:white;padding:3px 8px;z-index:2}
 .pc-tag.w{background:white;color:var(--k);border:1px solid var(--k)}
-.pc-wish{position:absolute;top:11px;right:13px;font-size:17px;color:var(--i16);opacity:0;transition:opacity .2s;cursor:pointer;z-index:2}
+.pc-wish{position:absolute;top:11px;right:13px;font-size:17px;color:var(--i16);opacity:0;transition:opacity .2s;cursor:none;z-index:2}
 .pc:hover .pc-wish{opacity:1}
 .pc-wish.on{opacity:1;color:var(--k)}
 .pc-body{padding:15px 18px 20px}
@@ -247,9 +244,9 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .ed-tit .ghost{-webkit-text-stroke:1.5px rgba(255,255,255,.45);color:transparent;display:block}
 .ed-body{font-family:var(--b);font-size:13.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.40);max-width:340px;margin-bottom:38px}
 .ed-btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn-inv{height:46px;padding:0 28px;background:white;color:var(--k);font-family:var(--m);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:none;transition:background .15s}
+.btn-inv{height:46px;padding:0 28px;background:white;color:var(--k);font-family:var(--m);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:none;transition:background .15s}
 .btn-inv:hover{background:#F0EDEA}
-.btn-g-inv{height:46px;padding:0 22px;border:2px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;background:none;transition:all .2s}
+.btn-g-inv{height:46px;padding:0 22px;border:2px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:none;background:none;transition:all .2s}
 .btn-g-inv:hover{border-color:rgba(255,255,255,.5);color:white}
 .ed-r{padding:56px 28px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
 .ed-feat{padding:19px 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;gap:16px}
@@ -260,7 +257,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 
 /* ══ CATEGORIES ══ */
 .cat-g{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--k)}
-.ct{background:var(--w);border-right:1px solid var(--bdr);padding:26px 20px;cursor:pointer;transition:background .2s;overflow:hidden;position:relative}
+.ct{background:var(--w);border-right:1px solid var(--bdr);padding:26px 20px;cursor:none;transition:background .2s;overflow:hidden;position:relative}
 .ct:last-child{border-right:none}
 .ct:hover{background:var(--off)}
 .ct-n{font-family:var(--bc);font-size:44px;font-weight:900;color:var(--i04);line-height:1;margin-bottom:10px;transition:color .3s}
@@ -272,7 +269,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 
 /* ══ SELLERS ══ */
 .sg{display:grid;grid-template-columns:repeat(7,1fr);border:2px solid var(--k)}
-.scrd{background:var(--w);border-right:1px solid var(--bdr);padding:26px 14px;cursor:pointer;transition:background .2s;text-align:center}
+.scrd{background:var(--w);border-right:1px solid var(--bdr);padding:26px 14px;cursor:none;transition:background .2s;text-align:center}
 .scrd:last-child{border-right:none}
 .scrd:hover{background:var(--off)}
 .savt{width:50px;height:50px;border:2px solid var(--k);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:19px;filter:grayscale(1)brightness(.42);transition:filter .3s;border-radius:50%}
@@ -292,16 +289,16 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .srch-wrap{max-width:800px;margin:0 auto;position:relative}
 .srch-inp{width:100%;height:56px;border:none;border-bottom:2px solid var(--k);background:transparent;font-family:var(--bc);font-size:32px;font-weight:700;color:var(--k);letter-spacing:.02em;outline:none;padding:0 48px 0 0;text-transform:uppercase}
 .srch-inp::placeholder{color:var(--i16)}
-.srch-close{position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:22px;color:var(--i32);cursor:pointer;transition:color .15s}
+.srch-close{position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:22px;color:var(--i32);cursor:none;transition:color .15s}
 .srch-close:hover{color:var(--k)}
 .srch-tags{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
-.srch-tag{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bdr2);padding:5px 14px;color:var(--i32);cursor:pointer;transition:all .15s}
+.srch-tag{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bdr2);padding:5px 14px;color:var(--i32);cursor:none;transition:all .15s}
 .srch-tag:hover{background:var(--k);color:white;border-color:var(--k)}
 
 /* ══ CART PANEL ══ */
 .cart-head{padding:24px 24px 18px;border-bottom:2px solid var(--k);display:flex;align-items:center;justify-content:space-between}
 .cart-title{font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
-.panel-close{font-size:20px;color:var(--i55);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bdr);transition:all .15s}
+.panel-close{font-size:20px;color:var(--i55);cursor:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bdr);transition:all .15s}
 .panel-close:hover{background:var(--k);color:white;border-color:var(--k)}
 .cart-items{padding:20px 24px;flex:1}
 .cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bdr)}
@@ -314,7 +311,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .ci-row{display:flex;align-items:center;justify-content:space-between}
 .ci-price{font-family:var(--m);font-size:14px;font-weight:500;color:var(--k)}
 .ci-qty{display:flex;align-items:center;gap:0;border:1px solid var(--bdr2)}
-.qty-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--i55);cursor:pointer;transition:background .15s;border:none;background:none;font-family:var(--m)}
+.qty-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--i55);cursor:none;transition:background .15s;border:none;background:none;font-family:var(--m)}
 .qty-btn:hover{background:var(--off)}
 .qty-n{width:32px;text-align:center;font-family:var(--m);font-size:12px;font-weight:500;color:var(--k)}
 .cart-footer{padding:20px 24px;border-top:2px solid var(--k);margin-top:auto}
@@ -322,9 +319,9 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .cart-tot-lbl{font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i55)}
 .cart-tot-val{font-family:var(--bc);font-size:28px;font-weight:900;color:var(--k);letter-spacing:-.01em}
 .cart-note{font-family:var(--b);font-size:11px;font-weight:300;color:var(--i32);margin-bottom:16px;line-height:1.5}
-.btn-full{width:100%;height:50px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border:2px solid var(--k);transition:all .2s;margin-bottom:8px}
+.btn-full{width:100%;height:50px;background:var(--k);color:white;font-family:var(--m);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:none;border:2px solid var(--k);transition:all .2s;margin-bottom:8px}
 .btn-full:hover{background:transparent;color:var(--k)}
-.btn-full-o{width:100%;height:46px;background:transparent;color:var(--i55);font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:2px solid var(--bdr);transition:all .2s}
+.btn-full-o{width:100%;height:46px;background:transparent;color:var(--i55);font-family:var(--m);font-size:10.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;cursor:none;border:2px solid var(--bdr);transition:all .2s}
 .btn-full-o:hover{border-color:var(--k);color:var(--k)}
 
 /* ══ LOGIN MODAL ══ */
@@ -332,7 +329,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
 .modal-tit{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
 .modal-tabs{display:flex;border-bottom:2px solid var(--k);margin-bottom:32px}
-.m-tab{padding:10px 24px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:pointer;transition:color .15s;border-bottom:2px solid transparent;margin-bottom:-2px}
+.m-tab{padding:10px 24px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);cursor:none;transition:color .15s;border-bottom:2px solid transparent;margin-bottom:-2px}
 .m-tab.on{color:var(--k);border-bottom-color:var(--k)}
 .m-tab:hover:not(.on){color:var(--i55)}
 .m-field{margin-bottom:18px}
@@ -342,7 +339,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .m-or{display:flex;align-items:center;gap:14px;margin:22px 0;font-family:var(--m);font-size:9px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--i32)}
 .m-or::before,.m-or::after{content:'';flex:1;height:1px;background:var(--bdr2)}
 .m-social{display:flex;gap:10px}
-.m-soc-btn{flex:1;height:44px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--i55);cursor:pointer;background:var(--w);transition:all .2s}
+.m-soc-btn{flex:1;height:44px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--i55);cursor:none;background:var(--w);transition:all .2s}
 .m-soc-btn:hover{border-color:var(--k);color:var(--k)}
 .m-footer{margin-top:12px;font-family:var(--b);font-size:11.5px;font-weight:300;color:var(--i32);line-height:1.6;text-align:center}
 .m-footer a{color:var(--k);font-weight:500;border-bottom:1px solid var(--k)}
@@ -363,7 +360,7 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .pm-off{font-family:var(--m);font-size:11px;font-weight:600;color:var(--i55)}
 .pm-sec-tit{font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--i32);margin-bottom:10px}
 .pm-sizes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
-.pm-sz{width:40px;height:40px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:11px;font-weight:500;color:var(--i55);cursor:pointer;transition:all .15s}
+.pm-sz{width:40px;height:40px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:11px;font-weight:500;color:var(--i55);cursor:none;transition:all .15s}
 .pm-sz:hover,.pm-sz.on{border-color:var(--k);color:var(--k);background:var(--off)}
 .pm-sz.sold{opacity:.3;pointer-events:none;text-decoration:line-through}
 .pm-desc{font-family:var(--b);font-size:12.5px;font-weight:300;line-height:1.75;color:var(--i55);margin-bottom:24px}
@@ -379,13 +376,13 @@ nav{background:var(--w);border-bottom:2px solid var(--k);position:sticky;top:0;z
 .mob-head{padding:20px 20px;border-bottom:2px solid var(--k);display:flex;align-items:center;justify-content:space-between}
 .mob-logo{font-family:var(--bc);font-size:20px;font-weight:900;letter-spacing:.22em;color:var(--k)}
 .mob-links{padding:24px 20px;display:flex;flex-direction:column;gap:0;flex:1}
-.mob-lnk{padding:15px 0;font-family:var(--bc);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--k);border-bottom:1px solid var(--bdr);cursor:pointer;transition:color .15s;display:flex;align-items:center;justify-content:space-between}
+.mob-lnk{padding:15px 0;font-family:var(--bc);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--k);border-bottom:1px solid var(--bdr);cursor:none;transition:color .15s;display:flex;align-items:center;justify-content:space-between}
 .mob-lnk:hover{color:var(--i55)}
 .mob-lnk:last-child{border-bottom:none}
 .mob-foot{padding:20px;border-top:2px solid var(--k)}
 
 /* ══ TOGGLE BTN ══ */
-.drop-toggle{position:fixed;bottom:24px;left:24px;z-index:9000;display:flex;align-items:center;gap:8px;background:var(--k);color:white;padding:10px 16px;font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .2s;box-shadow:0 4px 20px rgba(12,11,9,.2)}
+.drop-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;align-items:center;gap:8px;background:var(--k);color:white;padding:10px 16px;font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:none;border:none;transition:opacity .2s;box-shadow:0 4px 20px rgba(12,11,9,.2)}
 .drop-toggle:hover{opacity:.8}
 .t-dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex-shrink:0;transition:background .3s}
 .t-dot.off{background:rgba(255,255,255,.3)}
@@ -406,12 +403,12 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 .ft-desc{font-family:var(--b);font-size:12.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.28);max-width:280px;margin-bottom:24px}
 .ft-domain{font-family:var(--m);font-size:10px;font-weight:400;letter-spacing:.1em;color:rgba(255,255,255,.22);margin-bottom:22px}
 .ft-soc{display:flex;gap:0;border:1px solid rgba(255,255,255,.10);width:fit-content}
-.fsoc{width:34px;height:34px;border-right:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;filter:grayscale(1)brightness(.4);transition:filter .2s,background .2s}
+.fsoc{width:34px;height:34px;border-right:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:none;filter:grayscale(1)brightness(.4);transition:filter .2s,background .2s}
 .fsoc:last-child{border-right:none}
 .fsoc:hover{filter:grayscale(1)brightness(.7);background:rgba(255,255,255,.04)}
 .ft-ch{font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.20);margin-bottom:18px}
 .ft-links{list-style:none;display:flex;flex-direction:column;gap:10px}
-.ft-links a{font-family:var(--b);font-size:12.5px;font-weight:300;color:rgba(255,255,255,.28);cursor:pointer;transition:color .15s}
+.ft-links a{font-family:var(--b);font-size:12.5px;font-weight:300;color:rgba(255,255,255,.28);cursor:none;transition:color .15s}
 .ft-links a:hover{color:rgba(255,255,255,.70)}
 .ft-bot{display:flex;align-items:center;justify-content:space-between;font-family:var(--m);font-size:9.5px;font-weight:300;letter-spacing:.06em;color:rgba(255,255,255,.18);flex-wrap:wrap;gap:12px}
 .ft-bds{display:flex;gap:6px;flex-wrap:wrap}
@@ -419,7 +416,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 
 /* ══ PASSWORD & FORM SECURITY ══ */
 .pw-wrap{position:relative}
-.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--i32);cursor:pointer;background:none;border:none;padding:4px;transition:color .15s;font-family:var(--m);line-height:1}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--i32);cursor:none;background:none;border:none;padding:4px;transition:color .15s;font-family:var(--m);line-height:1}
 .pw-toggle:hover{color:var(--k)}
 .pw-strength{height:3px;margin-top:6px;border-radius:2px;background:var(--bdr);overflow:hidden;display:none}
 .pw-strength-bar{height:100%;width:0%;border-radius:2px;transition:width .3s,background .3s}
@@ -431,7 +428,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 .btn-loading::after{content:' ●●●';letter-spacing:2px;animation:blink 1.2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .rate-locked{font-family:var(--m);font-size:10px;color:#DC2626;letter-spacing:.04em;text-align:center;margin-top:10px;padding:8px;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);display:none}
-#btt{position:fixed;bottom:76px;right:24px;z-index:8999;width:40px;height:40px;background:var(--k);color:white;border:none;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 4px 16px rgba(12,11,9,.2)}
+#btt{position:fixed;bottom:80px;right:24px;z-index:8999;width:40px;height:40px;background:var(--k);color:white;border:none;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 4px 16px rgba(12,11,9,.2)}
 #btt.show{opacity:1;pointer-events:all}
 #btt:hover{transform:translateY(-2px)}
 .skip-link{position:absolute;top:-40px;left:0;background:var(--k);color:white;padding:8px 16px;font-family:var(--m);font-size:11px;letter-spacing:.08em;z-index:9999;transition:top .2s}
@@ -453,8 +450,6 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 }
 @media(max-width:900px){
   .nav-c{display:none}
-  #navMobBtn{display:flex !important}
-  .nav-sell{display:none}
   .vg{grid-template-columns:repeat(3,1fr)}
   .pg{grid-template-columns:repeat(2,1fr)}
   .cat-g{grid-template-columns:repeat(2,1fr)}
@@ -482,388 +477,6 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   .sg{grid-template-columns:repeat(2,1fr)}
   .ft-top{grid-template-columns:1fr}
 }
-
-/* ══ PAGE ROUTER ══ */
-.page{display:none}
-.page.active{display:block;animation:pagein .28s ease}
-@keyframes pagein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══ COLLECTION PAGE ══ */
-.shop-layout{max-width:1440px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:220px 1fr;gap:0;min-height:80vh}
-.breadcrumb{max-width:1440px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;gap:8px;font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;border-bottom:1px solid var(--bdr)}
-.breadcrumb a{color:var(--i32);cursor:pointer;transition:color .15s}
-.breadcrumb a:hover,.breadcrumb span.cur{color:var(--k)}
-.breadcrumb .sep{color:var(--i16)}
-.filter-sidebar{padding:24px 24px 24px 0;border-right:1px solid var(--bdr);position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
-.filter-sidebar::-webkit-scrollbar{width:2px}
-.filter-sidebar::-webkit-scrollbar-thumb{background:var(--bdr2)}
-.filter-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.filter-hd-tit{font-family:var(--bc);font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--k)}
-.clear-all{font-family:var(--m);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--i32);border-bottom:1px solid var(--bdr);padding-bottom:1px;cursor:pointer;transition:color .15s}
-.clear-all:hover{color:var(--k)}
-.fg{margin-bottom:20px;border-bottom:1px solid var(--bdr);padding-bottom:18px}
-.fg:last-child{border-bottom:none}
-.fg-lbl{font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--i32);margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
-.fc{display:flex;align-items:center;gap:10px;padding:5px 0;cursor:pointer;transition:color .15s}
-.fc:hover{color:var(--k)}
-.fc input[type=checkbox]{width:14px;height:14px;border:1.5px solid var(--bdr2);appearance:none;background:var(--w);cursor:pointer;transition:all .15s;flex-shrink:0;border-radius:2px}
-.fc input:checked{background:var(--k);border-color:var(--k)}
-.fc-lbl{font-family:var(--b);font-size:12.5px;color:var(--i55);flex:1;transition:color .15s}
-.fc:hover .fc-lbl,.fc input:checked~.fc-lbl{color:var(--k)}
-.fc-cnt{font-family:var(--m);font-size:9px;color:var(--i32)}
-.price-rng{display:flex;gap:6px;align-items:center;margin-top:8px}
-.p-inp{width:72px;height:32px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--m);font-size:11px;color:var(--k);padding:0 8px;outline:none;transition:border-color .15s}
-.p-inp:focus{border-color:var(--k)}
-.p-go{height:32px;padding:0 12px;background:var(--k);color:white;font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
-.p-go:hover{opacity:.8}
-.p-dash{font-family:var(--m);font-size:11px;color:var(--i32)}
-.sz-row{display:flex;gap:5px;flex-wrap:wrap}
-.sz-chip{border:1.5px solid var(--bdr2);padding:4px 9px;font-family:var(--m);font-size:10px;font-weight:500;color:var(--i55);cursor:pointer;transition:all .15s}
-.sz-chip.on,.sz-chip:hover{border-color:var(--k);color:var(--k);background:var(--off)}
-.af-bar{max-width:1440px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--bdr)}
-.af-lbl{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.08em;text-transform:uppercase}
-.af-tag{display:inline-flex;align-items:center;gap:5px;background:var(--k);color:white;font-family:var(--m);font-size:8.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;cursor:pointer;transition:opacity .15s}
-.af-tag:hover{opacity:.75}
-.prod-area{padding:22px 0 22px 28px}
-.prod-tb{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
-.prod-ct{font-family:var(--m);font-size:10.5px;color:var(--i32);letter-spacing:.06em}
-.prod-ct b{color:var(--k);font-weight:600}
-.sort-wrap{display:flex;align-items:center;gap:8px}
-.sort-lbl{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.08em;text-transform:uppercase}
-.sort-sel{height:32px;padding:0 28px 0 10px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--m);font-size:10px;color:var(--k);outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%230C0B09'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;cursor:pointer}
-.coll-pg{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--k);gap:0}
-.coll-pg .pc{border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
-.coll-pg .pc:nth-child(3n){border-right:none}
-.coll-pg .pc:nth-last-child(-n+3){border-bottom:none}
-.pagi{display:flex;align-items:center;justify-content:center;gap:5px;padding:24px 0}
-.pgb{width:34px;height:34px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:11px;color:var(--i32);cursor:pointer;transition:all .15s}
-.pgb:hover,.pgb.on{background:var(--k);color:white;border-color:var(--k)}
-
-/* ══ PRODUCT PAGE ══ */
-.prod-pg{max-width:1440px;margin:0 auto;padding:32px 28px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.gal-main{border:2px solid var(--k);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--off);margin-bottom:10px}
-.gal-main-ico{font-size:120px;filter:grayscale(1)brightness(.28);transition:transform .6s}
-.gal-main:hover .gal-main-ico{transform:scale(1.04)translateY(-8px)}
-.gal-badge{position:absolute;top:16px;left:16px;font-family:var(--m);font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--k);color:white;padding:4px 10px}
-.gal-wish{position:absolute;top:12px;right:12px;width:38px;height:38px;background:var(--w);border:1.5px solid var(--k);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s}
-.gal-wish:hover,.gal-wish.on{background:var(--k);color:white}
-.gal-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.gal-thumb{background:var(--off);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:28px;filter:grayscale(1)brightness(.3);border:1.5px solid var(--bdr);cursor:pointer;transition:all .15s}
-.gal-thumb.on,.gal-thumb:hover{border-color:var(--k);filter:grayscale(1)brightness(.38)}
-.pi-vibe{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--i32);margin-bottom:8px}
-.pi-name{font-family:var(--bc);font-size:clamp(24px,3vw,40px);font-weight:900;text-transform:uppercase;letter-spacing:.01em;color:var(--k);line-height:1;margin-bottom:12px}
-.pi-seller-row{font-family:var(--m);font-size:10px;color:var(--i32);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.pi-seller-lnk{color:var(--k);border-bottom:1px solid var(--bdr);cursor:pointer;transition:border-color .15s}
-.pi-seller-lnk:hover{border-color:var(--k)}
-.pi-rating-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
-.pi-rat-score{font-family:var(--m);font-size:14px;font-weight:600;color:var(--k)}
-.pi-stars{color:var(--k);font-size:14px;letter-spacing:1px}
-.pi-rat-cnt{font-family:var(--m);font-size:10px;color:var(--i32);border-bottom:1px solid var(--bdr);cursor:pointer}
-.pi-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:22px;flex-wrap:wrap}
-.pi-price{font-family:var(--m);font-size:28px;font-weight:600;color:var(--k)}
-.pi-mrp{font-family:var(--m);font-size:15px;font-weight:300;color:var(--i32);text-decoration:line-through}
-.pi-off-badge{font-family:var(--m);font-size:11px;font-weight:700;color:#16A34A;background:rgba(22,163,74,.08);padding:3px 8px;border:1px solid rgba(22,163,74,.2)}
-.pi-sec-tit{font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--i32);margin-bottom:10px}
-.pi-sizes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.pi-sz{width:44px;height:44px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:11px;font-weight:500;color:var(--i55);cursor:pointer;transition:all .15s}
-.pi-sz:hover,.pi-sz.on{border-color:var(--k);color:var(--k);background:var(--off)}
-.pi-sz.sold{opacity:.3;pointer-events:none;text-decoration:line-through}
-.sg-lnk{font-family:var(--m);font-size:9px;color:var(--i32);border-bottom:1px solid var(--bdr);cursor:pointer;margin-bottom:18px;display:inline-block;margin-top:5px;transition:color .15s}
-.sg-lnk:hover{color:var(--k)}
-.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.qty-lbl{font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--i32)}
-.qty-c{display:flex;align-items:center;border:1.5px solid var(--bdr2)}
-.qty-b{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--i55);cursor:pointer;transition:background .15s}
-.qty-b:hover{background:var(--off)}
-.qty-n2{width:40px;text-align:center;font-family:var(--m);font-size:13px;font-weight:500;color:var(--k)}
-.pi-btns{display:flex;gap:10px;margin-bottom:18px}
-.pi-btns .btn-k{flex:2;justify-content:center}
-.pi-btns .btn-k-o{flex:1;justify-content:center}
-.del-box{background:var(--off);border:1px solid var(--bdr);padding:14px;margin-bottom:18px}
-.del-tit{font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--k);margin-bottom:8px}
-.del-row{font-family:var(--b);font-size:12.5px;color:var(--i55);margin-bottom:5px;display:flex;align-items:center;gap:6px}
-.pin-row{display:flex;gap:7px;margin-top:8px}
-.pin-in{flex:1;height:34px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--m);font-size:11px;color:var(--k);padding:0 10px;outline:none;transition:border-color .15s}
-.pin-in:focus{border-color:var(--k)}
-.pin-go{height:34px;padding:0 14px;background:var(--k);color:white;font-family:var(--m);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
-.pin-go:hover{opacity:.8}
-.pin-res{font-family:var(--m);font-size:10px;margin-top:5px;min-height:14px}
-.pin-res.ok{color:#16A34A}
-.pin-res.err{color:#DC2626}
-.share-row{display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--bdr)}
-.share-lbl{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.08em;text-transform:uppercase}
-.sh-btn{width:32px;height:32px;border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all .15s;color:var(--i55)}
-.sh-btn:hover{background:var(--k);color:white;border-color:var(--k)}
-.prod-tabs{border-top:2px solid var(--k);max-width:1440px;margin:0 auto;padding:0 28px}
-.tab-nav{display:flex;border-bottom:1px solid var(--bdr);gap:0;overflow-x:auto;scrollbar-width:none}
-.tab-nav::-webkit-scrollbar{display:none}
-.tab-btn{padding:13px 20px;font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--i32);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;cursor:pointer;transition:color .15s,border-color .15s;background:none;border-left:none;border-right:none;border-top:none}
-.tab-btn:hover{color:var(--i55)}
-.tab-btn.on{color:var(--k);border-bottom-color:var(--k)}
-.tab-body{padding:28px 0}
-.tab-pane{display:none}
-.tab-pane.on{display:block}
-.desc-txt{font-family:var(--b);font-size:14px;font-weight:300;line-height:1.9;color:var(--i55);max-width:640px;margin-bottom:16px}
-.spec-tbl{border:1px solid var(--bdr);max-width:480px}
-.spec-r{display:flex;border-bottom:1px solid var(--bdr)}
-.spec-r:last-child{border-bottom:none}
-.spec-k{padding:9px 13px;font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;min-width:140px;border-right:1px solid var(--bdr)}
-.spec-v{padding:9px 13px;font-family:var(--b);font-size:13px;color:var(--k)}
-.rv-sum{display:flex;gap:28px;padding:22px 0;border-bottom:1px solid var(--bdr);margin-bottom:20px;flex-wrap:wrap;align-items:flex-start}
-.rv-big{font-family:var(--bc);font-size:54px;font-weight:900;color:var(--k);line-height:1;text-align:center}
-.rv-stars2{font-size:17px;letter-spacing:1px;text-align:center}
-.rv-cnt2{font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;text-align:center;margin-top:2px}
-.rv-bars{flex:1;min-width:180px}
-.rb{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.rb-l{font-family:var(--m);font-size:10px;color:var(--i32);width:28px}
-.rb-tr{flex:1;height:3px;background:var(--bdr2)}
-.rb-f{height:100%;background:var(--k)}
-.rb-n{font-family:var(--m);font-size:10px;color:var(--i32);width:22px;text-align:right}
-.rv-card{padding:18px 0;border-bottom:1px solid var(--bdr)}
-.rv-card:last-child{border-bottom:none}
-.rv-hd{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.rv-av{width:34px;height:34px;background:var(--off2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--bc);font-size:14px;font-weight:900;color:var(--i32);flex-shrink:0;border:1.5px solid var(--bdr)}
-.rv-nm{font-family:var(--m);font-size:11px;font-weight:500;color:var(--k)}
-.rv-dt{font-family:var(--m);font-size:9.5px;color:var(--i32);margin-top:1px}
-.rv-st{margin-left:auto;font-size:12px;letter-spacing:1px;color:var(--k)}
-.rv-tx{font-family:var(--b);font-size:13px;font-weight:300;line-height:1.7;color:var(--i55)}
-.rv-vf{display:inline-flex;align-items:center;gap:4px;font-family:var(--m);font-size:9px;color:#16A34A;margin-top:5px;letter-spacing:.06em}
-.related-sec{max-width:1440px;margin:0 auto;padding:36px 28px;border-top:2px solid var(--k)}
-.rel-pg{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--k)}
-.rel-pc{background:var(--w);border-right:1px solid var(--bdr);overflow:hidden;cursor:pointer;transition:background .2s}
-.rel-pc:last-child{border-right:none}
-.rel-pc:hover{background:var(--off)}
-.rel-img{aspect-ratio:3/4;background:var(--off);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.rel-ico{font-size:44px;filter:grayscale(1)brightness(.32)contrast(.85);transition:filter .4s,transform .5s}
-.rel-pc:hover .rel-ico{filter:grayscale(1)brightness(.45);transform:scale(1.05)translateY(-4px)}
-.rel-body{padding:11px 13px 14px}
-.rel-name{font-family:var(--b);font-size:13px;font-weight:500;color:var(--k);margin-bottom:5px;line-height:1.35}
-.rel-price{font-family:var(--m);font-size:13px;font-weight:500;color:var(--k)}
-/* size guide modal */
-.sg-overlay{position:fixed;inset:0;background:rgba(12,11,9,.55);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.sg-overlay.open{display:flex}
-.sg-box{background:var(--w);border:2px solid var(--k);width:min(520px,94vw);max-height:88vh;overflow-y:auto;padding:26px}
-.sg-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
-.sg-tbl th{text-align:left;padding:8px 12px;background:var(--off);border-bottom:1px solid var(--bdr);font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--i32)}
-.sg-tbl td{padding:9px 12px;border-bottom:1px solid var(--bdr);font-family:var(--b);color:var(--i55)}
-.sg-tbl tr:last-child td{border-bottom:none}
-
-/* ══ SELLERS PAGE ══ */
-.sellers-hero{background:var(--k);padding:48px 28px;border-bottom:2px solid var(--k);position:relative;overflow:hidden}
-.sel-h-in{max-width:1440px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.sel-h-tit{font-family:var(--bc);font-size:clamp(40px,6vw,80px);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:.9;color:white}
-.sel-h-tit .gh{-webkit-text-stroke:1.5px rgba(255,255,255,.4);color:transparent;display:block}
-.sel-h-stats{display:flex;gap:24px;flex-wrap:wrap}
-.sel-h-stat-n{font-family:var(--bc);font-size:32px;font-weight:900;color:white;line-height:1}
-.sel-h-stat-l{font-family:var(--m);font-size:8.5px;color:rgba(255,255,255,.32);letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
-.sel-tb{max-width:1440px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--bdr)}
-.sel-search{flex:1;min-width:200px;max-width:320px;display:flex;align-items:center;border:1.5px solid var(--bdr2);height:38px}
-.sel-search input{flex:1;height:100%;border:none;background:transparent;font-family:var(--m);font-size:11px;color:var(--k);padding:0 12px;outline:none}
-.sel-search input::placeholder{color:var(--i32)}
-.sel-chips{display:flex;gap:5px;flex-wrap:wrap;flex:1}
-.sel-chip{padding:5px 12px;border:1.5px solid var(--bdr2);font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--i32);cursor:pointer;transition:all .15s}
-.sel-chip:hover,.sel-chip.on{background:var(--k);color:white;border-color:var(--k)}
-.sel-cnt{font-family:var(--m);font-size:10.5px;color:var(--i32);margin-left:auto;white-space:nowrap}
-.sel-cnt b{color:var(--k)}
-.sel-feat{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--k);border-top:none}
-.sf-card{background:var(--k);padding:28px 24px;border-right:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;cursor:pointer;transition:background .35s}
-.sf-card:last-child{border-right:none}
-.sf-card:hover{background:#181412}
-.sf-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:120px;filter:grayscale(1)brightness(.07);pointer-events:none;line-height:1}
-.sf-ct{position:relative;z-index:1}
-.sf-tag{font-family:var(--m);font-size:8px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:10px;border:1px solid rgba(255,255,255,.12);padding:2px 7px;display:inline-block}
-.sf-name{font-family:var(--bc);font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:white;line-height:1;margin-bottom:5px}
-.sf-handle{font-family:var(--m);font-size:9.5px;color:rgba(255,255,255,.32);margin-bottom:12px}
-.sf-bio{font-family:var(--b);font-size:12px;font-weight:300;color:rgba(255,255,255,.38);line-height:1.6;margin-bottom:14px}
-.sf-stat{font-family:var(--m);font-size:10px;color:rgba(255,255,255,.22);letter-spacing:.06em}
-.sf-arr{position:absolute;top:18px;right:18px;font-size:17px;color:rgba(255,255,255,.18);transition:color .2s}
-.sf-card:hover .sf-arr{color:rgba(255,255,255,.5)}
-.sel-grid{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--k);border-top:none}
-.sel-card{background:var(--w);border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:24px 18px;cursor:pointer;transition:background .2s}
-.sel-card:nth-child(4n){border-right:none}
-.sel-card:nth-last-child(-n+4){border-bottom:none}
-.sel-card:hover{background:var(--off)}
-.sc-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:13px}
-.sc-av{width:50px;height:50px;border:2px solid var(--k);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;filter:grayscale(1)brightness(.42);flex-shrink:0;transition:filter .3s}
-.sel-card:hover .sc-av{filter:grayscale(1)brightness(.6)}
-.sc-nm{font-family:var(--m);font-size:13px;font-weight:600;color:var(--k);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sc-hn{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.04em;margin-bottom:5px}
-.sc-vbadge{display:inline-flex;align-items:center;gap:3px;font-family:var(--m);font-size:7.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--k);border:1px solid var(--bdr2);padding:1px 6px}
-.sc-bio{font-family:var(--b);font-size:12px;font-weight:300;line-height:1.6;color:var(--i55);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.sc-stats{display:flex;gap:0;border-top:1px solid var(--bdr);padding-top:10px;margin-bottom:10px}
-.sc-stat{flex:1;text-align:center;padding:0 4px}
-.sc-stat+.sc-stat{border-left:1px solid var(--bdr)}
-.sc-stat-n{font-family:var(--bc);font-size:17px;font-weight:900;color:var(--k);line-height:1;margin-bottom:1px}
-.sc-stat-l{font-family:var(--m);font-size:7.5px;color:var(--i32);letter-spacing:.08em;text-transform:uppercase}
-.sc-vibes{display:flex;gap:3px;flex-wrap:wrap}
-.sc-vibe{font-family:var(--m);font-size:7.5px;padding:2px 6px;border:1px solid var(--bdr2);color:var(--i32);text-transform:uppercase;letter-spacing:.08em}
-.sel-apply{background:var(--off);border-top:2px solid var(--k);padding:48px 28px;text-align:center}
-
-/* ══ SELL PAGE ══ */
-.sell-hero{background:var(--k);padding:64px 28px 56px;border-bottom:2px solid var(--k);position:relative;overflow:hidden}
-.sell-hero-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--bc);font-size:clamp(200px,28vw,380px);font-weight:900;text-transform:uppercase;color:rgba(255,255,255,.03);letter-spacing:-.04em;white-space:nowrap;pointer-events:none;user-select:none;line-height:1}
-.sell-in{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1}
-.sell-tag{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.2);padding:5px 14px;font-family:var(--m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:22px}
-.sell-tit{font-family:var(--bc);font-size:clamp(48px,8vw,108px);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:.88;color:white;margin-bottom:18px}
-.sell-tit .gh{-webkit-text-stroke:1.5px rgba(255,255,255,.4);color:transparent;display:block}
-.sell-sub{font-family:var(--b);font-size:15px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;max-width:520px;margin:0 auto 32px}
-.sell-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.ben-grid{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--k)}
-.ben{padding:26px 22px;border-right:1px solid var(--bdr);transition:background .2s}
-.ben:last-child{border-right:none}
-.ben:hover{background:var(--off)}
-.ben-n{font-family:var(--bc);font-size:44px;font-weight:900;color:var(--i08);line-height:1;margin-bottom:10px;transition:color .3s}
-.ben:hover .ben-n{color:var(--i16)}
-.ben-tit{font-family:var(--m);font-size:13px;font-weight:600;color:var(--k);margin-bottom:6px;letter-spacing:.02em}
-.ben-sub{font-family:var(--b);font-size:12.5px;font-weight:300;color:var(--i55);line-height:1.65}
-.hiw-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:44px}
-.hiw-steps::before{content:'';position:absolute;top:26px;left:10%;right:10%;height:1px;background:var(--bdr2);z-index:0}
-.hw-step{text-align:center;position:relative;z-index:1;padding:0 10px}
-.hw-n{width:52px;height:52px;background:var(--k);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--bc);font-size:20px;font-weight:900;color:white;margin:0 auto 14px;border:3px solid var(--w)}
-.hw-tit{font-family:var(--m);font-size:11.5px;font-weight:600;color:var(--k);margin-bottom:5px;letter-spacing:.02em}
-.hw-sub{font-family:var(--b);font-size:11.5px;font-weight:300;color:var(--i55);line-height:1.55}
-.faq-item{border-bottom:1px solid var(--bdr)}
-.faq-q{padding:16px 0;font-family:var(--m);font-size:13px;font-weight:500;color:var(--k);cursor:pointer;display:flex;align-items:center;justify-content:space-between;letter-spacing:.02em}
-.faq-arr{font-size:18px;color:var(--i32);transition:transform .2s;font-weight:300}
-.faq-item.open .faq-arr{transform:rotate(45deg)}
-.faq-a{font-family:var(--b);font-size:13px;font-weight:300;color:var(--i55);line-height:1.75;padding-bottom:14px;display:none}
-.faq-item.open .faq-a{display:block}
-.apply-box{max-width:640px;margin:0 auto}
-.af-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
-.af-full{grid-column:1/-1}
-.af-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i55);margin-bottom:6px;display:block}
-.af-inp{width:100%;height:44px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:13.5px;color:var(--k);padding:0 13px;outline:none;transition:border-color .15s}
-.af-inp:focus{border-color:var(--k)}
-.af-inp::placeholder{color:var(--i32)}
-.af-sel{width:100%;height:44px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:13.5px;color:var(--k);padding:0 13px;outline:none;appearance:none;cursor:pointer}
-.af-ta{width:100%;min-height:90px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--b);font-size:13.5px;color:var(--k);padding:10px 13px;outline:none;transition:border-color .15s;resize:vertical;line-height:1.6}
-.af-ta:focus{border-color:var(--k)}
-.af-check{display:flex;align-items:flex-start;gap:9px;margin-bottom:13px}
-.af-check input{width:15px;height:15px;border:1.5px solid var(--bdr2);appearance:none;background:var(--w);cursor:pointer;flex-shrink:0;margin-top:2px;border-radius:2px;transition:all .15s}
-.af-check input:checked{background:var(--k);border-color:var(--k)}
-.af-check label{font-family:var(--b);font-size:12.5px;font-weight:300;color:var(--i55);line-height:1.6;cursor:pointer}
-.af-success{background:rgba(22,163,74,.06);border:1.5px solid rgba(22,163,74,.3);padding:20px;text-align:center;display:none}
-
-/* ══ CART PAGE ══ */
-.cart-pg{max-width:1200px;margin:0 auto;padding:32px 28px;display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:start}
-.cart-pg-title{font-family:var(--bc);font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:var(--k);margin-bottom:22px}
-.ci-img2{width:76px;height:96px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1)brightness(.32);flex-shrink:0;border:1px solid var(--bdr)}
-.rm-btn{font-family:var(--m);font-size:9px;color:var(--i32);border-bottom:1px solid var(--bdr);letter-spacing:.06em;cursor:pointer;transition:color .15s}
-.rm-btn:hover{color:#DC2626;border-color:#DC2626}
-.os-box{background:var(--off);border:2px solid var(--k);padding:22px;position:sticky;top:80px}
-.os-tit{font-family:var(--bc);font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--k);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--bdr)}
-.os-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-family:var(--b);font-size:13.5px;color:var(--i55)}
-.os-row.tot{border-top:1.5px solid var(--k);margin-top:12px;padding-top:12px;font-weight:500;color:var(--k)}
-.os-val{font-family:var(--bc);font-size:24px;font-weight:900;color:var(--k);letter-spacing:-.01em}
-.coup-row{display:flex;gap:7px;margin:13px 0}
-.coup-in{flex:1;height:38px;border:1.5px solid var(--bdr2);background:var(--w);font-family:var(--m);font-size:11px;color:var(--k);padding:0 11px;outline:none;transition:border-color .15s}
-.coup-in:focus{border-color:var(--k)}
-.coup-btn{height:38px;padding:0 14px;background:var(--k);color:white;font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
-.coup-btn:hover{opacity:.8}
-.trust-row2{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;justify-content:center}
-.trust-it{font-family:var(--m);font-size:9px;color:var(--i32);letter-spacing:.06em;display:flex;align-items:center;gap:3px}
-.empty-cart{text-align:center;padding:72px 20px}
-.empty-ico2{font-size:52px;filter:grayscale(1)brightness(.3);margin-bottom:18px}
-.empty-tit2{font-family:var(--bc);font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:var(--k);margin-bottom:7px}
-.empty-sub2{font-family:var(--b);font-size:13.5px;color:var(--i32);margin-bottom:22px;line-height:1.7}
-
-/* Responsive for inner pages */
-/* ── INNER PAGES RESPONSIVE ── */
-@media(max-width:1024px){
-  .shop-layout{grid-template-columns:1fr}
-  .filter-sidebar{display:none}
-  .prod-area{padding:18px 0}
-  .coll-pg{grid-template-columns:repeat(2,1fr)}
-  .coll-pg .pc:nth-child(3n){border-right:1px solid var(--bdr)}
-  .coll-pg .pc:nth-child(2n){border-right:none}
-  .coll-pg .pc:nth-last-child(-n+3){border-bottom:1px solid var(--bdr)}
-  .coll-pg .pc:nth-last-child(-n+2){border-bottom:none}
-  .sel-grid{grid-template-columns:repeat(3,1fr)}
-  .sel-grid .sel-card:nth-child(4n){border-right:1px solid var(--bdr)}
-  .sel-grid .sel-card:nth-child(3n){border-right:none}
-  .sel-feat{grid-template-columns:1fr}
-  .ben-grid{grid-template-columns:1fr 1fr}
-  .ben:nth-child(2){border-right:none}
-  .prod-pg{grid-template-columns:1fr;gap:24px;padding:24px 16px}
-  .rel-pg{grid-template-columns:repeat(2,1fr)}
-  .rel-pc:nth-child(2){border-right:none}
-  .cart-pg{grid-template-columns:1fr;padding:20px 16px;gap:20px}
-  .os-box{position:static}
-  .hiw-steps{grid-template-columns:repeat(3,1fr)}
-  .sell-hero{padding:48px 20px 40px}
-  .sell-tit{font-size:clamp(40px,10vw,80px)}
-}
-@media(max-width:768px){
-  /* Collection */
-  .breadcrumb{padding:10px 16px;font-size:9.5px}
-  .af-bar{padding:8px 16px}
-  .prod-area{padding:14px 0}
-  .prod-tb{padding:0 16px}
-  .coll-pg{margin:0 16px;border-left:none;border-right:none}
-  .pagi{padding:16px 0}
-  /* Product detail */
-  .prod-pg{grid-template-columns:1fr;padding:16px;gap:18px}
-  .gal-main{aspect-ratio:4/3;max-height:260px}
-  .pi-name{font-size:clamp(20px,6vw,32px)}
-  .pi-btns{flex-direction:column}
-  .pi-btns .btn-k,.pi-btns .btn-k-o{width:100%;justify-content:center}
-  .prod-tabs{padding:0 16px}
-  .tab-btn{padding:10px 14px;font-size:9.5px}
-  .related-sec{padding:24px 16px}
-  .rel-pg{grid-template-columns:repeat(2,1fr)}
-  /* Sellers */
-  .sellers-hero{padding:32px 16px}
-  .sel-h-in{flex-direction:column;gap:16px}
-  .sel-h-tit{font-size:clamp(36px,10vw,60px)}
-  .sel-feat{grid-template-columns:1fr}
-  .sf-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
-  .sel-tb{padding:12px 16px;gap:8px}
-  .sel-search{min-width:100%;max-width:100%}
-  .sel-chips{width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;padding-bottom:4px}
-  .sel-chips::-webkit-scrollbar{display:none}
-  .sel-cnt{display:none}
-  .sel-grid{grid-template-columns:repeat(2,1fr)}
-  .sel-grid .sel-card:nth-child(3n){border-right:1px solid var(--bdr)}
-  .sel-grid .sel-card:nth-child(2n){border-right:none}
-  .sel-apply{padding:32px 16px}
-  /* Sell */
-  .sell-hero{padding:40px 16px 32px}
-  .sell-in{max-width:100%}
-  .sell-tit{font-size:clamp(36px,10vw,72px)}
-  .sell-sub{font-size:13.5px;margin:0 auto 26px}
-  .sell-btns{flex-direction:column;align-items:stretch;gap:8px}
-  .sell-btns .btn-inv,.sell-btns .btn-g-inv{width:100%;text-align:center;justify-content:center;display:flex}
-  .ben-grid{grid-template-columns:1fr}
-  .ben{border-right:none;border-bottom:1px solid var(--bdr)}
-  .ben:last-child{border-bottom:none}
-  .hiw-steps{grid-template-columns:1fr 1fr;gap:16px}
-  .hiw-steps::before{display:none}
-  .hw-step{padding:0 8px}
-  .af-grid{grid-template-columns:1fr}
-  .apply-box{padding:0 16px}
-  /* Cart */
-  .cart-pg{padding:16px;gap:16px}
-  .cart-pg-title{font-size:24px}
-  .ci-img2{width:64px;height:82px;font-size:26px}
-  .os-box{padding:16px}
-  .coup-row{flex-wrap:wrap}
-  .coup-in{flex:1;min-width:120px}
-}
-@media(max-width:480px){
-  .coll-pg{grid-template-columns:1fr;margin:0 16px}
-  .coll-pg .pc{border-right:none}
-  .coll-pg .pc:nth-last-child(-n+1){border-bottom:none}
-  .sel-grid{grid-template-columns:1fr}
-  .sel-grid .sel-card{border-right:none}
-  .rel-pg{grid-template-columns:1fr 1fr}
-  .gal-thumbs{grid-template-columns:repeat(4,1fr)}
-  .pi-sizes{gap:6px}
-  .pi-sz{width:38px;height:38px;font-size:10px}
-  .sell-tit{font-size:clamp(32px,12vw,56px)}
-}
-.filter-sidebar.mob-open{display:block !important;position:fixed;inset:0;z-index:600;background:var(--w);padding:24px;overflow-y:auto;height:100vh}
-#mobFilterBtn{display:none}
-@media(max-width:1024px){#mobFilterBtn{display:inline-flex !important}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="application/ld+json">
@@ -982,7 +595,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <div class="cart-tot-val" id="cart-total">₹1,129</div>
     </div>
     <div class="cart-note">Free delivery on this order · Est. delivery 3–5 days</div>
-    <button class="btn-full" onclick="showPage('cart')">Proceed to Checkout →</button>
+    <button class="btn-full" onclick="toast('Checkout coming soon →')">Proceed to Checkout →</button>
     <button class="btn-full-o" onclick="closePanel('cartPanel')">Continue Shopping</button>
   </div>
 </div>
@@ -1015,7 +628,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       </div>
       <div class="rate-locked" id="rateLocked">Too many attempts. Please wait <span id="lockTimer">30</span>s before trying again.</div>
       <button class="btn-full" id="loginBtn" style="margin-top:8px" onclick="doLogin()">Sign In →</button>
-      <div style="text-align:center;margin-top:12px"><a onclick="showReset()" style="font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;cursor:pointer;border-bottom:1px solid var(--i16)">Forgot password?</a></div>
+      <div style="text-align:center;margin-top:12px"><a onclick="showReset()" style="font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;cursor:none;border-bottom:1px solid var(--i16)">Forgot password?</a></div>
       <div class="m-or">or continue with</div>
       <div class="m-social">
         <button class="m-soc-btn" onclick="toast('Google login coming soon!')">◯ &nbsp; Google</button>
@@ -1060,7 +673,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <div class="m-err" id="signPassErr">Password must be at least 8 characters</div>
       </div>
       <button class="btn-full" id="signupBtn" style="margin-top:8px" onclick="doSignup()">Create Account →</button>
-      <div class="m-footer" style="margin-top:10px">By signing up you agree to our <a href="/terms">Terms</a> & <a href="/privacy">Privacy Policy</a></div>
+      <div class="m-footer" style="margin-top:10px">By signing up you agree to our <a href="/terms" style="cursor:none">Terms</a> & <a href="/privacy" style="cursor:none">Privacy Policy</a></div>
     </div>
   </div>
 </div>
@@ -1109,27 +722,26 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 </div>
 
 <!-- MOBILE MENU -->
-<div class="overlay" id="mobOv" onclick="closePanel('mobMenu');location.href='collection.html?cat=new'"></div>
+<div class="overlay" id="mobOv" onclick="closePanel('mobMenu')"></div>
 <div class="mob-menu" id="mobMenu">
   <div class="mob-head">
     <div class="mob-logo">KARKER</div>
-    <button class="panel-close" onclick="closePanel('mobMenu');location.href='collection.html?cat=new'">✕</button>
+    <button class="panel-close" onclick="closePanel('mobMenu')">✕</button>
   </div>
   <div class="mob-links">
-    <div class="mob-lnk" onclick="closePanel('mobMenu');showPage('collection',{cat:'new'})">New Arrivals <span>→</span></div>
-    <div class="mob-lnk" onclick="closePanel('mobMenu');showPage('collection')">Collections <span>→</span></div>
-    <div class="mob-lnk" onclick="closePanel('mobMenu');showPage('sellers')">Artists <span>→</span></div>
-    <div class="mob-lnk" onclick="closePanel('mobMenu');showPage('sell')">For Sellers <span>→</span></div>
-    <div class="mob-lnk" onclick="closePanel('mobMenu');showPage('cart')">Cart <span>→</span></div>
-    <div class="mob-lnk" onclick="closePanel('mobMenu');openModal('loginModal')">Sign In <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">New Arrivals <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Collections <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Artists <span>→</span></div>
+    <div class="mob-lnk" onclick="closePanel('mobMenu')">Editorial <span>→</span></div>
+    <div class="mob-lnk" onclick="openPanel('cartPanel')">Cart (2) <span>→</span></div>
+    <div class="mob-lnk" onclick="openModal('loginModal')">Sign In <span>→</span></div>
   </div>
   <div class="mob-foot">
-    <button class="btn-k" style="width:100%" onclick="showPage('sell')">Sell on KARKER</button>
+    <button class="btn-k" style="width:100%" onclick="toast('Seller portal →','lt')">Sell on KARKER</button>
   </div>
 </div>
 
 <!-- ══ ANN BAR ══ -->
-<div id="home-content">
 <div class="ann">
   New drops every Tuesday
   <span class="ann-sep">—</span>
@@ -1141,26 +753,26 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-wrap">
-    <a class="nav-logo" onclick="showPage('home')">
+    <button class="nav-logo" onclick="window.scrollTo(0,0)">
       <div class="nav-mark"><span>K</span></div>
       KARKER
-    </a>
+    </button>
     <div class="nav-c">
-      <a class="nav-lnk" id="nav-new" onclick="showPage('collection',{cat:'new'})">New Arrivals</a>
-      <a class="nav-lnk" id="nav-coll" onclick="showPage('collection')">Collections</a>
-      <a class="nav-lnk" id="nav-artists" onclick="showPage('sellers')">Artists</a>
-      <a class="nav-lnk" id="nav-sell" onclick="showPage('sell')">For Sellers</a>
+      <a class="nav-lnk" href="#new-arrivals">New Arrivals</a>
+      <a class="nav-lnk" href="#vibes">Collections</a>
+      <a class="nav-lnk" href="#sellers">Artists</a>
+      <a class="nav-lnk" href="#sell">For Sellers</a>
     </div>
     <div class="nav-r">
       <div class="n-ico" onclick="openSearch()" title="Search">
         <span style="font-size:18px">⌕</span>
         <span class="nl">Search</span>
       </div>
-      <div class="n-ico" onclick="toast('Wishlist — account page coming soon ♡')" title="Wishlist">
+      <div class="n-ico" onclick="toast('Wishlist coming in Phase 2 ♡')" title="Wishlist">
         <span>♡</span>
         <span class="nl">Wishlist</span>
       </div>
-      <div class="n-ico" onclick="showPage('cart')" title="Cart">
+      <div class="n-ico" onclick="openPanel('cartPanel')" title="Cart">
         <span>◻</span>
         <span class="nl">Cart</span>
         <span class="n-cnt" id="navCartN">2</span>
@@ -1169,17 +781,13 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <span>◯</span>
         <span class="nl">Account</span>
       </div>
-      <button class="nav-sell" onclick="showPage('sell')">Sell</button>
-      <div class="n-ico" id="navMobBtn" onclick="openPanel('mobMenu')" title="Menu" style="display:none">
-        <span style="font-size:18px;line-height:1">≡</span>
-        <span class="nl">Menu</span>
-      </div>
+      <button class="nav-sell" onclick="toast('Seller portal — Phase 2 🎨','lt')">Sell</button>
     </div>
   </div>
 </nav>
 
 <!-- ══ VIBE STRIP ══ -->
-<div class="vs" id="vibeStrip">
+<div class="vs">
   <div class="vs-in">
     <span class="v-cs on" onclick="setVibe(this)">All Vibes</span>
     <span class="v-cs" onclick="setVibe(this)">Y2K Revival</span>
@@ -1231,10 +839,10 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       </h1>
       <p class="hero-body">Hand-picked indie clothing and accessories from India's most creative small artists. Real makers. Real pieces. Every drop limited. Zero algorithm.</p>
       <div class="hero-btns">
-        <button class="btn-k" onclick="showPage('collection')">
+        <button class="btn-k" onclick="document.getElementById('trending').scrollIntoView({behavior:'smooth'})">
           Shop Now &nbsp;→
         </button>
-        <button class="btn-k-o" onclick="showPage('sell')">
+        <button class="btn-k-o" onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">
           Sell on KARKER
         </button>
       </div>
@@ -1247,25 +855,25 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
     </div>
   </div>
   <div class="hero-r">
-    <div class="hr-cell" onclick="openProdPage(1)">
+    <div class="hr-cell" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit. Pairs well with high-waist bottoms.','New')">
       <span class="hr-ico">👗</span><span class="hr-arr">↗</span>
       <div class="hr-vibe">Y2K Revival</div>
       <div class="hr-name">Butterfly Mesh Baby Tee</div>
       <div class="hr-price">₹649</div>
     </div>
-    <div class="hr-cell" onclick="openProdPage(2)">
+    <div class="hr-cell" onclick="openProduct('💍','Accessories','Rhinestone Layered Set','@the.aura.co','₹480','','','Layered rhinestone necklace set. Silver-tone plating. Includes 3 chains of varying lengths.','New')">
       <span class="hr-ico">💍</span><span class="hr-arr">↗</span>
       <div class="hr-vibe">Accessories</div>
       <div class="hr-name">Rhinestone Layered Set</div>
       <div class="hr-price">₹480</div>
     </div>
-    <div class="hr-cell" onclick="openProdPage(9)">
+    <div class="hr-cell" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.','New')">
       <span class="hr-ico">🧥</span><span class="hr-arr">↗</span>
       <div class="hr-vibe">Soft Minimal</div>
       <div class="hr-name">Oversized Linen Blazer</div>
       <div class="hr-price">₹2,100</div>
     </div>
-    <div class="hr-cell" onclick="openProdPage(6)">
+    <div class="hr-cell" onclick="openProduct('🎨','Artistic Wear','Hand-Painted Denim Jacket','@palette.people','₹3,200','','','Each jacket is hand-painted — no two are alike. Acrylic on premium Japanese denim. XS–XL.','Artist Pick')">
       <span class="hr-ico">🎨</span><span class="hr-arr">↗</span>
       <div class="hr-vibe">Artistic Wear</div>
       <div class="hr-name">Hand-Painted Denim Jacket</div>
@@ -1315,7 +923,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row" style="margin-bottom:36px">
       <div><div class="sec-ey">Aesthetic Navigation</div><div class="sec-tit">Shop by <em>Vibe</em></div></div>
-      <span class="see-all" onclick="showPage('collection')">View All →</span>
+      <span class="see-all" onclick="toast('All 8 vibes →')">View All →</span>
     </div>
   </div>
 </div>
@@ -1338,38 +946,38 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row">
       <div><div class="sec-ey">Curated Picks</div><div class="sec-tit">Trending <em>This Week</em></div></div>
-      <span class="see-all" onclick="showPage('collection')">See All →</span>
+      <span class="see-all" onclick="toast('All products →')">See All →</span>
     </div>
     <div class="pg" id="prod-grid">
-      <div class="pc" onclick="openProdPage(1)">
+      <div class="pc" onclick="openProduct('👗','Y2K Revival','Butterfly Mesh Baby Tee, Lavender','@stardust.fits','₹649','₹899','28','Sheer mesh fabric with embroidered butterfly details. Cropped fit.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👗</span><span class="pc-tag">New</span><span class="pc-wish on">♥</span></div>
         <div class="pc-body"><div class="pc-seller">@stardust.fits <span class="sv">✓</span></div><div class="pc-name">Butterfly Mesh Baby Tee, Lavender</div><div class="pc-pr"><span class="pc-price">₹649</span><span class="pc-mrp">₹899</span><span class="pc-off">−28%</span></div><div class="pc-rat">★ 4.8 · 142 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(2)">
+      <div class="pc" onclick="openProduct('💍','Accessories','Rhinestone Layered Necklace Set','@the.aura.co','₹480','','','Layered rhinestone necklace set. Silver-tone plating. Three chains.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">💍</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@the.aura.co <span class="sv">✓</span></div><div class="pc-name">Rhinestone Layered Necklace Set</div><div class="pc-pr"><span class="pc-price">₹480</span></div><div class="pc-rat">★ 4.9 · 89 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(3)">
+      <div class="pc" onclick="openProduct('🧣','Dark Gothic','Velvet Butterfly Scarf, Midnight','@glitch.stitch','₹390','','','Deep midnight purple velvet. Extra-wide silhouette. Can be worn as shawl or scarf.','Limited')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧣</span><span class="pc-tag">Limited</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@glitch.stitch</div><div class="pc-name">Velvet Butterfly Scarf, Midnight</div><div class="pc-pr"><span class="pc-price">₹390</span></div><div class="pc-rat">★ 4.7 · 56 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(4)">
+      <div class="pc" onclick="openProduct('👜','Accessories','Chrome Mini Shoulder Bag','@nazar.studio','₹1,200','₹1,600','25','Polished chrome finish. Adjustable chain strap. Fits phone, cards, lipstick. Magnetic clasp.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👜</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@nazar.studio <span class="sv">✓</span></div><div class="pc-name">Chrome Mini Shoulder Bag</div><div class="pc-pr"><span class="pc-price">₹1,200</span><span class="pc-mrp">₹1,600</span><span class="pc-off">−25%</span></div><div class="pc-rat">★ 4.6 · 34 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(5)">
+      <div class="pc" onclick="openProduct('👖','Streetwear','Low-Rise Cargo Trousers, Sand','@pixel.drip','₹1,850','₹2,200','16','Heavy cotton cargo. 6 pockets. Low-rise waistband. Wide-leg silhouette. Sand beige.','Sale')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👖</span><span class="pc-tag">Sale</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@pixel.drip</div><div class="pc-name">Low-Rise Cargo Trousers, Sand</div><div class="pc-pr"><span class="pc-price">₹1,850</span><span class="pc-mrp">₹2,200</span><span class="pc-off">−16%</span></div><div class="pc-rat">★ 4.5 · 28 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(6)">
+      <div class="pc" onclick="openProduct('🎨','Artistic Wear','Hand-Painted Denim Jacket','@palette.people','₹3,200','','','Each jacket is hand-painted — no two are alike. Acrylic on premium Japanese denim.','Artist Pick')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🎨</span><span class="pc-tag w">Artist</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@palette.people <span class="sv">✓</span></div><div class="pc-name">Hand-Painted Denim Jacket</div><div class="pc-pr"><span class="pc-price">₹3,200</span></div><div class="pc-rat">★ 5.0 · 17 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(7)">
+      <div class="pc" onclick="openProduct('🧤','Dark Gothic','Fingerless Mesh Gloves, Black','@static.drop','₹299','','','Open-finger fishnet gloves. One size fits most. Cotton-mesh blend.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧤</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@static.drop</div><div class="pc-name">Fingerless Mesh Gloves, Black</div><div class="pc-pr"><span class="pc-price">₹299</span></div><div class="pc-rat">★ 4.3 · 44 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(8)">
+      <div class="pc" onclick="openProduct('👟','Y2K Revival','Platform Jelly Mules, Bubblegum','@retro.roots','₹999','₹1,400','29','Clear PVC platform mule. 4cm platform. Pink bubblegum colourway. Sizes 5–9.','Sale')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👟</span><span class="pc-tag">−29%</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@retro.roots</div><div class="pc-name">Platform Jelly Mules, Bubblegum</div><div class="pc-pr"><span class="pc-price">₹999</span><span class="pc-mrp">₹1,400</span><span class="pc-off">−29%</span></div><div class="pc-rat">★ 4.6 · 78 reviews</div></div>
       </div>
@@ -1391,7 +999,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <p class="ed-body">Join 180 verified indie artists already selling on KARKER. Zero listing fees, full payout transparency, and 7-day settlements straight to your bank account.</p>
     </div>
     <div class="ed-btns">
-      <button class="btn-inv" onclick="showPage('sell')">Start Selling Free</button>
+      <button class="btn-inv" onclick="toast('Seller registration — Phase 2! 🎨','lt')">Start Selling Free</button>
       <button class="btn-g-inv" onclick="toast('More info coming soon →')">How It Works →</button>
     </div>
   </div>
@@ -1416,12 +1024,12 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
   <div style="max-width:1440px;margin:0 auto">
     <div class="cat-g">
-      <div class="ct" onclick="showPage('collection',{cat:'Tops & Tees'})"><div class="ct-n">01</div><span class="ct-ico">👕</span><div class="ct-name">Tops & Tees</div><div class="ct-cnt">148 items</div></div>
-      <div class="ct" onclick="showPage('collection',{cat:'Bottoms'})"><div class="ct-n">02</div><span class="ct-ico">👖</span><div class="ct-name">Bottoms</div><div class="ct-cnt">112 items</div></div>
-      <div class="ct" onclick="showPage('collection',{cat:'Jewellery'})"><div class="ct-n">03</div><span class="ct-ico">💍</span><div class="ct-name">Jewellery</div><div class="ct-cnt">186 items</div></div>
-      <div class="ct" onclick="showPage('collection',{cat:'Bags'})"><div class="ct-n">04</div><span class="ct-ico">👜</span><div class="ct-name">Bags</div><div class="ct-cnt">79 items</div></div>
-      <div class="ct" onclick="showPage('collection',{cat:'Footwear'})"><div class="ct-n">05</div><span class="ct-ico">👟</span><div class="ct-name">Footwear</div><div class="ct-cnt">64 items</div></div>
-      <div class="ct" onclick="showPage('collection',{cat:'Accessories'})"><div class="ct-n">06</div><span class="ct-ico">🧣</span><div class="ct-name">Accessories</div><div class="ct-cnt">112 items</div></div>
+      <div class="ct" onclick="toast('Tops & Tees — 148 items')"><div class="ct-n">01</div><span class="ct-ico">👕</span><div class="ct-name">Tops & Tees</div><div class="ct-cnt">148 items</div></div>
+      <div class="ct" onclick="toast('Bottoms — 112 items')"><div class="ct-n">02</div><span class="ct-ico">👖</span><div class="ct-name">Bottoms</div><div class="ct-cnt">112 items</div></div>
+      <div class="ct" onclick="toast('Jewellery — 186 items')"><div class="ct-n">03</div><span class="ct-ico">💍</span><div class="ct-name">Jewellery</div><div class="ct-cnt">186 items</div></div>
+      <div class="ct" onclick="toast('Bags — 79 items')"><div class="ct-n">04</div><span class="ct-ico">👜</span><div class="ct-name">Bags</div><div class="ct-cnt">79 items</div></div>
+      <div class="ct" onclick="toast('Footwear — 64 items')"><div class="ct-n">05</div><span class="ct-ico">👟</span><div class="ct-name">Footwear</div><div class="ct-cnt">64 items</div></div>
+      <div class="ct" onclick="toast('Accessories — 112 items')"><div class="ct-n">06</div><span class="ct-ico">🧣</span><div class="ct-name">Accessories</div><div class="ct-cnt">112 items</div></div>
     </div>
   </div>
 </div>
@@ -1431,17 +1039,17 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row" style="margin-bottom:32px">
       <div><div class="sec-ey">The Makers</div><div class="sec-tit">Featured <em>Artists</em></div></div>
-      <span class="see-all" onclick="location.href='sellers.html'">View All →</span>
+      <span class="see-all" onclick="toast('All 180 sellers →')">View All →</span>
     </div>
   </div>
 </div>
 <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
   <div style="max-width:1440px;margin:0 auto">
     <div class="sg">
-      <div class="scrd" onclick="showPage('sellers')"><div class="savt">✦</div><div class="s-n">Stardust Fits</div><div class="s-h">@stardust.fits</div><div class="s-st">★ 4.9 · 48 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Gothic</span></div></div>
-      <div class="scrd" onclick="showPage('sellers')"><div class="savt">🎨</div><div class="s-n">Palette People</div><div class="s-h">@palette.people</div><div class="s-st">★ 5.0 · 22 products</div><div class="s-pills"><span class="spill">Artistic</span></div></div>
-      <div class="scrd" onclick="showPage('sellers')"><div class="savt">◈</div><div class="s-n">Glitch Stitch</div><div class="s-h">@glitch.stitch</div><div class="s-st">★ 4.7 · 37 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Indie</span></div></div>
-      <div class="scrd" onclick="showPage('sellers')"><div class="savt">❋</div><div class="s-n">Nazar Studio</div><div class="s-h">@nazar.studio</div><div class="s-st">★ 4.8 · 31 products</div><div class="s-pills"><span class="spill">Fashion</span></div></div>
+      <div class="scrd" onclick="toast('Opening @stardust.fits')"><div class="savt">✦</div><div class="s-n">Stardust Fits</div><div class="s-h">@stardust.fits</div><div class="s-st">★ 4.9 · 48 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Gothic</span></div></div>
+      <div class="scrd" onclick="toast('Opening @palette.people')"><div class="savt">🎨</div><div class="s-n">Palette People</div><div class="s-h">@palette.people</div><div class="s-st">★ 5.0 · 22 products</div><div class="s-pills"><span class="spill">Artistic</span></div></div>
+      <div class="scrd" onclick="toast('Opening @glitch.stitch')"><div class="savt">◈</div><div class="s-n">Glitch Stitch</div><div class="s-h">@glitch.stitch</div><div class="s-st">★ 4.7 · 37 products</div><div class="s-pills"><span class="spill">Y2K</span><span class="spill">Indie</span></div></div>
+      <div class="scrd" onclick="toast('Opening @nazar.studio')"><div class="savt">❋</div><div class="s-n">Nazar Studio</div><div class="s-h">@nazar.studio</div><div class="s-st">★ 4.8 · 31 products</div><div class="s-pills"><span class="spill">Fashion</span></div></div>
       <div class="scrd" onclick="toast('Opening @softstone.studio')"><div class="savt">◯</div><div class="s-n">Softstone Studio</div><div class="s-h">@softstone.studio</div><div class="s-st">★ 4.9 · 29 products</div><div class="s-pills"><span class="spill">Minimal</span></div></div>
       <div class="scrd" onclick="toast('Opening @pixel.drip')"><div class="savt">⚡</div><div class="s-n">Pixel Drip</div><div class="s-h">@pixel.drip</div><div class="s-st">★ 4.6 · 54 products</div><div class="s-pills"><span class="spill">Street</span><span class="spill">Y2K</span></div></div>
       <div class="scrd" onclick="toast('Opening @retro.roots')"><div class="savt">◌</div><div class="s-n">Retro Roots</div><div class="s-h">@retro.roots</div><div class="s-st">★ 4.5 · 18 products</div><div class="s-pills"><span class="spill">Vintage</span></div></div>
@@ -1454,22 +1062,22 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   <div class="sec-in">
     <div class="sec-row">
       <div><div class="sec-ey">Just Landed · karker.in</div><div class="sec-tit">New <em>Arrivals</em></div></div>
-      <span class="see-all" onclick="showPage('collection')">See All →</span>
+      <span class="see-all" onclick="toast('All new arrivals →')">See All →</span>
     </div>
     <div class="pg">
-      <div class="pc" onclick="openProdPage(9)">
+      <div class="pc" onclick="openProduct('🧥','Soft Minimal','Oversized Linen Blazer, Oatmeal','@softstone.studio','₹2,100','₹2,800','25','Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧥</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@softstone.studio</div><div class="pc-name">Oversized Linen Blazer, Oatmeal</div><div class="pc-pr"><span class="pc-price">₹2,100</span><span class="pc-mrp">₹2,800</span><span class="pc-off">−25%</span></div><div class="pc-rat">★ 4.8 · 61 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(10)">
+      <div class="pc" onclick="openProduct('🧶','Indie Core','Crochet Knit Vest, Sage','@cottage.craft','₹920','','','Handmade crochet vest in sage green. Open-weave pattern. Oversized fit. One size.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🧶</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@cottage.craft</div><div class="pc-name">Crochet Knit Vest, Sage</div><div class="pc-pr"><span class="pc-price">₹920</span></div><div class="pc-rat">★ 4.9 · 22 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(11)">
+      <div class="pc" onclick="openProduct('👒','Trending','Crochet Bucket Hat, Terracotta','@lustre.lane','₹720','','','Hand-crocheted bucket hat. Unstructured brim. Terracotta rust colourway. One size.','Trending')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">👒</span><span class="pc-tag">Trending</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@lustre.lane</div><div class="pc-name">Crochet Bucket Hat, Terracotta</div><div class="pc-pr"><span class="pc-price">₹720</span></div><div class="pc-rat">★ 4.7 · 38 reviews</div></div>
       </div>
-      <div class="pc" onclick="openProdPage(12)">
+      <div class="pc" onclick="openProduct('🌸','High Fashion','Petal Sleeve Organza Blouse','@sartorial.co','₹1,200','','','Sheer organza fabric. Petal-cut sleeves. Semi-fitted silhouette. Dry clean only.','New')">
         <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">🌸</span><span class="pc-tag w">New</span><span class="pc-wish">♡</span></div>
         <div class="pc-body"><div class="pc-seller">@sartorial.co</div><div class="pc-name">Petal Sleeve Organza Blouse</div><div class="pc-pr"><span class="pc-price">₹1,200</span></div><div class="pc-rat">★ 4.8 · 15 reviews</div></div>
       </div>
@@ -1498,18 +1106,18 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <div>
         <div class="ft-ch">Shop</div>
         <ul class="ft-links">
-          <li><a onclick="showPage('collection')">Y2K Revival</a></li>
-          <li><a onclick="showPage('collection')">Dark Gothic</a></li>
-          <li><a onclick="showPage('collection')">Soft Minimal</a></li>
-          <li><a onclick="showPage('collection')">Artistic Wear</a></li>
-          <li><a onclick="showPage('collection',{cat:'new'})">New Arrivals</a></li>
+          <li><a href="#vibes">Y2K Revival</a></li>
+          <li><a href="#vibes">Dark Gothic</a></li>
+          <li><a href="#vibes">Soft Minimal</a></li>
+          <li><a href="#vibes">Artistic Wear</a></li>
+          <li><a href="#new-arrivals">New Arrivals</a></li>
           <li><a onclick="toast('Sale section →')">Sale</a></li>
         </ul>
       </div>
       <div>
         <div class="ft-ch">Sellers</div>
         <ul class="ft-links">
-          <li><a onclick="showPage('sell')">Start Selling</a></li>
+          <li><a onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">Start Selling</a></li>
           <li><a onclick="toast('Seller dashboard — Phase 2')">Seller Dashboard</a></li>
           <li><a onclick="toast('Payout policy →')">Payout Policy</a></li>
           <li><a onclick="toast('Guidelines →')">Seller Guidelines</a></li>
@@ -1543,963 +1151,11 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 <button class="drop-toggle" id="dropToggle" onclick="toggleDrop()">
   <span class="t-dot" id="tDot"></span>
   <span id="tLbl">Drop Live</span>
-
-</div>
 </button>
-
-
-
-<!-- ══════════════════════════════════════
-     PAGE: COLLECTION
-══════════════════════════════════════ -->
-<div id="page-collection" class="page">
-  <div class="breadcrumb">
-    <a onclick="showPage('home')">Home</a>
-    <span class="sep">›</span>
-    <span class="cur" id="collBc">All Products</span>
-  </div>
-  <div id="af-bar" class="af-bar" style="display:none">
-    <span class="af-lbl">Filters:</span>
-    <div id="af-tags"></div>
-  </div>
-  <div class="shop-layout">
-    <aside class="filter-sidebar" id="filterSidebar">
-      <div class="filter-hd">
-        <div class="filter-hd-tit">Filter</div>
-        <button class="clear-all" onclick="clearFilters()">Clear all</button>
-      </div>
-      <div class="fg">
-        <div class="fg-lbl">Aesthetic Vibe</div>
-        <div>
-          <label class="fc"><input type="checkbox" value="Y2K Revival" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Y2K Revival</span><span class="fc-cnt">312</span></label>
-          <label class="fc"><input type="checkbox" value="Dark Gothic" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Dark Gothic</span><span class="fc-cnt">198</span></label>
-          <label class="fc"><input type="checkbox" value="Soft Minimal" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Soft Minimal</span><span class="fc-cnt">224</span></label>
-          <label class="fc"><input type="checkbox" value="Artistic Wear" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Artistic Wear</span><span class="fc-cnt">163</span></label>
-          <label class="fc"><input type="checkbox" value="High Fashion" onchange="applyFilter('vibe',this)"><span class="fc-lbl">High Fashion</span><span class="fc-cnt">287</span></label>
-          <label class="fc"><input type="checkbox" value="Indie Core" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Indie Core</span><span class="fc-cnt">176</span></label>
-          <label class="fc"><input type="checkbox" value="Streetwear" onchange="applyFilter('vibe',this)"><span class="fc-lbl">Streetwear</span><span class="fc-cnt">141</span></label>
-        </div>
-      </div>
-      <div class="fg">
-        <div class="fg-lbl">Category</div>
-        <div>
-          <label class="fc"><input type="checkbox" value="Tops & Tees" onchange="applyFilter('cat',this)"><span class="fc-lbl">Tops & Tees</span><span class="fc-cnt">148</span></label>
-          <label class="fc"><input type="checkbox" value="Bottoms" onchange="applyFilter('cat',this)"><span class="fc-lbl">Bottoms</span><span class="fc-cnt">112</span></label>
-          <label class="fc"><input type="checkbox" value="Jewellery" onchange="applyFilter('cat',this)"><span class="fc-lbl">Jewellery</span><span class="fc-cnt">186</span></label>
-          <label class="fc"><input type="checkbox" value="Bags" onchange="applyFilter('cat',this)"><span class="fc-lbl">Bags</span><span class="fc-cnt">79</span></label>
-          <label class="fc"><input type="checkbox" value="Footwear" onchange="applyFilter('cat',this)"><span class="fc-lbl">Footwear</span><span class="fc-cnt">64</span></label>
-          <label class="fc"><input type="checkbox" value="Accessories" onchange="applyFilter('cat',this)"><span class="fc-lbl">Accessories</span><span class="fc-cnt">112</span></label>
-        </div>
-      </div>
-      <div class="fg">
-        <div class="fg-lbl">Size</div>
-        <div class="sz-row">
-          <span class="sz-chip" onclick="toggleSize(this,'XS')">XS</span>
-          <span class="sz-chip" onclick="toggleSize(this,'S')">S</span>
-          <span class="sz-chip" onclick="toggleSize(this,'M')">M</span>
-          <span class="sz-chip" onclick="toggleSize(this,'L')">L</span>
-          <span class="sz-chip" onclick="toggleSize(this,'XL')">XL</span>
-          <span class="sz-chip" onclick="toggleSize(this,'Free Size')">Free</span>
-        </div>
-      </div>
-      <div class="fg">
-        <div class="fg-lbl">Price</div>
-        <div>
-          <label class="fc"><input type="checkbox" value="0-500" onchange="applyFilter('price',this)"><span class="fc-lbl">Under ₹500</span></label>
-          <label class="fc"><input type="checkbox" value="500-1000" onchange="applyFilter('price',this)"><span class="fc-lbl">₹500 – ₹1,000</span></label>
-          <label class="fc"><input type="checkbox" value="1000-2500" onchange="applyFilter('price',this)"><span class="fc-lbl">₹1,000 – ₹2,500</span></label>
-          <label class="fc"><input type="checkbox" value="2500+" onchange="applyFilter('price',this)"><span class="fc-lbl">₹2,500+</span></label>
-          <div class="price-rng" style="margin-top:10px">
-            <input class="p-inp" id="pMin" type="number" placeholder="Min">
-            <span class="p-dash">—</span>
-            <input class="p-inp" id="pMax" type="number" placeholder="Max">
-            <button class="p-go" onclick="applyCustomPrice()">Go</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-    <div class="prod-area">
-      <div class="prod-tb">
-        <div style="display:flex;align-items:center;gap:10px">
-          <button id="mobFilterBtn" onclick="document.getElementById('filterSidebar').classList.toggle('mob-open')" style="display:none;height:32px;padding:0 14px;border:1.5px solid var(--bdr2);font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--k);background:var(--w);cursor:pointer;align-items:center;gap:6px">⚙ Filters</button>
-          <div class="prod-ct"><b id="collCount">12</b> products</div>
-        </div>
-        <div class="sort-wrap">
-          <span class="sort-lbl">Sort</span>
-          <select class="sort-sel" id="collSort" onchange="renderCollection()">
-            <option value="popular">Most Popular</option>
-            <option value="new">Newest</option>
-            <option value="price-asc">Price ↑</option>
-            <option value="price-desc">Price ↓</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </div>
-      </div>
-      <div class="coll-pg" id="collGrid"></div>
-      <div class="pagi" id="collPagi"></div>
-    </div>
-  </div>
-
-  <footer style="background:var(--k);border-top:2px solid var(--k);padding:28px 28px 22px;margin-top:auto">
-    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer" onclick="showPage('home')">
-        <div class="ft-lm"><span>K</span></div>
-        <span style="font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white">KARKER</span>
-      </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <span onclick="showPage('collection')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Shop</span>
-        <span onclick="showPage('sellers')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Artists</span>
-        <span onclick="showPage('sell')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Sell</span>
-        <span onclick="showPage('cart')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Cart</span>
-      </div>
-      <span style="font-family:var(--m);font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em">© 2025 KARKER · karker.in · Bangalore, India</span>
-    </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════════════════════
-     PAGE: PRODUCT DETAIL
-══════════════════════════════════════ -->
-<div id="page-product" class="page">
-  <div class="sg-overlay" id="sizeGuide">
-    <div class="sg-box">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-        <div style="font-family:var(--bc);font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:.08em">Size Guide</div>
-        <button style="width:30px;height:30px;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--i55);cursor:pointer;transition:all .15s" onclick="document.getElementById('sizeGuide').classList.remove('open')">✕</button>
-      </div>
-      <p style="font-family:var(--b);font-size:12.5px;color:var(--i55);margin-bottom:14px;line-height:1.6">All measurements in centimetres. Size up for a relaxed fit.</p>
-      <table class="sg-tbl"><thead><tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hip</th><th>Length</th></tr></thead>
-      <tbody><tr><td>XS</td><td>80–84</td><td>62–66</td><td>88–92</td><td>55</td></tr><tr><td>S</td><td>84–88</td><td>66–70</td><td>92–96</td><td>57</td></tr><tr><td>M</td><td>88–92</td><td>70–74</td><td>96–100</td><td>59</td></tr><tr><td>L</td><td>92–96</td><td>74–78</td><td>100–104</td><td>61</td></tr><tr><td>XL</td><td>96–100</td><td>78–82</td><td>104–108</td><td>63</td></tr></tbody></table>
-    </div>
-  </div>
-  <div class="breadcrumb">
-    <a onclick="showPage('home')">Home</a><span class="sep">›</span>
-    <a onclick="showPage('collection')">Shop</a><span class="sep">›</span>
-    <span class="cur" id="prodBcVibe">Y2K Revival</span><span class="sep">›</span>
-    <span class="cur" id="prodBcName">Product</span>
-  </div>
-  <div class="prod-pg">
-    <div>
-      <div class="gal-main">
-        <span class="gal-main-ico" id="galIco">👗</span>
-        <span class="gal-badge" id="galBadge">New</span>
-        <button class="gal-wish" id="galWish" onclick="toggleGalWish()">♡</button>
-      </div>
-      <div class="gal-thumbs">
-        <div class="gal-thumb on" onclick="setGalThumb(this,'👗')">👗</div>
-        <div class="gal-thumb" onclick="setGalThumb(this,'✨')">✨</div>
-        <div class="gal-thumb" onclick="setGalThumb(this,'🦋')">🦋</div>
-        <div class="gal-thumb" onclick="setGalThumb(this,'📸')">📸</div>
-      </div>
-    </div>
-    <div>
-      <div class="pi-vibe" id="pdVibe">Y2K Revival · Tops & Tees</div>
-      <h1 class="pi-name" id="pdName">Butterfly Mesh Baby Tee, Lavender</h1>
-      <div class="pi-seller-row">By <span class="pi-seller-lnk" onclick="showPage('sellers')" id="pdSeller">@stardust.fits</span> <span class="sv">✓</span></div>
-      <div class="pi-rating-row">
-        <span class="pi-rat-score" id="pdRating">4.8</span>
-        <span class="pi-stars">★★★★★</span>
-        <span class="pi-rat-cnt" id="pdRevCnt" onclick="setTab2(document.querySelectorAll('.tab-btn')[2],'pane-reviews')">142 reviews</span>
-      </div>
-      <div class="pi-price-row">
-        <span class="pi-price" id="pdPrice">₹649</span>
-        <span class="pi-mrp" id="pdMrp">₹899</span>
-        <span class="pi-off-badge" id="pdOff">28% off</span>
-      </div>
-      <div class="pi-sec-tit">Select Size</div>
-      <div class="pi-sizes">
-        <div class="pi-sz sold">XS</div>
-        <div class="pi-sz on" onclick="selPdSz(this)">S</div>
-        <div class="pi-sz" onclick="selPdSz(this)">M</div>
-        <div class="pi-sz" onclick="selPdSz(this)">L</div>
-        <div class="pi-sz" onclick="selPdSz(this)">XL</div>
-      </div>
-      <span class="sg-lnk" onclick="document.getElementById('sizeGuide').classList.add('open')">Size guide →</span>
-      <div class="qty-row">
-        <span class="qty-lbl">Qty</span>
-        <div class="qty-c">
-          <button class="qty-b" onclick="changePdQty(-1)">−</button>
-          <div class="qty-n2" id="pdQty">1</div>
-          <button class="qty-b" onclick="changePdQty(1)">+</button>
-        </div>
-        <span style="font-family:var(--m);font-size:9.5px;color:#16A34A;letter-spacing:.06em">In stock · 12 left</span>
-      </div>
-      <div class="pi-btns">
-        <button class="btn-k" onclick="addToCartPd()">Add to Cart</button>
-        <button class="btn-k-o" onclick="toast('Checkout coming soon →')">Buy Now</button>
-      </div>
-      <div class="del-box">
-        <div class="del-tit">Delivery & Returns</div>
-        <div class="del-row">✓ Free delivery above ₹599</div>
-        <div class="del-row">↩ 7-day easy returns</div>
-        <div class="del-row">🔒 Secured via Razorpay</div>
-        <div class="pin-row">
-          <input class="pin-in" id="pinIn" type="text" placeholder="Enter pincode" maxlength="6" inputmode="numeric">
-          <button class="pin-go" onclick="checkPdPin()">Check</button>
-        </div>
-        <div class="pin-res" id="pinRes"></div>
-      </div>
-      <div class="share-row">
-        <span class="share-lbl">Share</span>
-        <button class="sh-btn" onclick="toast('Link copied ✓','lt');navigator.clipboard.writeText(window.location.href).catch(()=>{})">🔗</button>
-        <button class="sh-btn" onclick="window.open('https://wa.me/?text=Check this on KARKER — '+encodeURIComponent(window.location.href))">💬</button>
-      </div>
-    </div>
-  </div>
-  <div class="prod-tabs">
-    <div class="tab-nav">
-      <button class="tab-btn on" onclick="setTab2(this,'pane-desc')">Description</button>
-      <button class="tab-btn" onclick="setTab2(this,'pane-specs')">Details & Care</button>
-      <button class="tab-btn" onclick="setTab2(this,'pane-reviews')">Reviews (142)</button>
-      <button class="tab-btn" onclick="setTab2(this,'pane-seller')">About Seller</button>
-    </div>
-    <div class="tab-body">
-      <div class="tab-pane on" id="pane-desc">
-        <p class="desc-txt">Sheer mesh fabric with hand-embroidered butterfly details across the chest. Cropped fit hits just above the waist. Pairs beautifully with high-waist bottoms, cargo trousers, or layered under an oversized jacket.</p>
-        <p class="desc-txt">The Lavender colourway is a soft muted purple — less pastel, more dusty — that photographs beautifully in both natural and artificial light. Limited run of 40 pieces per drop.</p>
-      </div>
-      <div class="tab-pane" id="pane-specs">
-        <div class="spec-tbl">
-          <div class="spec-r"><div class="spec-k">Fabric</div><div class="spec-v">100% Polyester mesh</div></div>
-          <div class="spec-r"><div class="spec-k">Fit</div><div class="spec-v">Cropped, relaxed</div></div>
-          <div class="spec-r"><div class="spec-k">Transparency</div><div class="spec-v">Semi-sheer — layer recommended</div></div>
-          <div class="spec-r"><div class="spec-k">Care</div><div class="spec-v">Hand wash cold, do not tumble dry</div></div>
-          <div class="spec-r"><div class="spec-k">Origin</div><div class="spec-v">Made in India 🇮🇳</div></div>
-          <div class="spec-r"><div class="spec-k">Return policy</div><div class="spec-v">7 days from delivery</div></div>
-        </div>
-      </div>
-      <div class="tab-pane" id="pane-reviews">
-        <div class="rv-sum">
-          <div><div class="rv-big">4.8</div><div class="rv-stars2">★★★★★</div><div class="rv-cnt2">142 reviews</div></div>
-          <div class="rv-bars">
-            <div class="rb"><span class="rb-l">5★</span><div class="rb-tr"><div class="rb-f" style="width:78%"></div></div><span class="rb-n">111</span></div>
-            <div class="rb"><span class="rb-l">4★</span><div class="rb-tr"><div class="rb-f" style="width:14%"></div></div><span class="rb-n">20</span></div>
-            <div class="rb"><span class="rb-l">3★</span><div class="rb-tr"><div class="rb-f" style="width:5%"></div></div><span class="rb-n">7</span></div>
-            <div class="rb"><span class="rb-l">2★</span><div class="rb-tr"><div class="rb-f" style="width:2%"></div></div><span class="rb-n">3</span></div>
-            <div class="rb"><span class="rb-l">1★</span><div class="rb-tr"><div class="rb-f" style="width:1%"></div></div><span class="rb-n">1</span></div>
-          </div>
-        </div>
-        <div class="rv-card"><div class="rv-hd"><div class="rv-av">P</div><div><div class="rv-nm">Priya M.</div><div class="rv-dt">March 2025</div></div><span class="rv-st">★★★★★</span></div><p class="rv-tx">Absolutely obsessed. The mesh is delicate but not flimsy, and the embroidery is so detailed. Sizing is true to size — ordered M as usual.</p><div class="rv-vf">✓ Verified purchase · Size M</div></div>
-        <div class="rv-card"><div class="rv-hd"><div class="rv-av">A</div><div><div class="rv-nm">Ananya K.</div><div class="rv-dt">February 2025</div></div><span class="rv-st">★★★★★</span></div><p class="rv-tx">Packaging was gorgeous — black tissue with a KARKER sticker. The top is stunning. Lavender is the perfect shade. Very happy!</p><div class="rv-vf">✓ Verified purchase · Size S</div></div>
-        <div class="rv-card"><div class="rv-hd"><div class="rv-av">R</div><div><div class="rv-nm">Riya S.</div><div class="rv-dt">January 2025</div></div><span class="rv-st">★★★★☆</span></div><p class="rv-tx">Love the design but I'd say size up if between sizes. Quality is excellent and the seller was very responsive.</p><div class="rv-vf">✓ Verified purchase · Size XS</div></div>
-      </div>
-      <div class="tab-pane" id="pane-seller">
-        <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
-          <div style="width:60px;height:60px;border:2px solid var(--k);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;filter:grayscale(1)brightness(.4);flex-shrink:0">✦</div>
-          <div style="flex:1;min-width:200px">
-            <div style="font-family:var(--bc);font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--k);margin-bottom:3px">Stardust Fits</div>
-            <div style="font-family:var(--m);font-size:10px;color:var(--i32);margin-bottom:10px">@stardust.fits · Bangalore, India</div>
-            <div style="display:flex;gap:18px;margin-bottom:12px;flex-wrap:wrap">
-              <div style="text-align:center"><div style="font-family:var(--bc);font-size:22px;font-weight:900;color:var(--k)">48</div><div style="font-family:var(--m);font-size:9px;color:var(--i32);text-transform:uppercase;letter-spacing:.08em">Products</div></div>
-              <div style="text-align:center"><div style="font-family:var(--bc);font-size:22px;font-weight:900;color:var(--k)">4.9★</div><div style="font-family:var(--m);font-size:9px;color:var(--i32);text-transform:uppercase;letter-spacing:.08em">Rating</div></div>
-              <div style="text-align:center"><div style="font-family:var(--bc);font-size:22px;font-weight:900;color:var(--k)">98%</div><div style="font-family:var(--m);font-size:9px;color:var(--i32);text-transform:uppercase;letter-spacing:.08em">On time</div></div>
-            </div>
-            <p style="font-family:var(--b);font-size:13px;font-weight:300;line-height:1.75;color:var(--i55);max-width:440px;margin-bottom:12px">Y2K and dark aesthetic pieces handmade in Bangalore. Each drop is limited — once it's gone, it's gone.</p>
-            <button class="btn-k-o" style="height:38px;padding:0 18px;font-size:10px" onclick="showPage('sellers')">Visit Store →</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="related-sec">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px">
-      <div><div class="sec-ey">You may also like</div><div class="sec-tit">Similar <em>Pieces</em></div></div>
-      <span class="see-all" onclick="showPage('collection')">View all →</span>
-    </div>
-    <div class="rel-pg">
-      <div class="rel-pc" onclick="openProdPage(7)"><div class="rel-img"><span class="rel-ico">🧤</span></div><div class="rel-body"><div class="rel-name">Fingerless Mesh Gloves</div><div class="rel-price">₹299</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(8)"><div class="rel-img"><span class="rel-ico">👟</span></div><div class="rel-body"><div class="rel-name">Platform Jelly Mules</div><div class="rel-price">₹999</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(2)"><div class="rel-img"><span class="rel-ico">💍</span></div><div class="rel-body"><div class="rel-name">Rhinestone Necklace Set</div><div class="rel-price">₹480</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(3)"><div class="rel-img"><span class="rel-ico">🧣</span></div><div class="rel-body"><div class="rel-name">Velvet Butterfly Scarf</div><div class="rel-price">₹390</div></div></div>
-    </div>
-  </div>
-
-  <footer style="background:var(--k);border-top:2px solid var(--k);padding:28px 28px 22px;margin-top:auto">
-    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer" onclick="showPage('home')">
-        <div class="ft-lm"><span>K</span></div>
-        <span style="font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white">KARKER</span>
-      </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <span onclick="showPage('collection')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Shop</span>
-        <span onclick="showPage('sellers')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Artists</span>
-        <span onclick="showPage('sell')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Sell</span>
-        <span onclick="showPage('cart')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Cart</span>
-      </div>
-      <span style="font-family:var(--m);font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em">© 2025 KARKER · karker.in · Bangalore, India</span>
-    </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════════════════════
-     PAGE: SELLERS / ARTISTS
-══════════════════════════════════════ -->
-<div id="page-sellers" class="page">
-  <div class="sellers-hero">
-    <div class="sel-h-in">
-      <div>
-        <div class="sel-h-tit"><span>The</span><span class="gh">Makers.</span></div>
-        <p style="font-family:var(--b);font-size:13px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.7;max-width:300px;margin-top:12px">180+ verified indie artists. Real pieces. Real people.</p>
-      </div>
-      <div class="sel-h-stats">
-        <div><div class="sel-h-stat-n">180+</div><div class="sel-h-stat-l">Verified artists</div></div>
-        <div><div class="sel-h-stat-n">4.7★</div><div class="sel-h-stat-l">Avg. rating</div></div>
-        <div><div class="sel-h-stat-n">7 days</div><div class="sel-h-stat-l">Payout cycle</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="sel-feat">
-    <div class="sf-card" onclick="showPage('sellers')"><span class="sf-bg">✦</span><div class="sf-ct"><span class="sf-tag">Featured Artist</span><div class="sf-name">Stardust Fits</div><div class="sf-handle">@stardust.fits</div><p class="sf-bio">Y2K and dark aesthetic pieces handmade in Bangalore.</p><div class="sf-stat">★ 4.9 · 48 products · 340 sales</div></div><span class="sf-arr">↗</span></div>
-    <div class="sf-card" onclick="showPage('sellers')"><span class="sf-bg">🎨</span><div class="sf-ct"><span class="sf-tag">Top Rated</span><div class="sf-name">Palette People</div><div class="sf-handle">@palette.people</div><p class="sf-bio">Hand-painted wearable art. No two pieces alike.</p><div class="sf-stat">★ 5.0 · 22 products · 190 sales</div></div><span class="sf-arr">↗</span></div>
-    <div class="sf-card" onclick="showPage('sellers')"><span class="sf-bg">❋</span><div class="sf-ct"><span class="sf-tag">Rising Artist</span><div class="sf-name">Nazar Studio</div><div class="sf-handle">@nazar.studio</div><p class="sf-bio">High fashion accessories with an editorial edge.</p><div class="sf-stat">★ 4.8 · 31 products · 210 sales</div></div><span class="sf-arr">↗</span></div>
-  </div>
-  <div class="sel-tb">
-    <div class="sel-search"><input type="text" id="selSearch" placeholder="Search artists..." oninput="renderSellers()" autocomplete="off"><span style="font-size:16px;color:var(--i32);padding:0 10px">⌕</span></div>
-    <div class="sel-chips">
-      <span class="sel-chip on" onclick="setSelChip(this,'all')">All</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Y2K')">Y2K</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Gothic')">Gothic</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Minimal')">Minimal</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Artistic')">Artistic</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Fashion')">Fashion</span>
-      <span class="sel-chip" onclick="setSelChip(this,'Indie')">Indie</span>
-    </div>
-    <div class="sel-cnt">Showing <b id="selCnt">7</b> artists</div>
-  </div>
-  <div class="sel-grid" id="selGrid"></div>
-  <div class="sel-apply">
-    <div style="max-width:580px;margin:0 auto;text-align:center">
-      <div class="sec-ey" style="justify-content:center">Join the community</div>
-      <div class="sec-tit" style="margin-bottom:12px">Sell your art.<br><em>Own your income.</em></div>
-      <p style="font-family:var(--b);font-size:13.5px;font-weight:300;color:var(--i55);line-height:1.8;margin-bottom:22px">Zero listing fees. You set your prices. 7-day payouts. Join 180+ artists on KARKER.</p>
-      <button class="btn-k" onclick="showPage('sell')">Start Selling Free →</button>
-    </div>
-  </div>
-
-  <footer style="background:var(--k);border-top:2px solid var(--k);padding:28px 28px 22px;margin-top:auto">
-    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer" onclick="showPage('home')">
-        <div class="ft-lm"><span>K</span></div>
-        <span style="font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white">KARKER</span>
-      </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <span onclick="showPage('collection')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Shop</span>
-        <span onclick="showPage('sellers')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Artists</span>
-        <span onclick="showPage('sell')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Sell</span>
-        <span onclick="showPage('cart')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Cart</span>
-      </div>
-      <span style="font-family:var(--m);font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em">© 2025 KARKER · karker.in · Bangalore, India</span>
-    </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════════════════════
-     PAGE: SELL ON KARKER
-══════════════════════════════════════ -->
-<div id="page-sell" class="page">
-  <div class="sell-hero">
-    <div class="sell-hero-bg">SELL</div>
-    <div class="sell-in">
-      <div class="sell-tag"><span style="width:6px;height:6px;background:#4ADE80;border-radius:50%"></span> Now accepting new sellers</div>
-      <div class="sell-tit"><span>Your Art.</span><span class="gh">Your Rules.</span><span>Your Income.</span></div>
-      <p class="sell-sub">Join 180+ indie artists on KARKER. Zero listing fees, you set your prices, 7-day payouts guaranteed.</p>
-      <div class="sell-btns">
-        <button class="btn-inv" onclick="document.getElementById('applyForm').scrollIntoView({behavior:'smooth'})">Apply Free →</button>
-        <button class="btn-g-inv" onclick="document.getElementById('howItWorks').scrollIntoView({behavior:'smooth'})">How it works →</button>
-      </div>
-    </div>
-  </div>
-  <div class="sec" style="padding-bottom:0">
-    <div class="sec-in">
-      <div class="sec-ey">Why sellers choose KARKER</div>
-      <div class="sec-tit" style="margin-bottom:0">Everything a <em>real</em> artist needs.</div>
-    </div>
-  </div>
-  <div style="border-top:2px solid var(--k);border-bottom:2px solid var(--k)">
-    <div style="max-width:1440px;margin:0 auto">
-      <div class="ben-grid">
-        <div class="ben"><div class="ben-n">01</div><div class="ben-tit">Zero listing fees</div><div class="ben-sub">List unlimited products free. We earn only when you earn — 8–15% commission on completed sales only.</div></div>
-        <div class="ben"><div class="ben-n">02</div><div class="ben-tit">You set your prices</div><div class="ben-sub">Full control over pricing, descriptions, and quantities. No race to the bottom. Your work, your value.</div></div>
-        <div class="ben"><div class="ben-n">03</div><div class="ben-tit">7-day payouts</div><div class="ben-sub">Money released 7 days after delivery. Withdraw any amount above ₹500 directly to your bank.</div></div>
-        <div class="ben"><div class="ben-n">04</div><div class="ben-tit">Your own storefront</div><div class="ben-sub">A clean branded page — your story, your products, your aesthetic at karker.in/shop/yourhandle</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="sec" id="howItWorks">
-    <div class="sec-in">
-      <div class="sec-ey">Simple process</div>
-      <div class="sec-tit">5 steps to your <em>first sale.</em></div>
-      <div class="hiw-steps">
-        <div class="hw-step"><div class="hw-n">1</div><div class="hw-tit">Apply</div><div class="hw-sub">Fill the form below. We review within 48 hours.</div></div>
-        <div class="hw-step"><div class="hw-n">2</div><div class="hw-tit">Verify</div><div class="hw-sub">Quick KYC — Aadhaar + PAN + bank. One time.</div></div>
-        <div class="hw-step"><div class="hw-n">3</div><div class="hw-tit">List</div><div class="hw-sub">Upload products with photos, pricing, sizes.</div></div>
-        <div class="hw-step"><div class="hw-n">4</div><div class="hw-tit">Sell</div><div class="hw-sub">Orders arrive in dashboard. One-click Shiprocket label.</div></div>
-        <div class="hw-step"><div class="hw-n">5</div><div class="hw-tit">Get Paid</div><div class="hw-sub">₹ in your account D+7 after delivery. Every time.</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="sec" style="background:var(--off);border-top:2px solid var(--k);border-bottom:2px solid var(--k)" id="applyForm">
-    <div class="sec-in">
-      <div class="sec-ey">Ready to start?</div>
-      <div class="sec-tit" style="margin-bottom:36px">Apply in <em>2 minutes.</em></div>
-      <div class="apply-box">
-        <div id="af-success" class="af-success">
-          <div style="font-size:28px;margin-bottom:8px">✦</div>
-          <p style="font-family:var(--b);font-size:13.5px;color:#15803D;line-height:1.6"><strong>Application received!</strong><br>We review within 48 hours and will reach out on WhatsApp or email.</p>
-        </div>
-        <form id="applyFormEl" onsubmit="submitApply(event)">
-          <div class="af-grid">
-            <div><label class="af-label">Full Name</label><input class="af-inp" id="afName" type="text" placeholder="Your name" autocomplete="name" required></div>
-            <div><label class="af-label">Shop / Brand Name</label><input class="af-inp" id="afShop" type="text" placeholder="Stardust Fits" required></div>
-            <div><label class="af-label">Email</label><input class="af-inp" id="afEmail" type="email" placeholder="you@email.com" autocomplete="email" required></div>
-            <div><label class="af-label">WhatsApp Number</label><input class="af-inp" id="afPhone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required></div>
-            <div><label class="af-label">Instagram Handle</label><input class="af-inp" id="afIG" type="text" placeholder="@yourbrand"></div>
-            <div><label class="af-label">Primary Aesthetic</label><select class="af-sel" id="afVibe" required><option value="">Select...</option><option>Y2K Revival</option><option>Dark Gothic</option><option>Soft Minimal</option><option>Artistic Wear</option><option>High Fashion</option><option>Indie Core</option><option>Streetwear</option></select></div>
-            <div class="af-full"><label class="af-label">About your brand</label><textarea class="af-ta" id="afBio" placeholder="Tell us about your aesthetic, what you make..." required></textarea></div>
-          </div>
-          <div class="af-check"><input type="checkbox" id="afAgree" required><label for="afAgree">I create original products and agree to KARKER's Seller Terms. I understand 8–15% commission applies per sale.</label></div>
-          <button type="submit" class="btn-k" style="width:100%;height:52px;justify-content:center" id="afBtn">Submit Application →</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="sec">
-    <div class="sec-in">
-      <div class="sec-ey">Common questions</div>
-      <div class="sec-tit" style="margin-bottom:32px">Got <em>questions?</em></div>
-      <div style="max-width:680px">
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq2(this)">How long does approval take? <span class="faq-arr">+</span></div><div class="faq-a">We review every application within 48 hours. You will receive a WhatsApp message or email from our team.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq2(this)">What products can I sell? <span class="faq-arr">+</span></div><div class="faq-a">Any original clothing, jewellery, accessories, or wearable art you have created. No reselling of other brands.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq2(this)">How do payouts work? <span class="faq-arr">+</span></div><div class="faq-a">Earnings released to your wallet 7 days after delivery. Withdraw any amount above ₹500 to your bank account anytime. Transfers take 1–3 business days.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq2(this)">Do I need a GST number? <span class="faq-arr">+</span></div><div class="faq-a">Not required to start. GST registration becomes mandatory if your annual revenue from all sources exceeds ₹20 lakh.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq2(this)">What is TCS? <span class="faq-arr">+</span></div><div class="faq-a">TCS at 1% is a mandatory deduction all Indian e-commerce operators must collect. It is passed to the Income Tax department on your behalf. You can claim it back when filing your ITR.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <footer style="background:var(--k);border-top:2px solid var(--k);padding:28px 28px 22px;margin-top:auto">
-    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer" onclick="showPage('home')">
-        <div class="ft-lm"><span>K</span></div>
-        <span style="font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white">KARKER</span>
-      </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <span onclick="showPage('collection')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Shop</span>
-        <span onclick="showPage('sellers')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Artists</span>
-        <span onclick="showPage('sell')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Sell</span>
-        <span onclick="showPage('cart')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Cart</span>
-      </div>
-      <span style="font-family:var(--m);font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em">© 2025 KARKER · karker.in · Bangalore, India</span>
-    </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════════════════════
-     PAGE: CART
-══════════════════════════════════════ -->
-<div id="page-cart" class="page">
-  <div class="breadcrumb">
-    <a onclick="showPage('home')">Home</a><span class="sep">›</span>
-    <span class="cur">Cart</span>
-  </div>
-  <div class="cart-pg" id="cartPgWrap">
-    <div>
-      <div class="cart-pg-title">Your Cart <span id="cartPgCount" style="font-size:14px;font-weight:400;color:var(--i32);font-family:var(--m)">(2 items)</span></div>
-      <div id="cartPgItems">
-        <div class="cart-item" id="cpi-1">
-          <div class="ci-img2">👗</div>
-          <div class="ci-info">
-            <div class="ci-seller">@stardust.fits ✓</div>
-            <div class="ci-name">Butterfly Mesh Baby Tee, Lavender</div>
-            <div class="ci-meta">Size: S · Y2K Revival</div>
-            <div class="ci-row">
-              <div class="ci-price" id="cprice-1">₹649</div>
-              <div class="ci-actions" style="display:flex;align-items:center;gap:10px">
-                <div class="ci-qty"><button class="qty-btn" onclick="changeCPQty(1,-1)">−</button><div class="qty-n" id="cqty-1">1</div><button class="qty-btn" onclick="changeCPQty(1,1)">+</button></div>
-                <span class="rm-btn" onclick="removeCPItem(1)">Remove</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="cart-item" id="cpi-2">
-          <div class="ci-img2">💍</div>
-          <div class="ci-info">
-            <div class="ci-seller">@the.aura.co ✓</div>
-            <div class="ci-name">Rhinestone Layered Necklace Set</div>
-            <div class="ci-meta">One size · Accessories</div>
-            <div class="ci-row">
-              <div class="ci-price" id="cprice-2">₹480</div>
-              <div class="ci-actions" style="display:flex;align-items:center;gap:10px">
-                <div class="ci-qty"><button class="qty-btn" onclick="changeCPQty(2,-1)">−</button><div class="qty-n" id="cqty-2">1</div><button class="qty-btn" onclick="changeCPQty(2,1)">+</button></div>
-                <span class="rm-btn" onclick="removeCPItem(2)">Remove</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="os-box">
-      <div class="os-tit">Order Summary</div>
-      <div class="os-row"><span>Subtotal</span><span id="cpSubtotal">₹1,129</span></div>
-      <div class="os-row"><span>Delivery</span><span style="color:#16A34A;font-family:var(--m);font-size:11px;font-weight:500" id="cpDelivery">FREE</span></div>
-      <div class="os-row" id="cpDiscRow" style="display:none"><span>Discount</span><span style="color:#16A34A" id="cpDisc"></span></div>
-      <div class="coup-row"><input class="coup-in" id="cpCoupon" type="text" placeholder="Coupon code" autocomplete="off"><button class="coup-btn" onclick="applyCPCoupon()">Apply</button></div>
-      <div class="os-row tot"><span>Total</span><span class="os-val" id="cpTotal">₹1,129</span></div>
-      <div style="font-family:var(--m);font-size:9px;color:var(--i32);margin-bottom:14px;letter-spacing:.04em">Inc. all taxes · GST included</div>
-      <button class="btn-full" onclick="toast('Razorpay checkout coming in Phase 3 →')">Proceed to Checkout →</button>
-      <button class="btn-full-o" onclick="showPage('collection')">Continue Shopping</button>
-      <div class="trust-row2">
-        <span class="trust-it">🔒 Secure</span>
-        <span class="trust-it">↩ 7-day returns</span>
-        <span class="trust-it">📦 2–3 days</span>
-      </div>
-    </div>
-  </div>
-  <div class="related-sec">
-    <div class="sec-ey">You may also like</div>
-    <div class="sec-tit" style="margin-bottom:20px">More <em>Pieces</em></div>
-    <div class="rel-pg">
-      <div class="rel-pc" onclick="openProdPage(3)"><div class="rel-img"><span class="rel-ico">🧣</span></div><div class="rel-body"><div class="rel-name">Velvet Butterfly Scarf</div><div class="rel-price">₹390</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(7)"><div class="rel-img"><span class="rel-ico">🧤</span></div><div class="rel-body"><div class="rel-name">Fingerless Mesh Gloves</div><div class="rel-price">₹299</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(8)"><div class="rel-img"><span class="rel-ico">👟</span></div><div class="rel-body"><div class="rel-name">Platform Jelly Mules</div><div class="rel-price">₹999</div></div></div>
-      <div class="rel-pc" onclick="openProdPage(6)"><div class="rel-img"><span class="rel-ico">🎨</span></div><div class="rel-body"><div class="rel-name">Hand-Painted Denim Jacket</div><div class="rel-price">₹3,200</div></div></div>
-    </div>
-  </div>
-
-  <footer style="background:var(--k);border-top:2px solid var(--k);padding:28px 28px 22px;margin-top:auto">
-    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer" onclick="showPage('home')">
-        <div class="ft-lm"><span>K</span></div>
-        <span style="font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:white">KARKER</span>
-      </div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap">
-        <span onclick="showPage('collection')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Shop</span>
-        <span onclick="showPage('sellers')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Artists</span>
-        <span onclick="showPage('sell')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Sell</span>
-        <span onclick="showPage('cart')" style="font-family:var(--m);font-size:10px;color:rgba(255,255,255,.35);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Cart</span>
-      </div>
-      <span style="font-family:var(--m);font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.06em">© 2025 KARKER · karker.in · Bangalore, India</span>
-    </div>
-  </footer>
-</div>
-
 
 <script>
 /* ── SANITISE (XSS prevention) ── */
 function sanitise(s){if(typeof s!=='string')return '';return s.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#x27;'}[c])).trim();}
-
-
-/* ══ PAGE ROUTER ══ */
-const PAGES=['home','collection','product','sellers','sell','cart'];
-let currentPage='home';
-
-function showPage(name, params) {
-  params = params || {};
-
-  // Hide all inner pages
-  PAGES.forEach(p => {
-    const el = document.getElementById('page-' + p);
-    if (el) el.classList.remove('active');
-  });
-
-  // Show/hide home content
-  const homeContent = document.getElementById('home-content');
-  const vibeStrip = document.getElementById('vibeStrip');
-  const isHome = name === 'home';
-
-  if (homeContent) homeContent.style.display = isHome ? '' : 'none';
-  if (vibeStrip) vibeStrip.style.display = isHome ? '' : 'none';
-
-  // Activate inner page
-  if (!isHome) {
-    const pg = document.getElementById('page-' + name);
-    if (pg) pg.classList.add('active');
-  }
-
-  currentPage = name;
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  updateNav(name);
-
-  // Update browser history & URL
-  try {
-    history.pushState({ page: name, params }, '', isHome ? './' : '#' + name);
-  } catch(e) {}
-
-  // Run page-specific init
-  if (name === 'collection') initCollection(params);
-  if (name === 'product') initProduct(params);
-  if (name === 'sellers') renderSellers();
-  if (name === 'sell') resetSellForm();
-  if (name === 'cart') rebuildCart();
-}
-
-function updateNav(page){
-  document.querySelectorAll('.nav-lnk').forEach(l=>l.classList.remove('active'));
-  const map={collection:'nav-coll',product:'nav-coll',sellers:'nav-artists',sell:'nav-sell',cart:null};
-  const targetId=map[page];
-  if(targetId){const el=document.getElementById(targetId);if(el)el.classList.add('active');}
-  // Show/hide drop toggle only on home
-  const dt=document.getElementById('dropToggle');
-  if(dt)dt.style.display=page==='home'?'flex':'none';
-}
-
-window.addEventListener('popstate',e=>{
-  const p=e.state?.page||'home';
-  if(PAGES.includes(p))showPage(p,e.state?.params||{});
-  else showPage('home');
-});
-
-/* ══ PRODUCTS DATA ══ */
-const PRODS=[
-  {id:1,ico:'👗',tag:'New',vibe:'Y2K Revival',cat:'Tops & Tees',seller:'@stardust.fits',verified:true,name:'Butterfly Mesh Baby Tee, Lavender',price:649,mrp:899,rating:4.8,reviews:142,sizes:['XS','S','M','L','XL']},
-  {id:2,ico:'💍',tag:'New',vibe:'Accessories',cat:'Jewellery',seller:'@the.aura.co',verified:true,name:'Rhinestone Layered Necklace Set',price:480,mrp:null,rating:4.9,reviews:89,sizes:['Free Size']},
-  {id:3,ico:'🧣',tag:'Limited',vibe:'Dark Gothic',cat:'Accessories',seller:'@glitch.stitch',verified:false,name:'Velvet Butterfly Scarf, Midnight',price:390,mrp:null,rating:4.7,reviews:56,sizes:['Free Size']},
-  {id:4,ico:'👜',tag:'New',vibe:'Accessories',cat:'Bags',seller:'@nazar.studio',verified:true,name:'Chrome Mini Shoulder Bag',price:1200,mrp:1600,rating:4.6,reviews:34,sizes:['Free Size']},
-  {id:5,ico:'👖',tag:'Sale',vibe:'Streetwear',cat:'Bottoms',seller:'@pixel.drip',verified:false,name:'Low-Rise Cargo Trousers, Sand',price:1850,mrp:2200,rating:4.5,reviews:28,sizes:['S','M','L','XL']},
-  {id:6,ico:'🎨',tag:'Artist',vibe:'Artistic Wear',cat:'Tops & Tees',seller:'@palette.people',verified:true,name:'Hand-Painted Denim Jacket',price:3200,mrp:null,rating:5.0,reviews:17,sizes:['XS','S','M','L','XL']},
-  {id:7,ico:'🧤',tag:'',vibe:'Dark Gothic',cat:'Accessories',seller:'@static.drop',verified:false,name:'Fingerless Mesh Gloves, Black',price:299,mrp:null,rating:4.3,reviews:44,sizes:['Free Size']},
-  {id:8,ico:'👟',tag:'-29%',vibe:'Y2K Revival',cat:'Footwear',seller:'@retro.roots',verified:false,name:'Platform Jelly Mules, Bubblegum',price:999,mrp:1400,rating:4.6,reviews:78,sizes:['5','6','7','8','9']},
-  {id:9,ico:'🧥',tag:'New',vibe:'Soft Minimal',cat:'Tops & Tees',seller:'@softstone.studio',verified:false,name:'Oversized Linen Blazer, Oatmeal',price:2100,mrp:2800,rating:4.8,reviews:61,sizes:['XS','S','M','L','XL']},
-  {id:10,ico:'🧶',tag:'New',vibe:'Indie Core',cat:'Tops & Tees',seller:'@cottage.craft',verified:false,name:'Crochet Knit Vest, Sage Green',price:920,mrp:null,rating:4.9,reviews:22,sizes:['S','M','L','Free Size']},
-  {id:11,ico:'👒',tag:'Trending',vibe:'Soft Minimal',cat:'Accessories',seller:'@lustre.lane',verified:false,name:'Crochet Bucket Hat, Terracotta',price:720,mrp:null,rating:4.7,reviews:38,sizes:['Free Size']},
-  {id:12,ico:'🌸',tag:'New',vibe:'High Fashion',cat:'Tops & Tees',seller:'@sartorial.co',verified:false,name:'Petal Sleeve Organza Blouse',price:1200,mrp:null,rating:4.8,reviews:15,sizes:['XS','S','M','L']},
-];
-
-/* ══ COLLECTION PAGE ══ */
-let collFilters={vibe:[],cat:[],size:[],price:[]};
-let collPage=1; const COLL_PER=9;
-
-function initCollection(params){
-  if(params.search){
-    collFilters={vibe:[],cat:[],size:[],price:[],search:params.search};
-    document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>cb.checked=false);
-    document.getElementById('collBc').textContent='Search: '+params.search;
-  } else if(params.vibe){
-    collFilters={vibe:[params.vibe],cat:[],size:[],price:[]};
-    document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>{cb.checked=cb.value===params.vibe;});
-    document.getElementById('collBc').textContent=params.vibe;
-  } else if(params.cat){
-    collFilters={vibe:[],cat:[params.cat],size:[],price:[]};
-    document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>{cb.checked=cb.value===params.cat;});
-    document.getElementById('collBc').textContent=params.cat;
-  } else {
-    collFilters={vibe:[],cat:[],size:[],price:[],search:''};
-    document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>cb.checked=false);
-    document.getElementById('collBc').textContent='All Products';
-  }
-  collPage=1;
-  renderCollection();
-}
-
-function getCollFiltered(){
-  return PRODS.filter(p=>{
-    if(collFilters.search){const q=collFilters.search.toLowerCase();if(!p.name.toLowerCase().includes(q)&&!p.vibe.toLowerCase().includes(q)&&!p.cat.toLowerCase().includes(q)&&!p.seller.toLowerCase().includes(q))return false;}
-    if(collFilters.vibe.length&&!collFilters.vibe.includes(p.vibe))return false;
-    if(collFilters.cat.length&&!collFilters.cat.includes(p.cat))return false;
-    if(collFilters.size.length&&!collFilters.size.some(s=>p.sizes.includes(s)))return false;
-    if(collFilters.price.length){
-      const ok=collFilters.price.some(r=>{
-        if(r==='0-500')return p.price<500;
-        if(r==='500-1000')return p.price>=500&&p.price<1000;
-        if(r==='1000-2500')return p.price>=1000&&p.price<2500;
-        if(r==='2500+')return p.price>=2500;
-        if(r.includes('c')){const[mn,mx]=r.replace('c','').split('-').map(Number);return p.price>=mn&&p.price<=mx;}
-        return true;
-      });
-      if(!ok)return false;
-    }
-    return true;
-  });
-}
-
-function renderCollection(){
-  const filtered=getCollFiltered();
-  const v=document.getElementById('collSort')?.value||'popular';
-  const sorted=[...filtered].sort((a,b)=>{
-    if(v==='new')return b.id-a.id;
-    if(v==='price-asc')return a.price-b.price;
-    if(v==='price-desc')return b.price-a.price;
-    if(v==='rating')return b.rating-a.rating;
-    return b.reviews-a.reviews;
-  });
-  const start=(collPage-1)*COLL_PER;
-  const page=sorted.slice(start,start+COLL_PER);
-  document.getElementById('collCount').textContent=filtered.length;
-  const grid=document.getElementById('collGrid');
-  if(!page.length){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--m);font-size:12px;color:var(--i32)">No products found. Try removing some filters.</div>';
-    document.getElementById('collPagi').innerHTML='';
-    return;
-  }
-  grid.innerHTML=page.map(p=>{
-    const off=p.mrp?Math.round((1-p.price/p.mrp)*100):'';
-    return`<div class="pc" onclick="openProdPage(${p.id})">
-      <div class="pc-img"><div class="pc-img-bg"></div><span class="pc-ico">${p.ico}</span>${p.tag?`<span class="pc-tag${p.tag.startsWith('-')?' w':''}">${p.tag}</span>`:''}<span class="pc-wish" onclick="event.stopPropagation();this.classList.toggle('on');this.textContent=this.classList.contains('on')?'♥':'♡';toast(this.classList.contains('on')?'Saved ♥':'Removed')">♡</span></div>
-      <div class="pc-body"><div class="pc-seller">${p.seller}${p.verified?' <span class="sv">✓</span>':''}</div><div class="pc-name">${p.name}</div><div class="pc-pr"><span class="pc-price">₹${p.price.toLocaleString('en-IN')}</span>${p.mrp?`<span class="pc-mrp">₹${p.mrp.toLocaleString('en-IN')}</span><span class="pc-off">−${off}%</span>`:''}</div><div class="pc-rat">★ ${p.rating} · ${p.reviews} reviews</div></div>
-    </div>`;
-  }).join('');
-  const pages=Math.ceil(filtered.length/COLL_PER);
-  let pagi='';
-  if(pages>1){
-    if(collPage>1)pagi+=`<button class="pgb" onclick="collPage--;renderCollection()">‹</button>`;
-    for(let i=1;i<=pages;i++)pagi+=`<button class="pgb${i===collPage?' on':''}" onclick="collPage=${i};renderCollection();document.getElementById('page-collection').scrollIntoView()">${i}</button>`;
-    if(collPage<pages)pagi+=`<button class="pgb" onclick="collPage++;renderCollection()">›</button>`;
-  }
-  document.getElementById('collPagi').innerHTML=pagi;
-  updateAFBar();
-}
-
-function applyFilter(type,cb){
-  const v=cb.value;
-  if(cb.checked){if(!collFilters[type].includes(v))collFilters[type].push(v);}
-  else{collFilters[type]=collFilters[type].filter(x=>x!==v);}
-  collPage=1;renderCollection();
-}
-
-function toggleSize(el,sz){
-  el.classList.toggle('on');
-  if(el.classList.contains('on')){if(!collFilters.size.includes(sz))collFilters.size.push(sz);}
-  else{collFilters.size=collFilters.size.filter(s=>s!==sz);}
-  collPage=1;renderCollection();
-}
-
-function applyCustomPrice(){
-  const mn=parseInt(document.getElementById('pMin').value)||0;
-  const mx=parseInt(document.getElementById('pMax').value)||999999;
-  collFilters.price=collFilters.price.filter(p=>!p.includes('c'));
-  collFilters.price.push(mn+'-'+mx+'c');
-  collPage=1;renderCollection();
-}
-
-function clearFilters(){
-  collFilters={vibe:[],cat:[],size:[],price:[]};
-  document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>cb.checked=false);
-  document.querySelectorAll('.sz-chip').forEach(c=>c.classList.remove('on'));
-  document.getElementById('pMin').value='';
-  document.getElementById('pMax').value='';
-  collPage=1;renderCollection();
-}
-
-function updateAFBar(){
-  const all=[...collFilters.vibe,...collFilters.cat,...collFilters.size,...collFilters.price];
-  const bar=document.getElementById('af-bar');
-  const tags=document.getElementById('af-tags');
-  if(!bar||!tags)return;
-  bar.style.display=all.length?'flex':'none';
-  tags.innerHTML=all.map(v=>`<span class="af-tag" onclick="removeAF('${v}')">${v.replace('c','').replace('-custom','')} ✕</span>`).join('');
-}
-
-function removeAF(v){
-  for(const k in collFilters)collFilters[k]=collFilters[k].filter(x=>x!==v&&x!==v+'c');
-  document.querySelectorAll('#filterSidebar .fc input').forEach(cb=>{if(cb.value===v)cb.checked=false;});
-  document.querySelectorAll('.sz-chip').forEach(c=>{if(c.textContent.trim()===v||c.textContent.trim()===v.replace(' Size',''))c.classList.remove('on');});
-  collPage=1;renderCollection();
-}
-
-/* ══ PRODUCT DETAIL PAGE ══ */
-let pdQty=1, pdWished=false, currentProd=null;
-
-function initProduct(params){
-  const id=params.id||1;
-  const p=PRODS.find(x=>x.id===id)||PRODS[0];
-  currentProd=p;
-  document.getElementById('galIco').textContent=p.ico;
-  document.getElementById('galBadge').textContent=p.tag||'New';
-  document.getElementById('galBadge').style.display=p.tag?'':'none';
-  document.getElementById('pdVibe').textContent=p.vibe+' · '+p.cat;
-  document.getElementById('pdName').textContent=p.name;
-  document.getElementById('pdSeller').textContent=p.seller;
-  document.getElementById('pdRating').textContent=p.rating;
-  document.getElementById('pdRevCnt').textContent=p.reviews+' reviews';
-  document.getElementById('pdPrice').textContent='₹'+p.price.toLocaleString('en-IN');
-  document.getElementById('pdMrp').textContent=p.mrp?'₹'+p.mrp.toLocaleString('en-IN'):'';
-  document.getElementById('pdMrp').style.display=p.mrp?'':'none';
-  const off=p.mrp?Math.round((1-p.price/p.mrp)*100):'';
-  document.getElementById('pdOff').textContent=off?off+'% off':'';
-  document.getElementById('pdOff').style.display=off?'':'none';
-  document.getElementById('prodBcVibe').textContent=p.vibe;
-  document.getElementById('prodBcName').textContent=p.name.substring(0,30)+(p.name.length>30?'...':'');
-  document.getElementById('pdQty').textContent=1;
-  pdQty=1; pdWished=false;
-  document.getElementById('galWish').textContent='♡';
-  document.getElementById('galWish').classList.remove('on');
-  document.getElementById('pinIn').value='';
-  document.getElementById('pinRes').textContent='';
-  // Rebuild sizes dynamically from product data
-  const szRow=document.querySelector('#page-product .pi-sizes');
-  if(szRow){
-    szRow.innerHTML=p.sizes.map(sz=>`<div class="pi-sz" onclick="selPdSz(this)">${sz}</div>`).join('');
-    const first=szRow.querySelector('.pi-sz');
-    if(first)first.classList.add('on');
-  }
-  const prodTabBtns=document.querySelectorAll('#page-product .tab-btn');
-  if(prodTabBtns[0])setTab2(prodTabBtns[0],'pane-desc');
-  document.querySelectorAll('.gal-thumb').forEach((t,i)=>{t.classList.toggle('on',i===0);if(i===0)t.textContent=p.ico;});
-}
-
-function openProdPage(id){showPage('product',{id});}
-function selPdSz(el){document.querySelectorAll('.pi-sz').forEach(s=>s.classList.remove('on'));el.classList.add('on');}
-function changePdQty(d){pdQty=Math.max(1,Math.min(10,pdQty+d));document.getElementById('pdQty').textContent=pdQty;}
-function toggleGalWish(){pdWished=!pdWished;const b=document.getElementById('galWish');b.textContent=pdWished?'♥':'♡';b.classList.toggle('on',pdWished);toast(pdWished?'Saved to wishlist ♥':'Removed from wishlist');}
-function setGalThumb(el,ico){document.querySelectorAll('.gal-thumb').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('galIco').textContent=ico;}
-function addToCartPd(){
-  const sz=document.querySelector('.pi-sz.on');
-  if(!sz){toast('Please select a size');return;}
-  cartCount++;
-  const n=document.getElementById('navCartN');
-  const c=document.getElementById('cart-count');
-  if(n)n.textContent=cartCount;
-  if(c)c.textContent='('+cartCount+' items)';
-  toast('Added to cart ✓','lt');
-}
-function checkPdPin(){
-  const p=document.getElementById('pinIn').value.trim();
-  const r=document.getElementById('pinRes');
-  if(p.length!==6||!/^\d{6}$/.test(p)){r.className='pin-res err';r.textContent='Enter a valid 6-digit pincode';return;}
-  r.className='pin-res ok';
-  const d=(parseInt(p[0])%3)+2;
-  r.textContent='✓ Delivery in '+d+'–'+(d+1)+' days · Free on this order';
-}
-function setTab2(btn,pane){
-  const prodPg=document.getElementById('page-product');
-  if(prodPg){prodPg.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));prodPg.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));}
-  btn.classList.add('on');
-  const el=document.getElementById(pane);
-  if(el)el.classList.add('on');
-}
-
-/* ══ SELLERS PAGE ══ */
-const SELLERS=[
-  {ico:'✦',name:'Stardust Fits',handle:'stardust.fits',bio:'Y2K and dark aesthetic pieces handmade in Bangalore. Butterflies, mesh, all things early 2000s.',rating:'4.9',products:48,sales:340,vibes:['Y2K','Gothic'],verified:true},
-  {ico:'🎨',name:'Palette People',handle:'palette.people',bio:'Hand-painted wearable art. Acrylic on premium Japanese denim. Every piece unique.',rating:'5.0',products:22,sales:190,vibes:['Artistic'],verified:true},
-  {ico:'◈',name:'Glitch Stitch',handle:'glitch.stitch',bio:'Y2K and indie core clothing with a dark twist. Mesh, velvet, and anything that glitters.',rating:'4.7',products:37,sales:280,vibes:['Y2K','Indie'],verified:false},
-  {ico:'❋',name:'Nazar Studio',handle:'nazar.studio',bio:'High fashion accessories and bags with an editorial edge. Minimal. Precise. Intentional.',rating:'4.8',products:31,sales:210,vibes:['Fashion'],verified:true},
-  {ico:'◉',name:'Pixel Drip',handle:'pixel.drip',bio:'Streetwear with a South Indian sensibility. Heavy cotton. Wide legs. Statement cargo.',rating:'4.5',products:19,sales:160,vibes:['Streetwear'],verified:false},
-  {ico:'☽',name:'Static Drop',handle:'static.drop',bio:'Dark minimal accessories. Mesh gloves, chokers, and everything black.',rating:'4.3',products:28,sales:130,vibes:['Gothic','Minimal'],verified:false},
-  {ico:'🌿',name:'Softstone Studio',handle:'softstone.studio',bio:'Slow fashion. Linen, cotton, natural fabrics in earthy tones.',rating:'4.8',products:14,sales:95,vibes:['Minimal'],verified:false},
-];
-let selVibe='all';
-
-function setSelChip(el,v){
-  document.querySelectorAll('.sel-chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');selVibe=v;renderSellers();
-}
-
-function renderSellers(){
-  const q=document.getElementById('selSearch')?.value?.trim()?.toLowerCase()||'';
-  const filtered=SELLERS.filter(s=>{
-    const matchV=selVibe==='all'||s.vibes.some(v=>v.toLowerCase().includes(selVibe.toLowerCase()));
-    const matchS=!q||s.name.toLowerCase().includes(q)||s.handle.toLowerCase().includes(q);
-    return matchV&&matchS;
-  });
-  const cnt=document.getElementById('selCnt');
-  if(cnt)cnt.textContent=filtered.length;
-  const grid=document.getElementById('selGrid');
-  if(!grid)return;
-  if(!filtered.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:48px;font-family:var(--m);font-size:12px;color:var(--i32)">No artists found.</div>';return;}
-  grid.innerHTML=filtered.map(s=>`
-    <div class="sel-card" onclick="toast('Opening @${s.handle} →')">
-      <div class="sc-top">
-        <div class="sc-av">${s.ico}</div>
-        <div><div class="sc-nm">${s.name}</div><div class="sc-hn">@${s.handle}</div>${s.verified?'<span class="sc-vbadge">✓ Verified</span>':''}</div>
-      </div>
-      <div class="sc-bio">${sanitise(s.bio)}</div>
-      <div class="sc-stats">
-        <div class="sc-stat"><div class="sc-stat-n">${s.rating}★</div><div class="sc-stat-l">Rating</div></div>
-        <div class="sc-stat"><div class="sc-stat-n">${s.products}</div><div class="sc-stat-l">Products</div></div>
-        <div class="sc-stat"><div class="sc-stat-n">${s.sales}</div><div class="sc-stat-l">Sales</div></div>
-      </div>
-      <div class="sc-vibes">${s.vibes.map(v=>`<span class="sc-vibe">${v}</span>`).join('')}</div>
-    </div>`).join('');
-}
-
-/* ══ SELL PAGE ══ */
-function toggleFaq2(el){
-  const item=el.closest('.faq-item');
-  const was=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
-  if(!was)item.classList.add('open');
-}
-function submitApply(e){
-  e.preventDefault();
-  const btn=document.getElementById('afBtn');
-  btn.disabled=true;btn.textContent='Submitting...';
-  setTimeout(()=>{
-    document.getElementById('applyFormEl').style.display='none';
-    document.getElementById('af-success').style.display='block';
-    toast('Application submitted! We will be in touch within 48 hours ✓','lt');
-  },1200);
-}
-
-/* ══ CART PAGE ══ */
-const cpPrices={1:649,2:480};
-let cpItems={1:{qty:1,active:true},2:{qty:1,active:true}};
-let cpDiscount=0;
-
-function changeCPQty(id,dir){
-  if(!cpItems[id]?.active)return;
-  cpItems[id].qty=Math.max(1,Math.min(10,cpItems[id].qty+dir));
-  const el=document.getElementById('cqty-'+id);
-  if(el)el.textContent=cpItems[id].qty;
-  recalcCP();
-}
-function removeCPItem(id){
-  cpItems[id].active=false;
-  const el=document.getElementById('cpi-'+id);
-  if(el){el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);}
-  toast('Item removed');
-  recalcCP();
-}
-function recalcCP(){
-  let sub=0,cnt=0;
-  for(const id in cpItems){
-    if(cpItems[id].active){sub+=cpPrices[id]*cpItems[id].qty;cnt+=cpItems[id].qty;}
-  }
-  const tot=Math.max(0,sub-cpDiscount);
-  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  set('cpSubtotal','₹'+sub.toLocaleString('en-IN'));
-  set('cpTotal','₹'+tot.toLocaleString('en-IN'));
-  set('cartPgCount','('+cnt+' item'+(cnt!==1?'s':'')+')');
-  const del=document.getElementById('cpDelivery');
-  if(del)del.textContent=sub>=599?'FREE':'₹99';
-  if(cnt===0){
-    const wrap=document.getElementById('cartPgWrap');
-    if(wrap)wrap.innerHTML='<div class="empty-cart" style="grid-column:1/-1"><div class="empty-ico2">◻</div><div class="empty-tit2">Your cart is empty</div><div class="empty-sub2">Explore our curated indie picks.</div><button class="btn-k" onclick="showPage('collection')">Shop Now →</button></div>';
-  }
-}
-function applyCPCoupon(){
-  const code=document.getElementById('cpCoupon')?.value?.trim()?.toUpperCase();
-  if(code==='KARKER10'){cpDiscount=113;const d=document.getElementById('cpDiscRow');if(d)d.style.display='flex';const dv=document.getElementById('cpDisc');if(dv)dv.textContent='−₹113';toast('10% off applied ✓','lt');recalcCP();}
-  else if(code==='FIRST50'){cpDiscount=50;const d=document.getElementById('cpDiscRow');if(d)d.style.display='flex';const dv=document.getElementById('cpDisc');if(dv)dv.textContent='−₹50';toast('₹50 off applied ✓','lt');recalcCP();}
-  else{toast('Invalid coupon. Try KARKER10 or FIRST50');}
-}
-
-/* ══ UPDATE NAV LINKS TO USE ROUTER ══ */
-document.addEventListener('DOMContentLoaded', () => {
-  // Ensure home content is visible by default
-  const hc = document.getElementById('home-content');
-  const vs = document.getElementById('vibeStrip');
-  if (hc) hc.style.display = '';
-  if (vs) vs.style.display = '';
-
-  // Handle initial hash for deep linking
-  const hash = window.location.hash.replace('#', '');
-  if (PAGES.includes(hash) && hash !== 'home') {
-    showPage(hash);
-  } else {
-    // Render collection in background for fast first switch
-    renderSellers();
-  }
-
-  // Render collection to warm up data
-  renderCollection();
-});
-
-/* ══ UPDATE setVibe2 to use router ══ */
-function setVibe2(name){
-  document.querySelectorAll('.v-cs').forEach(i=>{i.classList.toggle('on',i.textContent.trim()===name);});
-  showPage('collection',{vibe:name});
-}
 
 /* ── TOAST — defined first so all functions can call it ── */
 function toast(msg,cls=''){
@@ -2512,43 +1168,14 @@ function toast(msg,cls=''){
 }
 
 /* ── CURSOR ── */
-const cur = document.getElementById('cur');
-let isTouchDevice = false;
-
-// Detect touch vs mouse — show custom cursor only for mouse users
-window.addEventListener('touchstart', () => {
-  isTouchDevice = true;
-  document.body.classList.remove('has-mouse');
-}, { once: true, passive: true });
-
-window.addEventListener('mousemove', (e) => {
-  if (isTouchDevice) return;
-  document.body.classList.add('has-mouse');
-  if (cur) {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top = e.clientY + 'px';
-  }
-}, { passive: true });
-
-// Event delegation for hover state — works for dynamically added elements too
-const HOV_TAGS = new Set(['A','BUTTON','SELECT','INPUT','TEXTAREA','LABEL']);
-const HOV_CLS = ['onclick','vc','pc','hr-cell','scrd','ct','see-all','v-cs','fsoc','mob-lnk','srch-tag','pm-sz','m-tab','m-soc-btn','qty-btn','nav-logo','drop-btn','pgb','sz-chip','sel-chip','sf-card','sel-card','rel-pc','pi-sz','af-tag','fc','p-go','pin-go','coup-btn','gal-thumb','gal-wish','sh-btn','tab-btn','rv-rat-cnt','sg-lnk','pi-seller-lnk','af-check'];
-
-document.addEventListener('mouseover', (e) => {
-  if (isTouchDevice) return;
-  const el = e.target?.closest('a,button,select,input,textarea,label,[onclick]') ||
-    HOV_CLS.reduce((found, cls) => found || e.target?.closest('.'+cls), null);
-  if (el) document.body.classList.add('hov');
-}, { passive: true });
-
-document.addEventListener('mouseout', (e) => {
-  if (isTouchDevice) return;
-  const el = e.target?.closest('a,button,select,input,textarea,label,[onclick]') ||
-    HOV_CLS.reduce((found, cls) => found || e.target?.closest('.'+cls), null);
-  if (el && !e.relatedTarget?.closest('a,button,select,input,textarea,label,[onclick]')) {
-    document.body.classList.remove('hov');
-  }
-}, { passive: true });
+const cur=document.getElementById('cur');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
+const hovSel='[onclick],button,a,.vc,.pc,.hr-cell,.scrd,.ct,.see-all,.v-cs,.ft-links a,.fsoc,.mob-lnk,.srch-tag,.pm-sz,.m-tab,.m-soc-btn,.qty-btn,.nav-logo,.drop-btn,#btt';
+document.querySelectorAll(hovSel).forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
 
 /* ── KEYBOARD — ESC closes everything ── */
 document.addEventListener('keydown',e=>{
@@ -2638,7 +1265,11 @@ function checkPwStrength(pw){
 
 /* ── VIBE STRIP ── */
 function setVibe(el){document.querySelectorAll('.v-cs').forEach(i=>i.classList.remove('on'));el.classList.add('on');toast(el.textContent.trim());}
-/* setVibe2 defined in router section — do not redefine here */
+function setVibe2(name){
+  document.querySelectorAll('.v-cs').forEach(i=>{i.classList.toggle('on',i.textContent.trim()===name);});
+  toast(name+' — filtering...');
+  document.getElementById('trending')?.scrollIntoView({behavior:'smooth'});
+}
 
 /* ── PANELS / MODALS ── */
 function openPanel(id){document.getElementById(id)?.classList.add('open');document.getElementById('ov')?.classList.add('open');}
@@ -2779,7 +1410,7 @@ async function updateNavForUser(){
     const icon=btn.querySelector('span:first-child');
     if(user){
       if(icon)icon.textContent='◉';
-      btn.onclick=()=>{toast('Signing out...');setTimeout(doLogout,400);};
+      btn.onclick=()=>{if(confirm('Sign out of karker.in?'))doLogout();};
     }else{
       if(icon)icon.textContent='◯';
       btn.onclick=()=>openModal('loginModal');
@@ -2847,8 +1478,8 @@ function toggleDrop(){
 }
 
 /* ── COUNTDOWN ── */
-/* Fixed drop end date — update this for each drop */
-const dropEnd=new Date('2026-04-08T18:00:00+05:30');
+let dropEnd=new Date();
+dropEnd.setHours(dropEnd.getHours()+18,dropEnd.getMinutes()+42,dropEnd.getSeconds()+9);
 function tickCd(){
   const d=dropEnd-new Date();
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0');};
@@ -2873,63 +1504,6 @@ document.querySelectorAll('.pc-wish').forEach(w=>{
     toast(w.classList.contains('on')?'Saved to wishlist ♥':'Removed from wishlist');
   });
 });
-
-/* ── WISHLIST PERSISTENCE (localStorage) ── */
-let wishlist = [];
-try { wishlist = JSON.parse(localStorage.getItem('karker_wishlist') || '[]'); } catch(e) {}
-function saveWishlist() { try { localStorage.setItem('karker_wishlist', JSON.stringify(wishlist)); } catch(e) {} }
-function isWishlisted(id) { return wishlist.includes(id); }
-function toggleWishItem(id) {
-  const idx = wishlist.indexOf(id);
-  if (idx > -1) { wishlist.splice(idx, 1); toast('Removed from wishlist'); }
-  else { wishlist.push(id); toast('Saved to wishlist ♥', 'lt'); }
-  saveWishlist();
-  return wishlist.includes(id);
-}
-
-/* ── CART REBUILD on page visit ── */
-function rebuildCart(){
-  // Rebuild cart HTML from cpItems state
-  const wrap = document.getElementById('cartPgWrap');
-  if (!wrap) return;
-  const active = Object.entries(cpItems).filter(([,v])=>v.active);
-  if (active.length === 0) {
-    wrap.innerHTML = '<div class="empty-cart" style="grid-column:1/-1"><div class="empty-ico2">◻</div><div class="empty-tit2">Your cart is empty</div><div class="empty-sub2">Explore our curated indie picks.</div><button class="btn-k" onclick="showPage('collection')">Shop Now →</button></div>';
-    return;
-  }
-  // Restore items that were removed from DOM
-  const itemsDiv = document.getElementById('cartPgItems');
-  if (itemsDiv) {
-    [1,2].forEach(id => {
-      const existing = document.getElementById('cpi-'+id);
-      if (!existing && cpItems[id]?.active) {
-        // Item was removed from DOM — this shouldn't happen anymore
-      }
-      if (existing) existing.style.opacity = cpItems[id]?.active ? '1' : '0.3';
-    });
-  }
-  recalcCP();
-}
-
-/* ── SELL FORM RESET on page visit ── */
-function resetSellForm(){
-  const form = document.getElementById('applyFormEl');
-  const success = document.getElementById('af-success');
-  const btn = document.getElementById('afBtn');
-  if (form) form.style.display = '';
-  if (success) success.style.display = 'none';
-  if (btn) { btn.disabled = false; btn.textContent = 'Submit Application →'; }
-}
-
-/* ── SEARCH: navigate to collection with filter ── */
-function doSearch(){
-  const q = document.getElementById('srchInp')?.value?.trim();
-  if (!q) return;
-  closeSearch();
-  showPage('collection', {search: q});
-}
-
-/* ── ANN BAR font bump on mobile ── */
 
 /* ── LAZY IMAGE SUPPORT (future-proof) ── */
 if('IntersectionObserver' in window){
