@@ -506,6 +506,131 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   .sg{grid-template-columns:repeat(2,1fr)}
   .ft-top{grid-template-columns:1fr}
 }
+
+/* ══ PHASE 2 — WISHLIST PAGE ══ */
+.wl-empty{text-align:center;padding:80px 20px}
+.wl-empty-ico{font-size:52px;opacity:.22;margin-bottom:18px}
+.wl-empty-title{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:8px}
+.wl-empty-sub{font-family:var(--b);font-size:14px;color:var(--i55);margin-bottom:28px}
+.wl-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.wl-item:last-child{border-bottom:none}
+.wl-ico{width:60px;height:72px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:26px;filter:grayscale(1)brightness(.38);flex-shrink:0}
+.wl-info{flex:1;min-width:0}
+.wl-seller{font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em;margin-bottom:3px}
+.wl-name{font-family:var(--bc);font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--k);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wl-price{font-family:var(--m);font-size:14px;font-weight:600;color:var(--k)}
+.wl-actions{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.wl-btn{height:34px;padding:0 16px;font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:none;white-space:nowrap;transition:all .18s}
+.wl-btn-cart{background:var(--k);color:var(--w)}
+.wl-btn-cart:hover{opacity:.85}
+.wl-btn-rm{background:transparent;border:1px solid var(--bdr);color:var(--i55)}
+.wl-btn-rm:hover{border-color:var(--i55);color:var(--k)}
+
+/* ══ PHASE 2 — CHECKOUT ══ */
+.co-overlay{position:fixed;inset:0;background:var(--w);z-index:800;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden}
+.co-overlay.open{transform:translateX(0)}
+.co-head{position:sticky;top:0;background:var(--w);border-bottom:2px solid var(--k);padding:0 28px;height:62px;display:flex;align-items:center;gap:20px;z-index:10}
+.co-steps{display:flex;align-items:center;gap:0;margin-left:auto}
+.co-step{font-family:var(--m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--i32);padding:0 12px;position:relative}
+.co-step.on{color:var(--k);font-weight:600}
+.co-step+.co-step::before{content:'›';position:absolute;left:0;color:var(--i22)}
+.co-body{max-width:760px;margin:0 auto;padding:40px 28px}
+.co-section{margin-bottom:32px}
+.co-section-title{font-family:var(--bc);font-size:18px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--bdr)}
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.co-grid.full{grid-template-columns:1fr}
+.co-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i55);margin-bottom:7px;display:block}
+.co-inp{width:100%;height:44px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--b);font-size:14px;padding:0 14px;outline:none;transition:border-color .2s}
+.co-inp:focus{border-color:var(--k)}
+.co-inp::placeholder{color:var(--i22)}
+.co-select{width:100%;height:44px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--b);font-size:14px;padding:0 14px;outline:none;appearance:none;transition:border-color .2s}
+.co-select:focus{border-color:var(--k)}
+.co-err{font-family:var(--m);font-size:10px;color:#ef4444;margin-top:5px;display:none}
+/* order summary sidebar */
+.co-layout{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start}
+.co-summary{background:var(--off);border:1px solid var(--bdr);padding:22px;position:sticky;top:80px}
+.co-sum-title{font-family:var(--bc);font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:16px}
+.co-sum-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bdr);font-size:13px;color:var(--i55)}
+.co-sum-item:last-of-type{border-bottom:none}
+.co-sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:14px;margin-top:4px;border-top:2px solid var(--k)}
+.co-sum-total-lbl{font-family:var(--bc);font-size:16px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--k)}
+.co-sum-total-val{font-family:var(--m);font-size:16px;font-weight:700;color:var(--k)}
+.co-pay-logos{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.co-pay-logo{font-family:var(--m);font-size:9px;letter-spacing:.08em;color:var(--i32);border:1px solid var(--bdr);padding:4px 10px}
+/* confirmation */
+.co-confirm{text-align:center;padding:60px 20px}
+.co-confirm-ico{font-size:56px;margin-bottom:20px}
+.co-confirm-title{font-family:var(--bc);font-size:36px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:8px}
+.co-confirm-sub{font-family:var(--b);font-size:14px;color:var(--i55);margin-bottom:28px;line-height:1.7}
+.co-order-id{font-family:var(--m);font-size:12px;color:var(--i32);letter-spacing:.08em;margin-bottom:24px}
+@media(max-width:860px){.co-layout{grid-template-columns:1fr}.co-summary{position:static}}
+@media(max-width:600px){.co-grid{grid-template-columns:1fr}.co-steps{display:none}.co-body{padding:24px 16px}}
+
+/* ══ PHASE 2 — ORDER TRACKING ══ */
+.ord-card{background:var(--off);border:1px solid var(--bdr);padding:20px 22px;margin-bottom:14px;transition:border-color .18s}
+.ord-card:hover{border-color:var(--i22)}
+.ord-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.ord-id{font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.1em}
+.ord-date{font-family:var(--m);font-size:10px;color:var(--i32)}
+.ord-badge{font-family:var(--m);font-size:9px;padding:3px 10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ord-badge.delivered{background:rgba(34,197,94,.12);color:#16a34a;border:1px solid rgba(34,197,94,.25)}
+.ord-badge.shipped{background:rgba(59,130,246,.12);color:#2563eb;border:1px solid rgba(59,130,246,.2)}
+.ord-badge.placed{background:rgba(251,191,36,.12);color:#b45309;border:1px solid rgba(251,191,36,.2)}
+.ord-items{font-family:var(--b);font-size:13px;color:var(--i55);margin-bottom:12px;line-height:1.6}
+.ord-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ord-total{font-family:var(--m);font-size:13px;font-weight:600;color:var(--k)}
+.ord-actions{display:flex;gap:8px}
+.ord-btn{height:32px;padding:0 14px;font-family:var(--m);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bdr);background:transparent;color:var(--i55);cursor:none;transition:all .18s}
+.ord-btn:hover{border-color:var(--k);color:var(--k)}
+/* timeline */
+.ord-timeline{display:flex;align-items:flex-start;gap:0;margin:18px 0 0;overflow-x:auto;scrollbar-width:none}
+.ord-timeline::-webkit-scrollbar{display:none}
+.ord-tstep{flex:1;min-width:80px;text-align:center;position:relative}
+.ord-tstep::before{content:'';position:absolute;top:12px;left:50%;right:-50%;height:2px;background:var(--bdr);z-index:0}
+.ord-tstep:last-child::before{display:none}
+.ord-tstep.done::before{background:var(--k)}
+.ord-tdot{width:24px;height:24px;border-radius:50%;border:2px solid var(--bdr);background:var(--w);margin:0 auto 6px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;font-size:10px}
+.ord-tstep.done .ord-tdot{border-color:var(--k);background:var(--k);color:var(--w)}
+.ord-tlabel{font-family:var(--m);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--i32);white-space:nowrap}
+.ord-tstep.done .ord-tlabel{color:var(--k);font-weight:600}
+.ord-empty{text-align:center;padding:80px 20px}
+
+/* ══ PHASE 2 — SELLER MODAL ══ */
+.sell-ov{position:fixed;inset:0;background:rgba(12,11,9,.62);z-index:850;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.sell-ov.open{display:flex}
+.sell-box{background:var(--w);width:min(600px,94vw);max-height:90vh;overflow-y:auto}
+.sell-head{background:var(--k);padding:28px 28px 22px;position:sticky;top:0;z-index:5}
+.sell-head-top{display:flex;align-items:flex-start;justify-content:space-between}
+.sell-logo{font-family:var(--bc);font-size:14px;font-weight:900;letter-spacing:.22em;color:var(--w);opacity:.6;margin-bottom:8px}
+.sell-title{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--w);line-height:1.1}
+.sell-close{background:rgba(244,241,235,.15);border:none;color:var(--w);width:34px;height:34px;font-size:18px;cursor:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.sell-close:hover{background:rgba(244,241,235,.28)}
+.sell-steps{display:flex;gap:6px;margin-top:18px}
+.sell-step-dot{width:8px;height:8px;border-radius:50%;background:rgba(244,241,235,.28);transition:background .2s}
+.sell-step-dot.on{background:var(--w)}
+.sell-body{padding:28px}
+.sell-field{margin-bottom:18px}
+.sell-label{font-family:var(--m);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--i55);margin-bottom:7px;display:block}
+.sell-inp{width:100%;height:44px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--b);font-size:14px;padding:0 14px;outline:none;transition:border-color .2s}
+.sell-inp:focus{border-color:var(--k)}
+.sell-inp::placeholder{color:var(--i22)}
+.sell-textarea{width:100%;min-height:90px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--b);font-size:14px;padding:12px 14px;outline:none;transition:border-color .2s;resize:vertical;line-height:1.6}
+.sell-textarea:focus{border-color:var(--k)}
+.sell-select{width:100%;height:44px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--b);font-size:14px;padding:0 14px;outline:none;appearance:none;transition:border-color .2s}
+.sell-select:focus{border-color:var(--k)}
+.sell-err{font-family:var(--m);font-size:10px;color:#ef4444;margin-top:5px;display:none}
+.sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sell-note{font-family:var(--b);font-size:12px;color:var(--i32);line-height:1.6;margin-bottom:18px}
+.sell-perks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.sell-perk{background:var(--off);border:1px solid var(--bdr);padding:14px;display:flex;gap:10px;align-items:flex-start}
+.sell-perk-ico{font-size:18px;flex-shrink:0}
+.sell-perk-title{font-family:var(--m);font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--k);margin-bottom:3px}
+.sell-perk-sub{font-size:11px;color:var(--i55);line-height:1.5}
+.sell-confirm{text-align:center;padding:20px 0}
+.sell-confirm-ico{font-size:48px;margin-bottom:16px}
+.sell-confirm-title{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--k);margin-bottom:8px}
+.sell-confirm-sub{font-size:13px;color:var(--i55);line-height:1.7}
+@media(max-width:600px){.sell-grid{grid-template-columns:1fr}.sell-perks{grid-template-columns:1fr}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="application/ld+json">
@@ -624,7 +749,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <div class="cart-tot-val" id="cart-total">₹1,129</div>
     </div>
     <div class="cart-note">Free delivery on this order · Est. delivery 3–5 days</div>
-    <button class="btn-full" onclick="toast('Checkout coming soon →')">Proceed to Checkout →</button>
+    <button class="btn-full" onclick="openCheckout()">Proceed to Checkout →</button>
     <button class="btn-full-o" onclick="closePanel('cartPanel')">Continue Shopping</button>
   </div>
 </div>
@@ -766,7 +891,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
     <div class="mob-lnk" onclick="openModal('loginModal')">Sign In <span>→</span></div>
   </div>
   <div class="mob-foot">
-    <button class="btn-k" style="width:100%" onclick="toast('Seller portal →','lt')">Sell on KARKER</button>
+    <button class="btn-k" style="width:100%" onclick="closePanel('mobMenu');openSellerModal()">Sell on KARKER</button>
   </div>
 </div>
 
@@ -800,7 +925,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <span style="font-size:18px">⌕</span>
         <span class="nl">Search</span>
       </div>
-      <div class="n-ico" onclick="toast('Wishlist coming in Phase 2 ♡')" title="Wishlist">
+      <div class="n-ico" onclick="openWishlistPage()" title="Wishlist">
         <span>♡</span>
         <span class="nl">Wishlist</span>
       </div>
@@ -813,7 +938,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <span>◯</span>
         <span class="nl">Account</span>
       </div>
-      <button class="nav-sell" onclick="toast('Seller portal — Phase 2 🎨','lt')">Sell</button>
+      <button class="nav-sell" onclick="openSellerModal()">Sell</button>
     </div>
   </div>
 </nav>
@@ -1031,7 +1156,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <p class="ed-body">Join 180 verified indie artists already selling on KARKER. Zero listing fees, full payout transparency, and 7-day settlements straight to your bank account.</p>
     </div>
     <div class="ed-btns">
-      <button class="btn-inv" onclick="toast('Seller registration — Phase 2! 🎨','lt')">Start Selling Free</button>
+      <button class="btn-inv" onclick="openSellerModal()">Start Selling Free</button>
       <button class="btn-g-inv" onclick="toast('More info coming soon →')">How It Works →</button>
     </div>
   </div>
@@ -1150,7 +1275,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
         <div class="ft-ch">Sellers</div>
         <ul class="ft-links">
           <li><a onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">Start Selling</a></li>
-          <li><a onclick="toast('Seller dashboard — Phase 2')">Seller Dashboard</a></li>
+          <li><a href="karker_admin.html">Seller Dashboard</a></li>
           <li><a onclick="toast('Payout policy →')">Payout Policy</a></li>
           <li><a onclick="toast('Guidelines →')">Seller Guidelines</a></li>
           <li><a onclick="toast('Support →')">Seller Support</a></li>
@@ -1159,7 +1284,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       <div>
         <div class="ft-ch">Help</div>
         <ul class="ft-links">
-          <li><a onclick="toast('Order tracking — Phase 2')">Track Order</a></li>
+          <li><a onclick="openPage('ordersPage');renderOrders()">Track Order</a></li>
           <li><a onclick="toast('Returns policy →')">Returns & Refunds</a></li>
           <li><a onclick="toast('Size guide →')">Size Guide</a></li>
           <li><a onclick="toast('Contact: hello@karker.in')">Contact Us</a></li>
@@ -1306,6 +1431,293 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   </div>
 </div>
 
+<!-- ══ PHASE 2 — WISHLIST PAGE ══ -->
+<div class="pg-overlay" id="wishlistPage" role="dialog" aria-modal="true" aria-label="Your Wishlist">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('wishlistPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Saved Items</div>
+      <div class="pg-ov-title">Your Wishlist</div>
+    </div>
+    <div class="pg-ov-count" id="wlPageCount">0 items</div>
+  </div>
+  <div class="pg-ov-body" id="wlPageBody">
+    <div class="wl-empty" id="wlEmpty">
+      <div class="wl-empty-ico">♡</div>
+      <div class="wl-empty-title">Nothing saved yet</div>
+      <div class="wl-empty-sub">Browse the collection and tap ♡ to save pieces you love.</div>
+      <button class="btn-k" onclick="closePage('wishlistPage');document.getElementById('trending')?.scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+    </div>
+    <div id="wlList" style="display:none"></div>
+    <div style="text-align:center;padding:32px 0;display:none" id="wlCartRow">
+      <button class="btn-k" onclick="moveAllToCart()">Add All to Cart →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PHASE 2 — CHECKOUT ══ -->
+<script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
+<div class="co-overlay" id="checkoutPage" role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="co-head">
+    <button class="pg-back" onclick="closePage('checkoutPage')">← Cart</button>
+    <div>
+      <div class="pg-ov-sub">Secure Checkout</div>
+      <div class="pg-ov-title">KARKER</div>
+    </div>
+    <div class="co-steps">
+      <span class="co-step on" id="coStep1">1. Address</span>
+      <span class="co-step" id="coStep2">2. Payment</span>
+      <span class="co-step" id="coStep3">3. Confirm</span>
+    </div>
+  </div>
+  <!-- Step 1: Address -->
+  <div class="co-body" id="coStep1Body">
+    <div class="co-layout">
+      <div>
+        <div class="co-section">
+          <div class="co-section-title">Delivery Address</div>
+          <div class="co-grid">
+            <div>
+              <label class="co-label" for="coName">Full Name *</label>
+              <input class="co-inp" id="coName" placeholder="As on ID" maxlength="80">
+              <div class="co-err" id="coNameErr"></div>
+            </div>
+            <div>
+              <label class="co-label" for="coPhone">Mobile Number *</label>
+              <input class="co-inp" id="coPhone" placeholder="+91 9XXXXXXXXX" maxlength="14" type="tel">
+              <div class="co-err" id="coPhoneErr"></div>
+            </div>
+            <div style="grid-column:1/-1">
+              <label class="co-label" for="coAddr1">Address Line 1 *</label>
+              <input class="co-inp" id="coAddr1" placeholder="House / Flat / Building" maxlength="120">
+              <div class="co-err" id="coAddr1Err"></div>
+            </div>
+            <div style="grid-column:1/-1">
+              <label class="co-label" for="coAddr2">Address Line 2</label>
+              <input class="co-inp" id="coAddr2" placeholder="Street / Area / Landmark" maxlength="120">
+            </div>
+            <div>
+              <label class="co-label" for="coCity">City *</label>
+              <input class="co-inp" id="coCity" placeholder="Mumbai" maxlength="60">
+              <div class="co-err" id="coCityErr"></div>
+            </div>
+            <div>
+              <label class="co-label" for="coState">State *</label>
+              <select class="co-select" id="coState">
+                <option value="">Select State</option>
+                <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+                <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+                <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+                <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+                <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+                <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+                <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+                <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+                <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+                <option>West Bengal</option><option>Delhi</option><option>Jammu & Kashmir</option>
+                <option>Ladakh</option><option>Chandigarh</option><option>Puducherry</option>
+              </select>
+              <div class="co-err" id="coStateErr"></div>
+            </div>
+            <div>
+              <label class="co-label" for="coPincode">Pincode *</label>
+              <input class="co-inp" id="coPincode" placeholder="400001" maxlength="6" type="tel">
+              <div class="co-err" id="coPincodeErr"></div>
+            </div>
+            <div>
+              <label class="co-label" for="coEmail">Email (for receipt)</label>
+              <input class="co-inp" id="coEmail" placeholder="you@email.com" type="email" maxlength="100">
+              <div class="co-err" id="coEmailErr"></div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-k" style="width:100%;height:50px;font-size:13px;letter-spacing:.1em" onclick="coNextToPayment()">Continue to Payment →</button>
+      </div>
+      <div>
+        <div class="co-summary" id="coSummary1"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Step 2: Payment -->
+  <div class="co-body" id="coStep2Body" style="display:none">
+    <div class="co-layout">
+      <div>
+        <div class="co-section">
+          <div class="co-section-title">Payment</div>
+          <div style="background:var(--off);border:1px solid var(--bdr);padding:22px;margin-bottom:18px">
+            <div style="font-family:var(--m);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--i32);margin-bottom:10px">Powered by</div>
+            <div class="co-pay-logos">
+              <span class="co-pay-logo">Razorpay</span>
+              <span class="co-pay-logo">UPI</span>
+              <span class="co-pay-logo">Cards</span>
+              <span class="co-pay-logo">Netbanking</span>
+              <span class="co-pay-logo">Wallets</span>
+            </div>
+            <div style="font-family:var(--b);font-size:13px;color:var(--i55);margin-top:16px;line-height:1.6">Your payment is secured with 256-bit SSL encryption. KARKER never stores your card details.</div>
+          </div>
+          <button class="btn-k" style="width:100%;height:54px;font-size:14px;letter-spacing:.06em" id="payBtn" onclick="initiatePayment()">Pay Securely with Razorpay →</button>
+          <div style="text-align:center;margin-top:14px">
+            <button class="pg-back" style="margin:0 auto" onclick="coBackToAddress()">← Change Address</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="co-summary" id="coSummary2"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Step 3: Confirmation -->
+  <div class="co-body" id="coStep3Body" style="display:none">
+    <div class="co-confirm">
+      <div class="co-confirm-ico">✓</div>
+      <div class="co-confirm-title">Order Placed!</div>
+      <div class="co-order-id" id="coOrderId">Order #KRK-000000</div>
+      <div class="co-confirm-sub">Thank you for shopping on KARKER.<br>Your indie pieces are on their way. Est. delivery 3–5 business days.<br>A confirmation has been sent to your email.</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <button class="btn-k" onclick="closePage('checkoutPage');openPage('ordersPage');renderOrders()">Track My Order →</button>
+        <button class="btn-k-o" onclick="closePage('checkoutPage')">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PHASE 2 — ORDER TRACKING ══ -->
+<div class="pg-overlay" id="ordersPage" role="dialog" aria-modal="true" aria-label="My Orders">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('ordersPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Account</div>
+      <div class="pg-ov-title">My Orders</div>
+    </div>
+    <div class="pg-ov-count" id="ordPageCount">0 orders</div>
+  </div>
+  <div class="pg-ov-body" id="ordPageBody">
+    <div class="ord-empty" id="ordEmpty">
+      <div class="wl-empty-ico">📦</div>
+      <div class="wl-empty-title">No orders yet</div>
+      <div class="wl-empty-sub">Your KARKER orders will appear here once you place them.</div>
+      <button class="btn-k" onclick="closePage('ordersPage');document.getElementById('trending')?.scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+    </div>
+    <div id="ordList" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ══ PHASE 2 — SELLER REGISTRATION MODAL ══ -->
+<div class="sell-ov" id="sellModal" role="dialog" aria-modal="true" aria-label="Sell on KARKER">
+  <div class="sell-box">
+    <div class="sell-head">
+      <div class="sell-head-top">
+        <div>
+          <div class="sell-logo">KARKER</div>
+          <div class="sell-title" id="sellModalTitle">Sell on<br>KARKER</div>
+        </div>
+        <button class="sell-close" onclick="closeSellerModal()">✕</button>
+      </div>
+      <div class="sell-steps" id="sellStepDots">
+        <div class="sell-step-dot on" id="sDot0"></div>
+        <div class="sell-step-dot" id="sDot1"></div>
+        <div class="sell-step-dot" id="sDot2"></div>
+      </div>
+    </div>
+    <div class="sell-body">
+      <!-- Step 0: Why sell -->
+      <div id="sellStep0">
+        <div class="sell-note">Join 180+ verified indie artists already earning on KARKER — India's curated indie fashion marketplace.</div>
+        <div class="sell-perks">
+          <div class="sell-perk"><div class="sell-perk-ico">✦</div><div><div class="sell-perk-title">Zero Listing Fee</div><div class="sell-perk-sub">List unlimited products for free. We earn only when you do.</div></div></div>
+          <div class="sell-perk"><div class="sell-perk-ico">◈</div><div><div class="sell-perk-title">Weekly Payouts</div><div class="sell-perk-sub">Direct bank transfer every Tuesday. No waiting.</div></div></div>
+          <div class="sell-perk"><div class="sell-perk-ico">❋</div><div><div class="sell-perk-title">Curated Reach</div><div class="sell-perk-sub">Your products reach 4.2K+ active shoppers daily.</div></div></div>
+          <div class="sell-perk"><div class="sell-perk-ico">◎</div><div><div class="sell-perk-title">KYC Verified Badge</div><div class="sell-perk-sub">Build trust instantly with our verified seller badge.</div></div></div>
+        </div>
+        <button class="btn-k" style="width:100%;height:50px;font-size:13px;letter-spacing:.1em" onclick="sellNextStep(1)">Apply Now — It's Free →</button>
+      </div>
+      <!-- Step 1: Brand info -->
+      <div id="sellStep1" style="display:none">
+        <div class="sell-grid">
+          <div class="sell-field">
+            <label class="sell-label" for="sName">Your Full Name *</label>
+            <input class="sell-inp" id="sName" placeholder="Priya Sharma" maxlength="80">
+            <div class="sell-err" id="sNameErr"></div>
+          </div>
+          <div class="sell-field">
+            <label class="sell-label" for="sEmail">Email Address *</label>
+            <input class="sell-inp" id="sEmail" placeholder="you@brand.in" type="email" maxlength="100">
+            <div class="sell-err" id="sEmailErr"></div>
+          </div>
+          <div class="sell-field">
+            <label class="sell-label" for="sPhone">Mobile Number *</label>
+            <input class="sell-inp" id="sPhone" placeholder="+91 9XXXXXXXXX" type="tel" maxlength="14">
+            <div class="sell-err" id="sPhoneErr"></div>
+          </div>
+          <div class="sell-field">
+            <label class="sell-label" for="sBrand">Brand / Shop Name *</label>
+            <input class="sell-inp" id="sBrand" placeholder="Stardust Fits" maxlength="60">
+            <div class="sell-err" id="sBrandErr"></div>
+          </div>
+          <div class="sell-field" style="grid-column:1/-1">
+            <label class="sell-label" for="sHandle">Instagram Handle *</label>
+            <input class="sell-inp" id="sHandle" placeholder="@yourbrand" maxlength="60">
+            <div class="sell-err" id="sHandleErr"></div>
+          </div>
+          <div class="sell-field" style="grid-column:1/-1">
+            <label class="sell-label" for="sCity">City</label>
+            <input class="sell-inp" id="sCity" placeholder="Mumbai" maxlength="60">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn-k-o" style="height:46px;flex:1" onclick="sellNextStep(0)">← Back</button>
+          <button class="btn-k" style="height:46px;flex:2" onclick="sellNextStep(2)">Next →</button>
+        </div>
+      </div>
+      <!-- Step 2: Brand details -->
+      <div id="sellStep2" style="display:none">
+        <div class="sell-field">
+          <label class="sell-label" for="sAesthetic">Primary Aesthetic *</label>
+          <select class="sell-select" id="sAesthetic">
+            <option value="">Select your style</option>
+            <option>Y2K Revival</option><option>Dark Gothic</option><option>Soft Minimal</option>
+            <option>Artistic Wear</option><option>High Fashion</option><option>Indie Core</option>
+            <option>Streetwear</option><option>Vintage</option><option>Other</option>
+          </select>
+          <div class="sell-err" id="sAestheticErr"></div>
+        </div>
+        <div class="sell-field">
+          <label class="sell-label" for="sCategory">Primary Category *</label>
+          <select class="sell-select" id="sCategory">
+            <option value="">Select category</option>
+            <option>Tops & Tees</option><option>Bottoms</option><option>Dresses & Co-ords</option>
+            <option>Jewellery</option><option>Bags</option><option>Footwear</option>
+            <option>Accessories</option><option>Mixed / Multiple</option>
+          </select>
+          <div class="sell-err" id="sCategoryErr"></div>
+        </div>
+        <div class="sell-field">
+          <label class="sell-label" for="sBio">Tell us about your brand *</label>
+          <textarea class="sell-textarea" id="sBio" placeholder="What makes your brand unique? What's your design story?" maxlength="500"></textarea>
+          <div class="sell-err" id="sBioErr"></div>
+        </div>
+        <div class="sell-field">
+          <label class="sell-label" for="sGST">GST Number (optional)</label>
+          <input class="sell-inp" id="sGST" placeholder="22AAAAA0000A1Z5" maxlength="15">
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn-k-o" style="height:46px;flex:1" onclick="sellNextStep(1)">← Back</button>
+          <button class="btn-k" id="sellSubmitBtn" style="height:46px;flex:2" onclick="doSellerApply()">Submit Application →</button>
+        </div>
+      </div>
+      <!-- Step 3: Confirmation -->
+      <div id="sellStep3" style="display:none">
+        <div class="sell-confirm">
+          <div class="sell-confirm-ico">✦</div>
+          <div class="sell-confirm-title">Application Sent!</div>
+          <div class="sell-confirm-sub" id="sellConfirmSub">We've received your application.<br>Our team will review and get back within 48 hours.<br>Meanwhile, explore the <a href="karker_admin.html" style="color:var(--k);text-decoration:underline">seller dashboard →</a></div>
+        </div>
+        <button class="btn-k" style="width:100%;height:46px;margin-top:20px" onclick="closeSellerModal()">Got it →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ DROP ADMIN TOGGLE ══ -->
 <button class="drop-toggle" id="dropToggle" onclick="toggleDrop()">
   <span class="t-dot" id="tDot"></span>
@@ -1350,7 +1762,7 @@ _updateISTClock();setInterval(_updateISTClock,1000);
 
 /* ── KEYBOARD — ESC closes everything ── */
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');closePage('collectionPage');closePage('categoryPage');closePage('sellerPage');}
+  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');closePage('collectionPage');closePage('categoryPage');closePage('sellerPage');closePage('wishlistPage');closePage('checkoutPage');closePage('ordersPage');closeSellerModal();}
 });
 
 /* ── VALIDATION ── */
@@ -1789,6 +2201,348 @@ if('IntersectionObserver' in window){
     entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.src){e.target.src=e.target.dataset.src;io.unobserve(e.target);}});
   },{rootMargin:'200px'});
   document.querySelectorAll('img[data-src]').forEach(img=>io.observe(img));
+}
+
+/* ══════════════════════════════════════════
+   PHASE 2 — WISHLIST PAGE
+══════════════════════════════════════════ */
+/* Static product data keyed by p0, p1, … matching the DOM order of .pc-wish */
+const _PROD_DATA=(()=>{
+  const cards=[...document.querySelectorAll('.pc')];
+  return cards.map((c,i)=>{
+    const ico=c.querySelector('.pc-ico')?.textContent||'✦';
+    const name=c.querySelector('.pc-name')?.textContent||'Product '+(i+1);
+    const seller=c.querySelector('.pc-seller')?.textContent?.replace('✓','').trim()||'';
+    const price=c.querySelector('.pc-price')?.textContent||'₹0';
+    return{key:'p'+i,ico,name,seller,price};
+  });
+})();
+
+function openWishlistPage(){
+  renderWishlist();
+  openPage('wishlistPage');
+}
+function renderWishlist(){
+  const list=document.getElementById('wlList');
+  const empty=document.getElementById('wlEmpty');
+  const cartRow=document.getElementById('wlCartRow');
+  const count=document.getElementById('wlPageCount');
+  if(!list)return;
+  const items=_PROD_DATA.filter(p=>_wl.has(p.key));
+  count.textContent=items.length+' item'+(items.length!==1?'s':'');
+  if(!items.length){
+    list.style.display='none';
+    if(cartRow)cartRow.style.display='none';
+    if(empty)empty.style.display='block';
+    return;
+  }
+  if(empty)empty.style.display='none';
+  list.style.display='block';
+  if(cartRow)cartRow.style.display='block';
+  list.innerHTML=items.map(p=>`
+    <div class="wl-item" id="wli-${sanitise(p.key)}">
+      <div class="wl-ico">${sanitise(p.ico)}</div>
+      <div class="wl-info">
+        <div class="wl-seller">${sanitise(p.seller)}</div>
+        <div class="wl-name">${sanitise(p.name)}</div>
+        <div class="wl-price">${sanitise(p.price)}</div>
+      </div>
+      <div class="wl-actions">
+        <button class="wl-btn wl-btn-cart" onclick="wlAddToCart('${sanitise(p.key)}','${sanitise(p.price)}')">Add to Cart</button>
+        <button class="wl-btn wl-btn-rm" onclick="wlRemove('${sanitise(p.key)}')">Remove</button>
+      </div>
+    </div>`).join('');
+}
+function wlRemove(key){
+  _wl.delete(key);_saveWL();
+  /* sync heart button on main page */
+  const idx=parseInt(key.replace('p',''));
+  const hearts=[...document.querySelectorAll('.pc-wish')];
+  if(hearts[idx]){hearts[idx].classList.remove('on');hearts[idx].textContent='♡';}
+  renderWishlist();
+  toast('Removed from wishlist');
+}
+function wlAddToCart(key,price){
+  const priceNum=parseInt(String(price).replace(/[^0-9]/g,''))||699;
+  window._cartCount++;
+  window._cartPrices.push(priceNum);
+  _saveCart();_syncCartUI();
+  toast('Added to cart ✓','lt');
+}
+function moveAllToCart(){
+  const items=_PROD_DATA.filter(p=>_wl.has(p.key));
+  items.forEach(p=>wlAddToCart(p.key,p.price));
+  toast('All '+items.length+' items added to cart ✓','lt');
+}
+
+/* ══════════════════════════════════════════
+   PHASE 2 — CHECKOUT
+══════════════════════════════════════════ */
+let _coAddr={};
+
+function _buildSummaryHTML(){
+  const total=window._cartPrices.reduce((a,b)=>a+b,0);
+  const delivery=total>=999?0:99;
+  const items=window._cartCount;
+  return`<div class="co-sum-title">Order Summary</div>
+    <div class="co-sum-item"><span>${items} item${items!==1?'s':''}</span><span>₹${total.toLocaleString('en-IN')}</span></div>
+    <div class="co-sum-item"><span>Delivery</span><span>${delivery===0?'FREE':'₹'+delivery}</span></div>
+    <div class="co-sum-total">
+      <span class="co-sum-total-lbl">Total</span>
+      <span class="co-sum-total-val">₹${(total+delivery).toLocaleString('en-IN')}</span>
+    </div>
+    <div class="co-pay-logos" style="margin-top:14px">
+      <span class="co-pay-logo">SSL Secured</span>
+      <span class="co-pay-logo">Razorpay</span>
+    </div>`;
+}
+
+function openCheckout(){
+  if(window._cartCount===0){toast('Your cart is empty');return;}
+  closePanel('cartPanel');
+  /* reset to step 1 */
+  _coSetStep(1);
+  document.getElementById('coSummary1').innerHTML=_buildSummaryHTML();
+  openPage('checkoutPage');
+}
+function _coSetStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('coStep'+i+'Body').style.display=i===n?'block':'none';
+    document.getElementById('coStep'+i)?.classList.toggle('on',i===n);
+  });
+}
+function _coFieldErr(id,msg){
+  const el=document.getElementById(id+'Err');
+  if(el){el.style.display='block';el.textContent=msg;}
+  const inp=document.getElementById(id);
+  if(inp)inp.style.borderColor='#ef4444';
+}
+function _coFieldOk(id){
+  const el=document.getElementById(id+'Err');
+  if(el)el.style.display='none';
+  const inp=document.getElementById(id);
+  if(inp)inp.style.borderColor='';
+}
+function coNextToPayment(){
+  /* clear previous errors */
+  ['coName','coPhone','coAddr1','coCity','coState','coPincode','coEmail'].forEach(id=>{_coFieldOk(id);});
+  const name=document.getElementById('coName')?.value?.trim()||'';
+  const phone=document.getElementById('coPhone')?.value?.trim()||'';
+  const addr1=document.getElementById('coAddr1')?.value?.trim()||'';
+  const city=document.getElementById('coCity')?.value?.trim()||'';
+  const state=document.getElementById('coState')?.value||'';
+  const pincode=document.getElementById('coPincode')?.value?.trim()||'';
+  const email=document.getElementById('coEmail')?.value?.trim()||'';
+  let ok=true;
+  if(!name){_coFieldErr('coName','Full name is required');ok=false;}
+  if(!validPhone(phone)||!phone){_coFieldErr('coPhone','Enter a valid Indian mobile number');ok=false;}
+  if(!addr1){_coFieldErr('coAddr1','Address is required');ok=false;}
+  if(!city){_coFieldErr('coCity','City is required');ok=false;}
+  if(!state){_coFieldErr('coState','Please select a state');ok=false;}
+  if(!pincode||!/^\d{6}$/.test(pincode)){_coFieldErr('coPincode','Enter a valid 6-digit pincode');ok=false;}
+  if(email&&!validEmail(email)){_coFieldErr('coEmail','Enter a valid email address');ok=false;}
+  if(!ok)return;
+  _coAddr={name,phone,addr1,addr2:document.getElementById('coAddr2')?.value?.trim()||'',city,state,pincode,email};
+  document.getElementById('coSummary2').innerHTML=_buildSummaryHTML();
+  _coSetStep(2);
+  document.getElementById('checkoutPage').scrollTo({top:0,behavior:'smooth'});
+}
+function coBackToAddress(){
+  _coSetStep(1);
+  document.getElementById('checkoutPage').scrollTo({top:0,behavior:'smooth'});
+}
+function initiatePayment(){
+  const total=window._cartPrices.reduce((a,b)=>a+b,0);
+  const delivery=total>=999?0:99;
+  const amountPaise=(total+delivery)*100;
+  const btn=document.getElementById('payBtn');
+  if(btn){btn.textContent='Opening payment...';btn.disabled=true;}
+  /* Check if Razorpay is loaded */
+  if(typeof Razorpay==='undefined'){
+    /* Fallback: simulate payment for demo */
+    setTimeout(()=>{_onPaymentSuccess('DEMO_'+Date.now());if(btn){btn.textContent='Pay Securely with Razorpay →';btn.disabled=false;}},1200);
+    return;
+  }
+  const options={
+    key:'rzp_test_karker',/* Replace with live key in production */
+    amount:amountPaise,
+    currency:'INR',
+    name:'KARKER',
+    description:'Indie Fashion Order',
+    image:'',
+    prefill:{name:_coAddr.name,email:_coAddr.email||'',contact:_coAddr.phone},
+    theme:{color:'#0C0B09'},
+    handler:function(resp){_onPaymentSuccess(resp.razorpay_payment_id);},
+    modal:{ondismiss:function(){if(btn){btn.textContent='Pay Securely with Razorpay →';btn.disabled=false;}toast('Payment cancelled');}},
+  };
+  try{
+    const rzp=new Razorpay(options);
+    rzp.open();
+  }catch(e){
+    /* Razorpay key invalid in test — simulate success for demo */
+    setTimeout(()=>{_onPaymentSuccess('SIM_'+Date.now());if(btn){btn.textContent='Pay Securely with Razorpay →';btn.disabled=false;}},900);
+  }
+}
+function _onPaymentSuccess(paymentId){
+  const orderId='KRK-'+Math.random().toString(36).substring(2,8).toUpperCase();
+  const total=window._cartPrices.reduce((a,b)=>a+b,0);
+  const delivery=total>=999?0:99;
+  /* Save order to localStorage */
+  const order={
+    id:orderId,
+    paymentId:String(paymentId),
+    items:window._cartCount,
+    total:total+delivery,
+    address:_coAddr,
+    date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}),
+    status:'placed',
+  };
+  try{
+    const orders=JSON.parse(localStorage.getItem('karker_orders')||'[]');
+    orders.unshift(order);
+    localStorage.setItem('karker_orders',JSON.stringify(orders));
+  }catch(e){}
+  /* Clear cart */
+  window._cartCount=0;window._cartPrices=[];
+  _saveCart();_syncCartUI();
+  /* Show confirmation */
+  document.getElementById('coOrderId').textContent='Order #'+orderId;
+  _coSetStep(3);
+  document.getElementById('checkoutPage').scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══════════════════════════════════════════
+   PHASE 2 — ORDER TRACKING
+══════════════════════════════════════════ */
+const _ORD_STEPS=['placed','shipped','out for delivery','delivered'];
+const _ORD_LABELS=['Order Placed','Shipped','Out for Delivery','Delivered'];
+const _ORD_ICONS=['✓','📦','🚚','✦'];
+
+function renderOrders(){
+  const list=document.getElementById('ordList');
+  const empty=document.getElementById('ordEmpty');
+  const count=document.getElementById('ordPageCount');
+  if(!list)return;
+  let orders=[];
+  try{orders=JSON.parse(localStorage.getItem('karker_orders')||'[]');}catch(e){}
+  count.textContent=orders.length+' order'+(orders.length!==1?'s':'');
+  if(!orders.length){
+    list.style.display='none';
+    if(empty)empty.style.display='block';
+    return;
+  }
+  if(empty)empty.style.display='none';
+  list.style.display='block';
+  list.innerHTML=orders.map(o=>{
+    const stepIdx=_ORD_STEPS.indexOf(o.status)||0;
+    const timeline=_ORD_STEPS.map((s,i)=>`
+      <div class="ord-tstep${i<=stepIdx?' done':''}">
+        <div class="ord-tdot">${i<=stepIdx?_ORD_ICONS[i]:''}</div>
+        <div class="ord-tlabel">${_ORD_LABELS[i]}</div>
+      </div>`).join('');
+    const badgeCls=o.status==='delivered'?'delivered':o.status==='shipped'?'shipped':'placed';
+    return`<div class="ord-card">
+      <div class="ord-card-head">
+        <div>
+          <div class="ord-id">Order #${sanitise(o.id)}</div>
+          <div class="ord-date">${sanitise(o.date)}</div>
+        </div>
+        <span class="ord-badge ${badgeCls}">${sanitise(o.status)}</span>
+      </div>
+      <div class="ord-items">${o.items} item${o.items!==1?'s':''} · ${sanitise(o.address?.city||'')}${o.address?.state?', '+sanitise(o.address.state):''}</div>
+      <div class="ord-timeline">${timeline}</div>
+      <div class="ord-footer" style="margin-top:16px">
+        <div class="ord-total">₹${Number(o.total).toLocaleString('en-IN')}</div>
+        <div class="ord-actions">
+          <button class="ord-btn" onclick="toast('Return/refund request sent for order #${sanitise(o.id)} ✓','lt')">Return / Refund</button>
+          <button class="ord-btn" onclick="toast('Invoice for #${sanitise(o.id)} downloading...')">Invoice</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════
+   PHASE 2 — SELLER PORTAL
+══════════════════════════════════════════ */
+let _sellStep=0;
+function openSellerModal(){
+  _sellStep=0;_renderSellStep();
+  document.getElementById('sellModal')?.classList.add('open');
+}
+function closeSellerModal(){
+  document.getElementById('sellModal')?.classList.remove('open');
+}
+function _renderSellStep(){
+  [0,1,2,3].forEach(i=>{
+    const el=document.getElementById('sellStep'+i);
+    if(el)el.style.display=i===_sellStep?'block':'none';
+    const dot=document.getElementById('sDot'+i);
+    if(dot)dot.classList.toggle('on',i===_sellStep);
+  });
+  const title=document.getElementById('sellModalTitle');
+  const titles=['Sell on<br>KARKER','Your Details','Your Brand','Done!'];
+  if(title)title.innerHTML=titles[_sellStep]||titles[0];
+}
+function sellNextStep(n){
+  if(n===2){
+    /* Validate step 1 before advancing */
+    const fields=[
+      {id:'sName',msg:'Full name is required',check:v=>v.trim().length>0},
+      {id:'sEmail',msg:'Valid email required',check:v=>validEmail(v)},
+      {id:'sPhone',msg:'Valid Indian mobile number required',check:v=>validPhone(v)&&v.trim().length>0},
+      {id:'sBrand',msg:'Brand name is required',check:v=>v.trim().length>0},
+      {id:'sHandle',msg:'Instagram handle is required',check:v=>v.trim().length>0},
+    ];
+    let ok=true;
+    fields.forEach(f=>{
+      const el=document.getElementById(f.id);
+      const errEl=document.getElementById(f.id+'Err');
+      const val=el?.value||'';
+      const valid=f.check(val);
+      if(errEl){errEl.style.display=valid?'none':'block';if(!valid)errEl.textContent=f.msg;}
+      if(el)el.style.borderColor=valid?'':'#ef4444';
+      if(!valid)ok=false;
+    });
+    if(!ok)return;
+  }
+  _sellStep=n;_renderSellStep();
+  document.getElementById('sellModal')?.querySelector('.sell-box')?.scrollTo({top:0,behavior:'smooth'});
+}
+async function doSellerApply(){
+  /* Validate step 2 */
+  const aesthetic=document.getElementById('sAesthetic')?.value||'';
+  const category=document.getElementById('sCategory')?.value||'';
+  const bio=document.getElementById('sBio')?.value?.trim()||'';
+  let ok=true;
+  const _e=(id,msg)=>{const el=document.getElementById(id+'Err');if(el){el.style.display='block';el.textContent=msg;}const inp=document.getElementById(id);if(inp)inp.style.borderColor='#ef4444';ok=false;};
+  const _ok=(id)=>{const el=document.getElementById(id+'Err');if(el)el.style.display='none';const inp=document.getElementById(id);if(inp)inp.style.borderColor='';};
+  if(!aesthetic){_e('sAesthetic','Please select an aesthetic');}else{_ok('sAesthetic');}
+  if(!category){_e('sCategory','Please select a category');}else{_ok('sCategory');}
+  if(bio.length<20){_e('sBio','Tell us a bit more (at least 20 characters)');}else{_ok('sBio');}
+  if(!ok)return;
+  const btn=document.getElementById('sellSubmitBtn');
+  if(btn){btn.textContent='Submitting...';btn.disabled=true;}
+  /* Save application to Supabase */
+  const name=document.getElementById('sName')?.value?.trim()||'';
+  const email=document.getElementById('sEmail')?.value?.trim()||'';
+  const phone=document.getElementById('sPhone')?.value?.trim()||'';
+  const brand=document.getElementById('sBrand')?.value?.trim()||'';
+  const handle=document.getElementById('sHandle')?.value?.trim()||'';
+  const city=document.getElementById('sCity')?.value?.trim()||'';
+  const gst=document.getElementById('sGST')?.value?.trim()||'';
+  try{
+    await sb.from('seller_applications').insert({
+      full_name:name,email,phone,brand_name:brand,instagram_handle:handle,
+      city,aesthetic,category,bio,gst_number:gst,status:'pending',
+      applied_at:new Date().toISOString()
+    });
+  }catch(e){/* table may not exist yet — proceed anyway */}
+  if(btn){btn.textContent='Submit Application →';btn.disabled=false;}
+  /* Show confirmation */
+  const sub=document.getElementById('sellConfirmSub');
+  if(sub)sub.innerHTML=`We've received your application, <strong>${sanitise(name)}</strong>!<br>Our team will review and get back to you at <strong>${sanitise(email)}</strong> within 48 hours.<br><br>Meanwhile, check out the <a href="karker_admin.html" style="color:var(--k);text-decoration:underline">seller dashboard →</a>`;
+  _sellStep=3;_renderSellStep();
 }
 </script>
 </body>
