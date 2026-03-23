@@ -587,6 +587,8 @@ button{font-family:var(--b);cursor:pointer}
       <div class="field"><label class="f-label">Seller Handle</label><input class="f-inp" id="pm-seller" placeholder="@stardust.fits"></div>
       <div class="field"><label class="f-label">Stock Quantity</label><input class="f-inp" id="pm-stock" type="number" placeholder="10"></div>
       <div class="field full"><label class="f-label">Sizes (comma separated)</label><input class="f-inp" id="pm-sizes" placeholder="XS, S, M, L, XL"></div>
+      <div class="field full"><label class="f-label">Product Image URL</label><input class="f-inp" id="pm-image" placeholder="https://images.unsplash.com/photo-... or Supabase storage URL" type="url" oninput="_updateImagePreview(this.value)"></div>
+      <div class="field full" id="pm-image-preview-wrap" style="display:none"><label class="f-label">Image Preview</label><img id="pm-image-preview" style="width:120px;height:150px;object-fit:cover;border:1px solid var(--bdr)" onerror="this.style.display='none'"></div>
       <div class="field">
         <label class="f-label">Badge Label</label>
         <select class="f-select" id="pm-badge">
@@ -639,11 +641,12 @@ button{font-family:var(--b);cursor:pointer}
 </div>
 
 <script>
-/* ══ CONFIG — REPLACE WITH YOUR VALUES ══ */
+/* ══ CONFIG ══ */
 const SUPA_URL = 'https://ftqtmcowohtlhulkuiih.supabase.co';
 const SUPA_KEY = 'sb_publishable_qlWnDndl1kcfrlWGA_IhFA_TZvyy0ER';
-const ADMIN_EMAIL = 'sumanthkarkera625@gmail.com';
-/* ════════════════════════════════════════ */
+/* Admin access is controlled by Supabase auth + profiles.role = 'admin'
+   Set a user as admin: UPDATE profiles SET role='admin' WHERE id='<user-uuid>'; */
+/* ═══════════════════════════════════════ */
 
 const { createClient } = supabase;
 const sb = createClient(SUPA_URL, SUPA_KEY);
@@ -690,9 +693,15 @@ async function adminLogin(){
   const errEl = document.getElementById('loginErr');
   errEl.textContent = '';
   if(!email || !pass){ errEl.textContent = 'Please enter email and password'; return; }
-  if(email !== ADMIN_EMAIL){ errEl.textContent = 'Not authorised as admin'; return; }
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
   if(error){ errEl.textContent = error.message; return; }
+  /* Check admin role in profiles table */
+  const { data: profile } = await sb.from('profiles').select('role').eq('id', data.user.id).single();
+  if(!profile || profile.role !== 'admin'){
+    await sb.auth.signOut();
+    errEl.textContent = 'Access denied — not an admin account.';
+    return;
+  }
   initApp(email);
 }
 
@@ -912,7 +921,18 @@ async function editProduct(id){
   document.getElementById('pm-vibe').value = data.vibe||'Y2K Revival';
   document.getElementById('pm-cat').value = data.category||'Tops & Tees';
   document.getElementById('pm-status').value = String(data.is_active);
+  const imgUrl = (data.images&&data.images[0])||'';
+  set('pm-image', imgUrl);
+  _updateImagePreview(imgUrl);
   document.getElementById('prodModal').classList.add('open');
+}
+
+function _updateImagePreview(url){
+  const wrap=document.getElementById('pm-image-preview-wrap');
+  const img=document.getElementById('pm-image-preview');
+  if(!wrap||!img)return;
+  if(url&&url.startsWith('http')){wrap.style.display='block';img.src=url;img.style.display='block';}
+  else{wrap.style.display='none';img.src='';}
 }
 
 async function saveProduct(){
@@ -925,7 +945,8 @@ async function saveProduct(){
     stock:parseInt(g('pm-stock'))||0,
     sizes:g('pm-sizes').split(',').map(s=>s.trim()).filter(Boolean),
     badge:g('pm-badge'),
-    is_active: document.getElementById('pm-status').value === 'true'
+    is_active: document.getElementById('pm-status').value === 'true',
+    images: g('pm-image') ? [g('pm-image')] : []
   };
   if(!payload.title){ toast('Product name is required','err'); return; }
   let error;
@@ -967,7 +988,7 @@ async function loadSellers(){
       <td><span class="tbl-badge ${s.is_verified?'b-green':'b-amber'}">${s.is_verified?'Verified':'Pending'}</span></td>
       <td><div class="tbl-actions">
         <button class="btn btn-success btn-sm" onclick="verifySeller('${s.id}',${!s.is_verified})">${s.is_verified?'Unverify':'Verify'}</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Edit seller →')">Edit</button>
+        <button class="btn btn-ghost btn-sm" onclick="openEditSellerModal('${s.id}','${(s.shop_name||s.brand_name||'').replace(/'/g,"\\'")}','${(s.handle||'').replace(/'/g,"\\'")}','${(s.bio||'').replace(/'/g,"\\'")}')">Edit</button>
       </div></td>
     </tr>`).join('');
 }
@@ -1014,7 +1035,7 @@ async function loadUsers(){
       <td><span class="tbl-badge ${u.role==='seller'?'b-amber':u.role==='admin'?'b-red':'b-blue'}">${u.role||'buyer'}</span></td>
       <td style="font-family:var(--m);font-size:11px;color:var(--w45)">${u.created_at?new Date(u.created_at).toLocaleDateString('en-IN'):'—'}</td>
       <td><div class="tbl-actions">
-        <button class="btn btn-ghost btn-sm" onclick="toast('User management coming soon')">Manage</button>
+        <button class="btn btn-ghost btn-sm" onclick="viewUserOrders(this)">View Orders</button>
       </div></td>
     </tr>`).join('');
 }
@@ -1040,13 +1061,106 @@ async function loadOrders(){
     </tr>`).join('');
 }
 
-async function updateOrderStatus(id){
-  const status = prompt('Enter new status: pending / confirmed / shipped / delivered / returned');
-  if(!status) return;
-  const { error } = await sb.from('orders').update({status}).eq('id',id);
-  if(error){ toast(error.message,'err'); return; }
-  toast('Order status updated ✓','ok');
+/* Order status modal */
+function updateOrderStatus(id){
+  // Inject a quick inline modal
+  const existing=document.getElementById('orderStatusModal');
+  if(existing)existing.remove();
+  const html=`<div id="orderStatusModal" class="m-overlay open" style="z-index:900">
+    <div class="m-box" style="max-width:360px;padding:24px">
+      <div class="m-head"><div class="m-title">Update Status</div><button class="m-close" onclick="document.getElementById('orderStatusModal').remove()">✕</button></div>
+      <div style="margin-bottom:18px">
+        <label class="f-label" style="margin-bottom:8px;display:block">New Order Status</label>
+        <select class="f-select" id="oStatusSel">
+          <option value="placed">Placed</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="shipped">Shipped</option>
+          <option value="out_for_delivery">Out for Delivery</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="refunded">Refunded</option>
+        </select>
+      </div>
+      <div style="margin-bottom:18px">
+        <label class="f-label" style="margin-bottom:8px;display:block">Tracking Number (optional)</label>
+        <input class="f-inp" id="oTrackNum" placeholder="e.g. DELHIVERY123456">
+      </div>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary" onclick="doUpdateOrderStatus('${id}')">Save →</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('orderStatusModal').remove()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+async function doUpdateOrderStatus(id){
+  const status=document.getElementById('oStatusSel')?.value;
+  const tracking=document.getElementById('oTrackNum')?.value?.trim()||null;
+  if(!status)return;
+  const payload={status,updated_at:new Date().toISOString()};
+  if(tracking)payload.tracking_number=tracking;
+  const{error}=await sb.from('orders').update(payload).eq('id',id);
+  document.getElementById('orderStatusModal')?.remove();
+  if(error){toast(error.message,'err');return;}
+  toast('Order status updated to "'+status+'" ✓','ok');
   loadOrders();
+}
+
+/* Seller edit modal */
+function openEditSellerModal(id,name,handle,bio){
+  const existing=document.getElementById('editSellerModal');
+  if(existing)existing.remove();
+  const html=`<div id="editSellerModal" class="m-overlay open" style="z-index:900">
+    <div class="m-box" style="max-width:480px;padding:24px">
+      <div class="m-head"><div class="m-title">Edit Seller</div><button class="m-close" onclick="document.getElementById('editSellerModal').remove()">✕</button></div>
+      <div class="form-grid" style="margin-bottom:14px">
+        <div class="field">
+          <label class="f-label">Brand Name</label>
+          <input class="f-inp" id="es-name" value="${name.replace(/"/g,'&quot;')}">
+        </div>
+        <div class="field">
+          <label class="f-label">Handle (@)</label>
+          <input class="f-inp" id="es-handle" value="${handle.replace(/"/g,'&quot;')}">
+        </div>
+        <div class="field full">
+          <label class="f-label">Bio</label>
+          <textarea class="f-textarea" id="es-bio">${bio.replace(/</g,'&lt;')}</textarea>
+        </div>
+        <div class="field full">
+          <label class="f-label">Avatar / Profile Image URL</label>
+          <input class="f-inp" id="es-avatar" placeholder="https://... or leave blank">
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary" onclick="doEditSeller('${id}')">Save Changes →</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('editSellerModal').remove()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+async function doEditSeller(id){
+  const payload={
+    brand_name:document.getElementById('es-name')?.value?.trim()||'',
+    handle:document.getElementById('es-handle')?.value?.replace('@','').trim()||'',
+    bio:document.getElementById('es-bio')?.value?.trim()||'',
+  };
+  const avatar=document.getElementById('es-avatar')?.value?.trim();
+  if(avatar)payload.avatar_url=avatar;
+  if(!payload.brand_name){toast('Brand name required','err');return;}
+  const{error}=await sb.from('seller_profiles').update(payload).eq('id',id);
+  document.getElementById('editSellerModal')?.remove();
+  if(error){toast(error.message,'err');return;}
+  toast('Seller updated ✓','ok');
+  loadSellers();
+}
+
+function viewUserOrders(btn){
+  const row=btn.closest('tr');
+  const email=row?.cells?.[1]?.textContent?.trim()||'';
+  toast('Orders for '+email+' — filter in Orders tab');
 }
 
 /* ── VIBES EDITOR ── */

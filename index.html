@@ -631,6 +631,122 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
 .sell-confirm-title{font-family:var(--bc);font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--k);margin-bottom:8px}
 .sell-confirm-sub{font-size:13px;color:var(--i55);line-height:1.7}
 @media(max-width:600px){.sell-grid{grid-template-columns:1fr}.sell-perks{grid-template-columns:1fr}}
+
+/* ══ PRODUCT CARD — REAL IMAGES ══ */
+.pc-img{position:relative;overflow:hidden}
+.pc-img img.pc-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s;z-index:1}
+.pc-img img.pc-photo.loaded{opacity:1}
+.pc-img.has-img .pc-img-bg{opacity:0}
+.pc-img.has-img .pc-ico{opacity:.12;filter:grayscale(1);z-index:0;position:relative}
+.pc-img .pc-tag,.pc-img .pc-wish{z-index:3;position:relative}
+
+/* ══ PAGE 2 — CATALOGUE ══ */
+.cat-ov-wrap{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 62px)}
+.cat-sidebar{border-right:2px solid var(--bdr);padding:22px 16px;overflow-y:auto;height:calc(100vh - 62px);position:sticky;top:62px;background:var(--w)}
+.cat-main{padding:24px 28px}
+.fil-section{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--bdr)}
+.fil-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fil-title{font-family:var(--m);font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--i32);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.fil-clr{font-size:8px;color:var(--i22);cursor:pointer;transition:color .15s;background:none;border:none;font-family:var(--m);letter-spacing:.06em}
+.fil-clr:hover{color:var(--k)}
+.fil-chips{display:flex;flex-wrap:wrap;gap:5px}
+.fil-chip{font-family:var(--m);font-size:9px;letter-spacing:.06em;padding:4px 10px;border:1px solid var(--bdr);color:var(--i55);cursor:pointer;transition:all .15s;background:transparent;user-select:none;line-height:1.4}
+.fil-chip:hover{border-color:var(--i22);color:var(--k)}
+.fil-chip.on{background:var(--k);color:var(--w);border-color:var(--k)}
+.fil-price-row{display:flex;gap:8px;align-items:center}
+.fil-price-inp{width:78px;height:34px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--m);font-size:11px;padding:0 10px;outline:none;text-align:center;transition:border-color .2s}
+.fil-price-inp:focus{border-color:var(--k)}
+.fil-price-sep{font-family:var(--m);font-size:10px;color:var(--i22)}
+.cat-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.cat-count{font-family:var(--m);font-size:10px;color:var(--i32);letter-spacing:.06em}
+.cat-sort-wrap{display:flex;align-items:center;gap:8px}
+.cat-sort-lbl{font-family:var(--m);font-size:9px;color:var(--i32);letter-spacing:.08em;text-transform:uppercase}
+.cat-sort{height:34px;background:var(--off);border:1px solid var(--bdr);color:var(--k);font-family:var(--m);font-size:10px;padding:0 28px 0 10px;outline:none;appearance:none;letter-spacing:.06em;cursor:pointer;transition:border-color .2s}
+.cat-sort:focus{border-color:var(--k)}
+.active-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;min-height:0}
+.a-chip{font-family:var(--m);font-size:9px;letter-spacing:.06em;padding:4px 8px 4px 10px;background:var(--k);color:var(--w);display:inline-flex;align-items:center;gap:5px}
+.a-chip button{background:none;border:none;color:var(--w);font-size:11px;cursor:pointer;padding:0;line-height:1;opacity:.65}
+.a-chip button:hover{opacity:1}
+.cat-load-wrap{text-align:center;padding:36px 0;border-top:1px solid var(--bdr);margin-top:28px}
+.cat-mobile-filters-btn{display:none;align-items:center;gap:7px;font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--i55);background:var(--off);border:1px solid var(--bdr);height:36px;padding:0 14px;cursor:pointer;transition:all .18s}
+.cat-mobile-filters-btn:hover{border-color:var(--k);color:var(--k)}
+.skel-card{background:var(--off);border:1px solid var(--bdr)}
+.skel-img{aspect-ratio:3/4;background:linear-gradient(90deg,var(--off) 25%,var(--bdr) 50%,var(--off) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skel-line{height:9px;background:linear-gradient(90deg,var(--off) 25%,var(--bdr) 50%,var(--off) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin:8px 12px;border-radius:1px}
+.skel-line.s{width:55%}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@media(max-width:860px){
+  .cat-ov-wrap{grid-template-columns:1fr}
+  .cat-sidebar{display:none;position:fixed;inset:0;top:62px;z-index:700;height:calc(100vh - 62px);overflow-y:auto;width:260px}
+  .cat-sidebar.mob-open{display:block}
+  .cat-mobile-filters-btn{display:flex}
+}
+@media(max-width:600px){.cat-main{padding:16px}}
+
+/* ══ PAGE 3 — ARTIST DIRECTORY ══ */
+.art-hero{background:var(--k);padding:36px 28px 28px;text-align:center}
+.art-hero-tit{font-family:var(--bc);font-size:40px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--w);margin-bottom:6px}
+.art-hero-sub{font-family:var(--m);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,241,235,.45)}
+.art-search-wrap{max-width:440px;margin:20px auto 0;position:relative}
+.art-search-inp{width:100%;height:46px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:var(--w);font-family:var(--b);font-size:14px;padding:0 16px 0 42px;outline:none;transition:border-color .2s}
+.art-search-inp::placeholder{color:rgba(255,255,255,.35)}
+.art-search-inp:focus{border-color:rgba(255,255,255,.5)}
+.art-search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:17px;color:rgba(255,255,255,.4);pointer-events:none}
+.art-body{padding:28px;max-width:1440px;margin:0 auto}
+.art-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.art-card{background:var(--off);border:1px solid var(--bdr);padding:22px 18px;cursor:pointer;transition:all .22s;display:flex;flex-direction:column;align-items:center;text-align:center}
+.art-card:hover{border-color:var(--i22);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.art-avt{width:64px;height:64px;border:2px solid var(--bdr);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;transition:all .22s;background:var(--w);overflow:hidden;flex-shrink:0}
+.art-avt img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.art-avt img.loaded{opacity:1}
+.art-card:hover .art-avt{border-color:var(--k)}
+.art-name{font-family:var(--bc);font-size:15px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--k);margin-bottom:2px}
+.art-handle{font-family:var(--m);font-size:9.5px;color:var(--i32);letter-spacing:.06em;margin-bottom:5px}
+.art-rating{font-family:var(--m);font-size:10px;color:var(--i55);margin-bottom:10px}
+.art-pills{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.art-pill{font-family:var(--m);font-size:8px;letter-spacing:.05em;padding:3px 7px;border:1px solid var(--bdr);color:var(--i32)}
+.art-empty{text-align:center;padding:60px 20px;color:var(--i32)}
+.art-empty-ico{font-size:36px;opacity:.2;margin-bottom:10px}
+.art-featured-label{font-family:var(--m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--i22);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--bdr)}
+.art-verified-badge{font-family:var(--m);font-size:8px;color:#16a34a;letter-spacing:.06em;margin-top:4px}
+
+/* ══ GENERAL UI/UX IMPROVEMENTS ══ */
+/* Skeleton loading for grids */
+.loading-grid .pc{pointer-events:none}
+/* Better toast positioning on mobile */
+@media(max-width:600px){#toasts{bottom:70px;right:10px;left:10px;align-items:stretch}.toast{text-align:center}}
+/* Nav active state */
+.nav-lnk.active{color:var(--k);border-bottom:2px solid var(--k)}
+/* Improved section headings */
+.sec-tit em{font-style:normal;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+/* Better focus states */
+:focus-visible{outline:2px solid var(--k);outline-offset:2px}
+/* Product card hover improvement */
+.pc:hover .pc-img img.pc-photo{transform:scale(1.04)}
+.pc-img img.pc-photo{transition:opacity .45s,transform .4s}
+/* Cart panel items scrollable */
+.cart-items-wrap{max-height:300px;overflow-y:auto}
+.cart-items-wrap::-webkit-scrollbar{width:2px}
+.cart-items-wrap::-webkit-scrollbar-thumb{background:var(--bdr)}
+/* Search results */
+.srch-result-item{padding:10px 0;border-bottom:1px solid var(--bdr);cursor:pointer;display:flex;align-items:center;gap:12px;transition:color .15s}
+.srch-result-item:hover .sri-name{color:var(--k)}
+.sri-ico{font-size:18px;flex-shrink:0}
+.sri-info{flex:1;min-width:0}
+.sri-name{font-size:13px;color:var(--k);font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sri-meta{font-family:var(--m);font-size:9px;color:var(--i32);letter-spacing:.05em}
+/* Mobile nav improvements */
+@media(max-width:880px){
+  .cat-ov-wrap{grid-template-columns:1fr}
+  .art-hero-tit{font-size:28px}
+}
+@media(max-width:480px){
+  .pg{grid-template-columns:repeat(2,1fr);gap:8px}
+  .pc-name{font-size:12px}
+  .pc-price{font-size:13px}
+  .pc-body{padding:10px}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="application/ld+json">
@@ -701,6 +817,7 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
     <span class="srch-tag" onclick="fillSearch('Painted Denim')">Painted Denim</span>
     <span class="srch-tag" onclick="fillSearch('Platform Mules')">Platform Mules</span>
   </div>
+  <div id="srchResults"></div>
 </div>
 
 <!-- CART PANEL -->
@@ -915,10 +1032,10 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
       KARKER
     </button>
     <div class="nav-c">
-      <a class="nav-lnk" href="#new-arrivals">New Arrivals</a>
-      <a class="nav-lnk" href="#vibes">Collections</a>
-      <a class="nav-lnk" href="#sellers">Artists</a>
-      <a class="nav-lnk" href="#sell">For Sellers</a>
+      <a class="nav-lnk" onclick="openCataloguePage()">New Arrivals</a>
+      <a class="nav-lnk" onclick="openCataloguePage()">Catalogue</a>
+      <a class="nav-lnk" onclick="openArtistsPage()">Artists</a>
+      <a class="nav-lnk" onclick="openSellerModal()">For Sellers</a>
     </div>
     <div class="nav-r">
       <div class="n-ico" onclick="openSearch()" title="Search">
@@ -1431,6 +1548,160 @@ footer{background:var(--k);border-top:2px solid var(--k);padding:64px 28px 28px}
   </div>
 </div>
 
+<!-- ══ PAGE 2 — FULL CATALOGUE ══ -->
+<div class="pg-overlay" id="cataloguePage" role="dialog" aria-modal="true" aria-label="Full Catalogue">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('cataloguePage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">All Products</div>
+      <div class="pg-ov-title">Catalogue</div>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <button class="cat-mobile-filters-btn" onclick="toggleCatSidebar()">⚙ Filters</button>
+      <div class="pg-ov-count" id="catCount">0 products</div>
+    </div>
+  </div>
+  <div class="cat-ov-wrap">
+    <!-- Sidebar Filters -->
+    <aside class="cat-sidebar" id="catSidebar">
+      <!-- Vibe / Aesthetic -->
+      <div class="fil-section">
+        <div class="fil-title">Aesthetic <button class="fil-clr" onclick="clearFilter('vibe')">Clear</button></div>
+        <div class="fil-chips" id="vibeFilters">
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Y2K Revival</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Dark Gothic</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Soft Minimal</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Artistic Wear</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">High Fashion</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Indie Core</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Streetwear</span>
+          <span class="fil-chip" onclick="toggleFilter('vibe',this)">Trending</span>
+        </div>
+      </div>
+      <!-- Category -->
+      <div class="fil-section">
+        <div class="fil-title">Category <button class="fil-clr" onclick="clearFilter('cat')">Clear</button></div>
+        <div class="fil-chips" id="catFilters">
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Tops & Tees</span>
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Bottoms</span>
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Jewellery</span>
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Bags</span>
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Footwear</span>
+          <span class="fil-chip" onclick="toggleFilter('cat',this)">Accessories</span>
+        </div>
+      </div>
+      <!-- Size -->
+      <div class="fil-section">
+        <div class="fil-title">Size <button class="fil-clr" onclick="clearFilter('size')">Clear</button></div>
+        <div class="fil-chips" id="sizeFilters">
+          <span class="fil-chip" onclick="toggleFilter('size',this)">XS</span>
+          <span class="fil-chip" onclick="toggleFilter('size',this)">S</span>
+          <span class="fil-chip" onclick="toggleFilter('size',this)">M</span>
+          <span class="fil-chip" onclick="toggleFilter('size',this)">L</span>
+          <span class="fil-chip" onclick="toggleFilter('size',this)">XL</span>
+          <span class="fil-chip" onclick="toggleFilter('size',this)">Free Size</span>
+        </div>
+      </div>
+      <!-- Price Range -->
+      <div class="fil-section">
+        <div class="fil-title">Price Range</div>
+        <div class="fil-price-row">
+          <input class="fil-price-inp" id="priceMin" placeholder="₹0" type="number" min="0" oninput="applyFilters()">
+          <span class="fil-price-sep">—</span>
+          <input class="fil-price-inp" id="priceMax" placeholder="₹5000" type="number" min="0" oninput="applyFilters()">
+        </div>
+      </div>
+      <!-- Tag -->
+      <div class="fil-section">
+        <div class="fil-title">Tag</div>
+        <div class="fil-chips">
+          <span class="fil-chip" onclick="toggleFilter('tag',this)">New</span>
+          <span class="fil-chip" onclick="toggleFilter('tag',this)">Sale</span>
+          <span class="fil-chip" onclick="toggleFilter('tag',this)">Limited</span>
+          <span class="fil-chip" onclick="toggleFilter('tag',this)">Artist Pick</span>
+          <span class="fil-chip" onclick="toggleFilter('tag',this)">Trending</span>
+        </div>
+      </div>
+      <div style="padding-top:10px">
+        <button class="btn-k-o" style="width:100%;height:38px;font-size:10px;letter-spacing:.1em" onclick="clearAllFilters()">Clear All Filters</button>
+      </div>
+    </aside>
+    <!-- Main Product Grid -->
+    <div class="cat-main" id="catMain">
+      <div class="cat-toolbar">
+        <div>
+          <div class="active-filters" id="activeFilters"></div>
+          <div class="cat-count" id="catCountMain">Loading...</div>
+        </div>
+        <div class="cat-sort-wrap">
+          <span class="cat-sort-lbl">Sort</span>
+          <select class="cat-sort" id="catSortSel" onchange="applyFilters()">
+            <option value="featured">Featured</option>
+            <option value="newest">Newest</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+      <div class="pg" id="catGrid">
+        <!-- Skeleton loading -->
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+        <div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>
+      </div>
+      <div class="cat-load-wrap" id="catLoadMore" style="display:none">
+        <button class="btn-k" onclick="loadMoreProducts()">Load More →</button>
+        <div style="font-family:var(--m);font-size:10px;color:var(--i22);margin-top:10px" id="catLoadMoreSub"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 3 — ARTIST DIRECTORY ══ -->
+<div class="pg-overlay" id="artistsPage" role="dialog" aria-modal="true" aria-label="Artist Directory">
+  <div class="pg-ov-head">
+    <button class="pg-back" onclick="closePage('artistsPage')">← Back</button>
+    <div>
+      <div class="pg-ov-sub">Creators & Designers</div>
+      <div class="pg-ov-title">Artists</div>
+    </div>
+    <div class="pg-ov-count" id="artPageCount">0 artists</div>
+  </div>
+  <div class="art-hero">
+    <div class="art-hero-tit">Meet the Makers</div>
+    <div class="art-hero-sub">180+ verified indie artists · curated by KARKER</div>
+    <div class="art-search-wrap">
+      <span class="art-search-ico">⌕</span>
+      <input class="art-search-inp" id="artSearchInp" placeholder="Search by name, brand or aesthetic…" oninput="filterArtists()">
+    </div>
+  </div>
+  <div class="art-body">
+    <div class="art-filter-row" id="artFilterRow">
+      <span class="fil-chip on" onclick="artFilterAesthetic(this,'')">All</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Y2K Revival')">Y2K Revival</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Dark Gothic')">Dark Gothic</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Soft Minimal')">Soft Minimal</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Artistic Wear')">Artistic Wear</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Indie Core')">Indie Core</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'Streetwear')">Streetwear</span>
+      <span class="fil-chip" onclick="artFilterAesthetic(this,'High Fashion')">High Fashion</span>
+    </div>
+    <div class="art-featured-label" id="artFeatLabel">Featured Artists</div>
+    <div class="art-grid" id="artGrid"></div>
+    <div class="art-empty" id="artEmpty" style="display:none">
+      <div class="art-empty-ico">✦</div>
+      <div style="font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:6px">No artists found</div>
+      <div style="font-size:13px;color:var(--i55)">Try a different name or aesthetic.</div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ PHASE 2 — WISHLIST PAGE ══ -->
 <div class="pg-overlay" id="wishlistPage" role="dialog" aria-modal="true" aria-label="Your Wishlist">
   <div class="pg-ov-head">
@@ -1762,7 +2033,7 @@ _updateISTClock();setInterval(_updateISTClock,1000);
 
 /* ── KEYBOARD — ESC closes everything ── */
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');closePage('collectionPage');closePage('categoryPage');closePage('sellerPage');closePage('wishlistPage');closePage('checkoutPage');closePage('ordersPage');closeSellerModal();}
+  if(e.key==='Escape'){closeSearch();closePanel('cartPanel');closePanel('mobMenu');closeModal('loginModal');closeModal('prodModal');closePage('collectionPage');closePage('categoryPage');closePage('sellerPage');closePage('wishlistPage');closePage('checkoutPage');closePage('ordersPage');closePage('cataloguePage');closePage('artistsPage');closeSellerModal();}
 });
 
 /* ── VALIDATION ── */
@@ -2195,13 +2466,412 @@ document.querySelectorAll('.pc-wish').forEach((w,i)=>{
   });
 });
 
-/* ── LAZY IMAGE SUPPORT (future-proof) ── */
+/* ══════════════════════════════════════════
+   PRODUCT IMAGE MAPPING  (Unsplash CDN)
+══════════════════════════════════════════ */
+const PRODUCT_IMGS={
+  /* Trending / Featured products */
+  'Butterfly Mesh Baby Tee, Lavender':
+    'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&h=500&fit=crop&auto=format&q=80',
+  'Rhinestone Layered Necklace Set':
+    'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=500&fit=crop&auto=format&q=80',
+  'Velvet Butterfly Scarf, Midnight':
+    'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&h=500&fit=crop&auto=format&q=80',
+  'Chrome Mini Shoulder Bag':
+    'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=500&fit=crop&auto=format&q=80',
+  'Low-Rise Cargo Trousers, Sand':
+    'https://images.unsplash.com/photo-1594938298603-c8148c4b4b9e?w=400&h=500&fit=crop&auto=format&q=80',
+  'Hand-Painted Denim Jacket':
+    'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=400&h=500&fit=crop&auto=format&q=80',
+  'Fingerless Mesh Gloves, Black':
+    'https://images.unsplash.com/photo-1592417817038-d13fd7342605?w=400&h=500&fit=crop&auto=format&q=80',
+  'Platform Jelly Mules, Bubblegum':
+    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=500&fit=crop&auto=format&q=80',
+  /* New Arrivals */
+  'Oversized Linen Blazer, Oatmeal':
+    'https://images.unsplash.com/photo-1490481870083-25c7f91b1268?w=400&h=500&fit=crop&auto=format&q=80',
+  'Crochet Knit Vest, Sage':
+    'https://images.unsplash.com/photo-1581338834647-3b7a0e5d5dbb?w=400&h=500&fit=crop&auto=format&q=80',
+  'Crochet Bucket Hat, Terracotta':
+    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&auto=format&q=80',
+  'Petal Sleeve Organza Blouse':
+    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=500&fit=crop&auto=format&q=80',
+  /* Seller / Collection page items */
+  'Y2K Butterfly Baby Tee':
+    'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&h=500&fit=crop&auto=format&q=80',
+  'Patchwork Denim Mini Skirt':
+    'https://images.unsplash.com/photo-1594938298603-c8148c4b4b9e?w=400&h=500&fit=crop&auto=format&q=80',
+  'Chunky Platform Sneakers, White':
+    'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=500&fit=crop&auto=format&q=80',
+  'Mini Rhinestone Tote':
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=500&fit=crop&auto=format&q=80',
+  'Satin Slip Midi Dress, Onyx':
+    'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=400&h=500&fit=crop&auto=format&q=80',
+  'Corset Belt, Black Patent':
+    'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400&h=500&fit=crop&auto=format&q=80',
+  'Choker Set, Gothic Silver':
+    'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=500&fit=crop&auto=format&q=80',
+  'Mesh Bodysuit, Long Sleeve':
+    'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=400&h=500&fit=crop&auto=format&q=80',
+  'Fingerless Lace Gloves, White':
+    'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=400&h=500&fit=crop&auto=format&q=80',
+  'Coquette Satin Bow Clip':
+    'https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=400&h=500&fit=crop&auto=format&q=80',
+};
+
+(function initProductImages(){
+  document.querySelectorAll('.pc').forEach(card=>{
+    const name=card.querySelector('.pc-name')?.textContent?.trim();
+    const url=name&&PRODUCT_IMGS[name];
+    if(!url)return;
+    const imgEl=document.createElement('img');
+    imgEl.className='pc-photo';
+    imgEl.alt=name;
+    imgEl.loading='lazy';
+    imgEl.onload=()=>imgEl.classList.add('loaded');
+    imgEl.onerror=()=>imgEl.remove();
+    imgEl.src=url;
+    const wrap=card.querySelector('.pc-img');
+    if(wrap){wrap.insertBefore(imgEl,wrap.firstChild);wrap.classList.add('has-img');}
+  });
+})();
+
+/* ── LAZY IMAGE SUPPORT ── */
 if('IntersectionObserver' in window){
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.src){e.target.src=e.target.dataset.src;io.unobserve(e.target);}});
   },{rootMargin:'200px'});
   document.querySelectorAll('img[data-src]').forEach(img=>io.observe(img));
 }
+
+/* ══════════════════════════════════════════
+   STATIC PRODUCT DATA (fallback when DB empty)
+══════════════════════════════════════════ */
+const STATIC_PRODUCTS=[
+  {ico:'👗',name:'Butterfly Mesh Baby Tee, Lavender',seller:'@stardust.fits',verified:true,price:'₹649',mrp:'₹899',off:'28',desc:'Sheer mesh fabric with embroidered butterfly details. Cropped fit.',tag:'New',vibe:'Y2K Revival',cat:'Tops & Tees',sizes:['XS','S','M','L'],rating:'4.8',reviews:'142',img:PRODUCT_IMGS['Butterfly Mesh Baby Tee, Lavender']},
+  {ico:'💍',name:'Rhinestone Layered Necklace Set',seller:'@the.aura.co',verified:true,price:'₹480',mrp:'',off:'',desc:'Layered rhinestone necklace set. Silver-tone plating. Three chains.',tag:'New',vibe:'Accessories',cat:'Jewellery',sizes:['Free Size'],rating:'4.9',reviews:'89',img:PRODUCT_IMGS['Rhinestone Layered Necklace Set']},
+  {ico:'🧣',name:'Velvet Butterfly Scarf, Midnight',seller:'@glitch.stitch',verified:false,price:'₹390',mrp:'',off:'',desc:'Deep midnight purple velvet. Extra-wide silhouette. Can be worn as shawl or scarf.',tag:'Limited',vibe:'Dark Gothic',cat:'Accessories',sizes:['Free Size'],rating:'4.7',reviews:'56',img:PRODUCT_IMGS['Velvet Butterfly Scarf, Midnight']},
+  {ico:'👜',name:'Chrome Mini Shoulder Bag',seller:'@nazar.studio',verified:true,price:'₹1,200',mrp:'₹1,600',off:'25',desc:'Polished chrome finish. Adjustable chain strap. Fits phone, cards, lipstick. Magnetic clasp.',tag:'New',vibe:'Accessories',cat:'Bags',sizes:['Free Size'],rating:'4.6',reviews:'34',img:PRODUCT_IMGS['Chrome Mini Shoulder Bag']},
+  {ico:'👖',name:'Low-Rise Cargo Trousers, Sand',seller:'@pixel.drip',verified:false,price:'₹1,850',mrp:'₹2,200',off:'16',desc:'Heavy cotton cargo. 6 pockets. Low-rise waistband. Wide-leg silhouette. Sand beige.',tag:'Sale',vibe:'Streetwear',cat:'Bottoms',sizes:['XS','S','M','L','XL'],rating:'4.5',reviews:'28',img:PRODUCT_IMGS['Low-Rise Cargo Trousers, Sand']},
+  {ico:'🎨',name:'Hand-Painted Denim Jacket',seller:'@palette.people',verified:true,price:'₹3,200',mrp:'',off:'',desc:'Each jacket is hand-painted — no two are alike. Acrylic on premium Japanese denim.',tag:'Artist Pick',vibe:'Artistic Wear',cat:'Tops & Tees',sizes:['S','M','L'],rating:'5.0',reviews:'17',img:PRODUCT_IMGS['Hand-Painted Denim Jacket']},
+  {ico:'🧤',name:'Fingerless Mesh Gloves, Black',seller:'@static.drop',verified:false,price:'₹299',mrp:'',off:'',desc:'Open-finger fishnet gloves. One size fits most. Cotton-mesh blend.',tag:'New',vibe:'Dark Gothic',cat:'Accessories',sizes:['Free Size'],rating:'4.3',reviews:'44',img:PRODUCT_IMGS['Fingerless Mesh Gloves, Black']},
+  {ico:'👟',name:'Platform Jelly Mules, Bubblegum',seller:'@retro.roots',verified:false,price:'₹999',mrp:'₹1,400',off:'29',desc:'Clear PVC platform mule. 4cm platform. Pink bubblegum colourway. Sizes 5–9.',tag:'Sale',vibe:'Y2K Revival',cat:'Footwear',sizes:['5','6','7','8','9'],rating:'4.6',reviews:'78',img:PRODUCT_IMGS['Platform Jelly Mules, Bubblegum']},
+  {ico:'🧥',name:'Oversized Linen Blazer, Oatmeal',seller:'@softstone.studio',verified:false,price:'₹2,100',mrp:'₹2,800',off:'25',desc:'Premium linen blend. Relaxed oversized silhouette. Unstructured lapels. Two front pockets.',tag:'New',vibe:'Soft Minimal',cat:'Tops & Tees',sizes:['XS','S','M','L','XL'],rating:'4.8',reviews:'61',img:PRODUCT_IMGS['Oversized Linen Blazer, Oatmeal']},
+  {ico:'🧶',name:'Crochet Knit Vest, Sage',seller:'@cottage.craft',verified:false,price:'₹920',mrp:'',off:'',desc:'Handmade crochet vest in sage green. Open-weave pattern. Oversized fit. One size.',tag:'New',vibe:'Indie Core',cat:'Tops & Tees',sizes:['Free Size'],rating:'4.9',reviews:'22',img:PRODUCT_IMGS['Crochet Knit Vest, Sage']},
+  {ico:'👒',name:'Crochet Bucket Hat, Terracotta',seller:'@lustre.lane',verified:false,price:'₹720',mrp:'',off:'',desc:'Hand-crocheted bucket hat. Unstructured brim. Terracotta rust colourway. One size.',tag:'Trending',vibe:'Trending',cat:'Accessories',sizes:['Free Size'],rating:'4.7',reviews:'38',img:PRODUCT_IMGS['Crochet Bucket Hat, Terracotta']},
+  {ico:'🌸',name:'Petal Sleeve Organza Blouse',seller:'@sartorial.co',verified:false,price:'₹1,200',mrp:'',off:'',desc:'Sheer organza fabric. Petal-cut sleeves. Semi-fitted silhouette. Dry clean only.',tag:'New',vibe:'High Fashion',cat:'Tops & Tees',sizes:['XS','S','M'],rating:'4.8',reviews:'15',img:PRODUCT_IMGS['Petal Sleeve Organza Blouse']},
+  {ico:'👗',name:'Satin Slip Midi Dress, Onyx',seller:'@glitch.stitch',verified:false,price:'₹1,450',mrp:'₹1,900',off:'24',desc:'Bias-cut satin slip dress. Adjustable spaghetti straps. Side slit. Onyx black.',tag:'New',vibe:'Dark Gothic',cat:'Tops & Tees',sizes:['XS','S','M','L'],rating:'4.7',reviews:'33',img:PRODUCT_IMGS['Satin Slip Midi Dress, Onyx']},
+  {ico:'🥿',name:'Chunky Platform Sneakers, White',seller:'@retro.roots',verified:false,price:'₹1,799',mrp:'₹2,400',off:'25',desc:'Chunky platform sole, 5cm. Lace-up front. White canvas upper with cream sole.',tag:'New',vibe:'Y2K Revival',cat:'Footwear',sizes:['5','6','7','8','9','10'],rating:'4.5',reviews:'52',img:PRODUCT_IMGS['Chunky Platform Sneakers, White']},
+  {ico:'👜',name:'Mini Rhinestone Tote',seller:'@nazar.studio',verified:true,price:'₹880',mrp:'',off:'',desc:'Structured mini tote covered in rhinestone embellishments. Double handle. Interior zip pocket.',tag:'Limited',vibe:'High Fashion',cat:'Bags',sizes:['Free Size'],rating:'4.9',reviews:'19',img:PRODUCT_IMGS['Mini Rhinestone Tote']},
+  {ico:'💎',name:'Choker Set, Gothic Silver',seller:'@glitch.stitch',verified:false,price:'₹350',mrp:'',off:'',desc:'Set of 3 gothic-style chokers. Mixed chain, velvet ribbon, and charm styles. One size.',tag:'New',vibe:'Dark Gothic',cat:'Jewellery',sizes:['Free Size'],rating:'4.6',reviews:'67',img:PRODUCT_IMGS['Choker Set, Gothic Silver']},
+];
+
+/* ══════════════════════════════════════════
+   SUPABASE DYNAMIC PRODUCT LOADER
+══════════════════════════════════════════ */
+let _dbProducts=null; /* null = not yet loaded; [] = loaded but empty */
+
+async function loadProductsFromDB(){
+  try{
+    const{data,error}=await sb.from('products')
+      .select('id,name,description,price,mrp,category,aesthetic,sizes,images,emoji_icon,tag,rating,total_reviews,seller_profiles(brand_name,handle,is_verified)')
+      .eq('is_active',true).order('is_featured',{ascending:false}).order('created_at',{ascending:false}).limit(100);
+    if(error||!data||!data.length)return null;
+    return data.map(p=>({
+      id:p.id,
+      ico:p.emoji_icon||'✦',
+      name:p.name,
+      seller:'@'+(p.seller_profiles?.handle||'karker'),
+      verified:p.seller_profiles?.is_verified||false,
+      price:'₹'+Math.round(p.price/100).toLocaleString('en-IN'),
+      mrp:p.mrp?'₹'+Math.round(p.mrp/100).toLocaleString('en-IN'):'',
+      off:p.mrp?String(Math.round((1-p.price/p.mrp)*100)):'',
+      desc:p.description||'',
+      tag:p.tag||'',
+      vibe:p.aesthetic||'',
+      cat:p.category||'',
+      sizes:p.sizes||[],
+      rating:p.rating?p.rating.toFixed(1):'',
+      reviews:String(p.total_reviews||0),
+      img:p.images&&p.images[0]?p.images[0]:(PRODUCT_IMGS[p.name]||''),
+    }));
+  }catch(e){return null;}
+}
+
+function _buildProdCard(p){
+  const off=p.off&&p.off!=='0'?`<span class="pc-off">−${sanitise(p.off)}%</span>`:'';
+  const mrp=p.mrp?`<span class="pc-mrp">${sanitise(p.mrp)}</span>`:'';
+  const sv=p.verified?`<span class="sv">✓</span>`:'';
+  const tagHtml=p.tag?`<span class="pc-tag${p.tag==='New'||p.tag==='Limited'?' w':''}">${sanitise(p.tag)}</span>`:'';
+  const rat=p.rating?`★ ${sanitise(p.rating)} · ${sanitise(p.reviews)} reviews`:'';
+  const imgHtml=p.img?`<img class="pc-photo" loading="lazy" alt="${sanitise(p.name)}" src="${sanitise(p.img)}" onload="this.classList.add('loaded')" onerror="this.remove()">`:'';
+  const hasImg=p.img?'has-img':'';
+  return`<div class="pc" onclick="openProduct(${JSON.stringify(p.ico)},${JSON.stringify(p.vibe)},${JSON.stringify(p.name)},${JSON.stringify(p.seller)},${JSON.stringify(p.price)},${JSON.stringify(p.mrp)},${JSON.stringify(p.off)},${JSON.stringify(p.desc)},${JSON.stringify(p.tag)})">
+    <div class="pc-img ${hasImg}">${imgHtml}<div class="pc-img-bg"></div><span class="pc-ico">${sanitise(p.ico)}</span>${tagHtml}<span class="pc-wish">♡</span></div>
+    <div class="pc-body"><div class="pc-seller">${sanitise(p.seller)} ${sv}</div><div class="pc-name">${sanitise(p.name)}</div><div class="pc-pr"><span class="pc-price">${sanitise(p.price)}</span>${mrp}${off}</div><div class="pc-rat">${rat}</div></div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 2 — CATALOGUE
+══════════════════════════════════════════ */
+const _catState={vibe:new Set(),cat:new Set(),size:new Set(),tag:new Set(),priceMin:0,priceMax:0,sort:'featured',page:0,perPage:16};
+let _catProducts=[];
+
+async function openCataloguePage(opts={}){
+  openPage('cataloguePage');
+  /* apply optional pre-set filters */
+  if(opts.vibe){_catState.vibe.clear();_catState.vibe.add(opts.vibe);_syncCatFilterUI();}
+  if(opts.cat){_catState.cat.clear();_catState.cat.add(opts.cat);_syncCatFilterUI();}
+  await _loadCatalogueProducts();
+}
+
+async function _loadCatalogueProducts(){
+  document.getElementById('catCountMain').textContent='Loading...';
+  /* Show skeletons */
+  const grid=document.getElementById('catGrid');
+  grid.innerHTML='<div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line s"></div></div>'.repeat(8);
+  /* Try DB first */
+  if(_dbProducts===null){_dbProducts=await loadProductsFromDB();}
+  _catProducts=(_dbProducts&&_dbProducts.length)?_dbProducts:STATIC_PRODUCTS;
+  _catState.page=0;
+  _renderCatalogueGrid();
+}
+
+function _filterAndSort(products){
+  let p=[...products];
+  if(_catState.vibe.size)p=p.filter(x=>_catState.vibe.has(x.vibe));
+  if(_catState.cat.size)p=p.filter(x=>_catState.cat.has(x.cat));
+  if(_catState.tag.size)p=p.filter(x=>_catState.tag.has(x.tag));
+  if(_catState.size.size)p=p.filter(x=>x.sizes&&x.sizes.some(s=>_catState.size.has(s)));
+  const mn=parseInt(document.getElementById('priceMin')?.value||'0')||0;
+  const mx=parseInt(document.getElementById('priceMax')?.value||'0')||0;
+  if(mn>0)p=p.filter(x=>parseInt(String(x.price).replace(/[^0-9]/g,''))>=mn);
+  if(mx>0)p=p.filter(x=>parseInt(String(x.price).replace(/[^0-9]/g,''))<=mx);
+  const sort=document.getElementById('catSortSel')?.value||'featured';
+  if(sort==='price_asc')p.sort((a,b)=>parseInt(String(a.price).replace(/[^0-9]/g,''))-parseInt(String(b.price).replace(/[^0-9]/g,'')));
+  if(sort==='price_desc')p.sort((a,b)=>parseInt(String(b.price).replace(/[^0-9]/g,''))-parseInt(String(a.price).replace(/[^0-9]/g,'')));
+  if(sort==='rating')p.sort((a,b)=>parseFloat(b.rating||'0')-parseFloat(a.rating||'0'));
+  if(sort==='newest')p.reverse();
+  return p;
+}
+
+function _renderCatalogueGrid(){
+  const filtered=_filterAndSort(_catProducts);
+  const total=filtered.length;
+  const start=0;const end=Math.min((_catState.page+1)*_catState.perPage,total);
+  const slice=filtered.slice(start,end);
+  const grid=document.getElementById('catGrid');
+  const countEl=document.getElementById('catCount');
+  const countMain=document.getElementById('catCountMain');
+  const loadMore=document.getElementById('catLoadMore');
+  const loadMoreSub=document.getElementById('catLoadMoreSub');
+  if(countEl)countEl.textContent=total+' products';
+  if(countMain)countMain.textContent=total+' product'+(total!==1?'s':'');
+  if(!slice.length){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 20px"><div style="font-size:36px;opacity:.2;margin-bottom:12px">✦</div><div style="font-family:var(--bc);font-size:22px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--k);margin-bottom:8px">No products found</div><div style="font-size:13px;color:var(--i55)">Try clearing some filters.</div></div>`;
+    if(loadMore)loadMore.style.display='none';
+    return;
+  }
+  grid.innerHTML=slice.map(_buildProdCard).join('');
+  _reinitWishlistOnGrid(grid);
+  if(loadMore)loadMore.style.display=end<total?'block':'none';
+  if(loadMoreSub&&end<total)loadMoreSub.textContent='Showing '+end+' of '+total;
+}
+
+function loadMoreProducts(){
+  _catState.page++;
+  _renderCatalogueGrid();
+  document.getElementById('cataloguePage')?.scrollTo({top:document.getElementById('catGrid')?.offsetTop||0,behavior:'smooth'});
+}
+
+function toggleFilter(type,el){
+  const val=el.textContent.trim();
+  const set=_catState[type];
+  if(set.has(val)){set.delete(val);el.classList.remove('on');}
+  else{set.add(val);el.classList.add('on');}
+  _catState.page=0;
+  _updateActiveFilters();
+  _renderCatalogueGrid();
+}
+
+function clearFilter(type){
+  _catState[type].clear();
+  document.querySelectorAll('#'+({vibe:'vibeFilters',cat:'catFilters',size:'sizeFilters',tag:'vibeFilters'}[type]||'vibeFilters')+' .fil-chip').forEach(c=>c.classList.remove('on'));
+  document.querySelectorAll('#catSidebar .fil-chips .fil-chip').forEach(c=>{
+    const match={vibe:['Y2K Revival','Dark Gothic','Soft Minimal','Artistic Wear','High Fashion','Indie Core','Streetwear','Trending'],cat:['Tops & Tees','Bottoms','Jewellery','Bags','Footwear','Accessories'],size:['XS','S','M','L','XL','Free Size'],tag:['New','Sale','Limited','Artist Pick','Trending']};
+    if(match[type]&&match[type].includes(c.textContent.trim()))c.classList.remove('on');
+  });
+  _catState.page=0;_updateActiveFilters();_renderCatalogueGrid();
+}
+
+function clearAllFilters(){
+  ['vibe','cat','size','tag'].forEach(t=>{_catState[t].clear();});
+  document.querySelectorAll('#catSidebar .fil-chip').forEach(c=>c.classList.remove('on'));
+  const mn=document.getElementById('priceMin');const mx=document.getElementById('priceMax');
+  if(mn)mn.value='';if(mx)mx.value='';
+  _catState.page=0;_updateActiveFilters();_renderCatalogueGrid();
+}
+
+function applyFilters(){_catState.page=0;_updateActiveFilters();_renderCatalogueGrid();}
+
+function _updateActiveFilters(){
+  const wrap=document.getElementById('activeFilters');
+  if(!wrap)return;
+  const chips=[];
+  _catState.vibe.forEach(v=>chips.push(`<span class="a-chip">${sanitise(v)}<button onclick="toggleFilterByVal('vibe','${sanitise(v)}')">✕</button></span>`));
+  _catState.cat.forEach(v=>chips.push(`<span class="a-chip">${sanitise(v)}<button onclick="toggleFilterByVal('cat','${sanitise(v)}')">✕</button></span>`));
+  _catState.size.forEach(v=>chips.push(`<span class="a-chip">Size: ${sanitise(v)}<button onclick="toggleFilterByVal('size','${sanitise(v)}')">✕</button></span>`));
+  _catState.tag.forEach(v=>chips.push(`<span class="a-chip">${sanitise(v)}<button onclick="toggleFilterByVal('tag','${sanitise(v)}')">✕</button></span>`));
+  wrap.innerHTML=chips.join('');
+}
+
+function toggleFilterByVal(type,val){
+  _catState[type].delete(val);
+  document.querySelectorAll('#catSidebar .fil-chip').forEach(c=>{if(c.textContent.trim()===val)c.classList.remove('on');});
+  _catState.page=0;_updateActiveFilters();_renderCatalogueGrid();
+}
+
+function _syncCatFilterUI(){
+  document.querySelectorAll('#catSidebar .fil-chip').forEach(c=>{
+    const val=c.textContent.trim();
+    const on=[..._catState.vibe,..._catState.cat,..._catState.size,..._catState.tag].includes(val);
+    c.classList.toggle('on',on);
+  });
+  _updateActiveFilters();
+}
+
+function toggleCatSidebar(){
+  document.getElementById('catSidebar')?.classList.toggle('mob-open');
+}
+
+function _reinitWishlistOnGrid(grid){
+  grid.querySelectorAll('.pc-wish').forEach((w,i)=>{
+    const key='cat'+i+Date.now();
+    w.addEventListener('click',e=>{
+      e.stopPropagation();
+      w.classList.toggle('on');
+      const saved=w.classList.contains('on');
+      w.textContent=saved?'♥':'♡';
+      /* find product name for key */
+      const name=w.closest('.pc')?.querySelector('.pc-name')?.textContent?.trim()||key;
+      const pid=_catProducts.findIndex(p=>p.name===name);
+      const pkey='cat'+(pid>=0?pid:Math.random().toString(36).slice(2));
+      saved?_wl.add(pkey):_wl.delete(pkey);
+      _saveWL();
+      toast(saved?'Saved to wishlist ♥':'Removed from wishlist');
+    });
+  });
+}
+
+/* ══════════════════════════════════════════
+   PAGE 3 — ARTIST DIRECTORY
+══════════════════════════════════════════ */
+const STATIC_ARTISTS=[
+  {name:'Stardust Fits',handle:'@stardust.fits',avt:'✦',rating:'4.9',products:'48',bio:'Y2K and indie fashion from Mumbai. Each piece is a mood.',tags:['Y2K Revival','Indie Core'],verified:true},
+  {name:'Palette People',handle:'@palette.people',avt:'◈',rating:'4.8',products:'32',bio:'Wearable art. Every jacket is hand-painted by us.',tags:['Artistic Wear','High Fashion'],verified:true},
+  {name:'Glitch Stitch',handle:'@glitch.stitch',avt:'❋',rating:'4.7',products:'61',bio:'Dark aesthetics, premium craft. Gothic fashion done right.',tags:['Dark Gothic','Indie Core'],verified:false},
+  {name:'Nazar Studio',handle:'@nazar.studio',avt:'◎',rating:'4.9',products:'27',bio:'Evil-eye and talisman-inspired accessories. Handmade in Jaipur.',tags:['Artistic Wear','Soft Minimal'],verified:true},
+  {name:'Softstone Studio',handle:'@softstone.studio',avt:'○',rating:'4.6',products:'44',bio:'Quiet luxury for the everyday. Linen, silk, and natural textures.',tags:['Soft Minimal','High Fashion'],verified:false},
+  {name:'Pixel Drip',handle:'@pixel.drip',avt:'◆',rating:'4.5',products:'38',bio:'Streetwear that hits different. Bold prints and oversized everything.',tags:['Streetwear','Trending'],verified:false},
+  {name:'Retro Roots',handle:'@retro.roots',avt:'⬡',rating:'4.7',products:'55',bio:'Vintage-inspired shoes and accessories for the nostalgic dresser.',tags:['Y2K Revival','Indie Core'],verified:true},
+  {name:'Lustre Lane',handle:'@lustre.lane',avt:'◇',rating:'4.8',products:'29',bio:'Handcrafted pieces for the boho-chic soul.',tags:['Indie Core','Soft Minimal'],verified:false},
+  {name:'The Aura Co',handle:'@the.aura.co',avt:'✧',rating:'4.9',products:'35',bio:'Fine jewellery with an indie soul. Stones, chains, and intention.',tags:['Artistic Wear','High Fashion'],verified:true},
+  {name:'Cottage Craft',handle:'@cottage.craft',avt:'❖',rating:'4.9',products:'22',bio:'Handmade crochet and knit. Slow fashion, made with love.',tags:['Indie Core','Soft Minimal'],verified:false},
+  {name:'Static Drop',handle:'@static.drop',avt:'▲',rating:'4.3',products:'19',bio:'Limited drops. Experimental silhouettes. Nothing safe.',tags:['Dark Gothic','Streetwear'],verified:false},
+  {name:'Sartorial Co',handle:'@sartorial.co',avt:'◉',rating:'4.8',products:'31',bio:'Draped silhouettes and fine fabrics for special occasions.',tags:['High Fashion','Soft Minimal'],verified:true},
+];
+let _artFilter='';
+
+async function openArtistsPage(){
+  openPage('artistsPage');
+  /* Try to load from DB */
+  let artists=STATIC_ARTISTS;
+  try{
+    const{data}=await sb.from('seller_profiles').select('brand_name,handle,bio,aesthetic_tags,rating,total_products,is_verified').eq('is_active',true).order('rating',{ascending:false});
+    if(data&&data.length)artists=data.map(s=>({name:s.brand_name,handle:'@'+(s.handle||s.brand_name.toLowerCase().replace(/\s/g,'.')),avt:'✦',rating:s.rating?s.rating.toFixed(1):'',products:String(s.total_products||0),bio:s.bio||'',tags:s.aesthetic_tags||[],verified:s.is_verified||false}));
+  }catch(e){}
+  window._artData=artists;
+  renderArtists(artists);
+  document.getElementById('artPageCount').textContent=artists.length+' artists';
+}
+
+function renderArtists(artists){
+  const grid=document.getElementById('artGrid');
+  const empty=document.getElementById('artEmpty');
+  const featLabel=document.getElementById('artFeatLabel');
+  if(!grid)return;
+  if(!artists.length){grid.innerHTML='';if(empty)empty.style.display='block';if(featLabel)featLabel.style.display='none';return;}
+  if(empty)empty.style.display='none';
+  if(featLabel)featLabel.textContent=_artFilter?'Artists':'Featured Artists';
+  grid.innerHTML=artists.map(a=>{
+    const pills=a.tags.map(t=>`<span class="art-pill">${sanitise(t)}</span>`).join('');
+    const badge=a.verified?`<div class="art-verified-badge">✓ Verified</div>`:'';
+    const rat=a.rating?`★ ${sanitise(String(a.rating))} · ${sanitise(String(a.products))} products`:'';
+    return`<div class="art-card" onclick="openSellerPage('${sanitise(a.name)}')">
+      <div class="art-avt"><span style="font-size:22px">${sanitise(a.avt)}</span></div>
+      <div class="art-name">${sanitise(a.name)}</div>
+      <div class="art-handle">${sanitise(a.handle)}</div>
+      <div class="art-rating">${rat}</div>
+      ${badge}
+      <div class="art-pills" style="margin-top:8px">${pills}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterArtists(){
+  const q=(document.getElementById('artSearchInp')?.value||'').toLowerCase().trim();
+  let filtered=window._artData||STATIC_ARTISTS;
+  if(q)filtered=filtered.filter(a=>a.name.toLowerCase().includes(q)||a.handle.toLowerCase().includes(q)||(a.bio&&a.bio.toLowerCase().includes(q))||a.tags.some(t=>t.toLowerCase().includes(q)));
+  if(_artFilter)filtered=filtered.filter(a=>a.tags.includes(_artFilter));
+  const countEl=document.getElementById('artPageCount');
+  if(countEl)countEl.textContent=filtered.length+' artist'+(filtered.length!==1?'s':'');
+  renderArtists(filtered);
+}
+
+function artFilterAesthetic(el,aesthetic){
+  _artFilter=aesthetic;
+  document.querySelectorAll('#artFilterRow .fil-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('artFeatLabel').textContent=aesthetic?aesthetic+' Artists':'Featured Artists';
+  filterArtists();
+}
+
+/* ══════════════════════════════════════════
+   LIVE SEARCH WITH SUPABASE
+══════════════════════════════════════════ */
+let _searchTimeout;
+async function doSearch(){
+  const q=(document.getElementById('srchInp')?.value||'').trim();
+  if(!q){toast('Enter something to search');return;}
+  const resWrap=document.getElementById('srchResults');
+  if(!resWrap)return;
+  resWrap.innerHTML='<div style="font-family:var(--m);font-size:10px;color:var(--i32);padding:12px 0;letter-spacing:.06em">Searching…</div>';
+  clearTimeout(_searchTimeout);
+  _searchTimeout=setTimeout(async()=>{
+    /* Search static + DB products */
+    const allProds=(_dbProducts&&_dbProducts.length)?_dbProducts:STATIC_PRODUCTS;
+    const qLow=q.toLowerCase();
+    const matches=allProds.filter(p=>
+      p.name.toLowerCase().includes(qLow)||
+      p.vibe.toLowerCase().includes(qLow)||
+      p.cat.toLowerCase().includes(qLow)||
+      p.seller.toLowerCase().includes(qLow)
+    ).slice(0,8);
+    if(!matches.length){resWrap.innerHTML=`<div style="padding:20px 0;text-align:center;font-size:13px;color:var(--i32)">No results for "${sanitise(q)}"</div>`;return;}
+    resWrap.innerHTML=matches.map(p=>`
+      <div class="srch-result-item" onclick="closeSearch();openProduct(${JSON.stringify(p.ico)},${JSON.stringify(p.vibe)},${JSON.stringify(p.name)},${JSON.stringify(p.seller)},${JSON.stringify(p.price)},${JSON.stringify(p.mrp)},${JSON.stringify(p.off)},${JSON.stringify(p.desc)},${JSON.stringify(p.tag)})">
+        <span class="sri-ico">${sanitise(p.ico)}</span>
+        <div class="sri-info">
+          <div class="sri-name">${sanitise(p.name)}</div>
+          <div class="sri-meta">${sanitise(p.price)} · ${sanitise(p.vibe)}</div>
+        </div>
+      </div>`).join('');
+  },320);
+}
+
+/* wire search input to live search */
+document.getElementById('srchInp')?.addEventListener('input',doSearch);
 
 /* ══════════════════════════════════════════
    PHASE 2 — WISHLIST PAGE
